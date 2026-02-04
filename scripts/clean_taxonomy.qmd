@@ -1,0 +1,72 @@
+---
+title: "clean_taxonomy"
+output: html_document
+date: "2026-02-04"
+---
+
+# clean taxonomy: pull taxa names & build dict of synonyms
+
+## load packages
+
+```{julia}
+using CSV, DataFrames
+```
+
+## load in data
+
+We're only focusing on clade 1 (south) + 2b (central-northish), so let's filter down to that clade.
+
+```{julia}
+taxa_traits = DataFrame(CSV.File("data/SupTable4-TraitsSpecies.csv"))
+#clean up column names - change from all caps to lowercase
+rename!(taxa_traits, lowercase.(names(taxa_traits)))
+#remove spaces
+rename!(taxa_traits, replace.(names(taxa_traits), ' '=> '_'))
+filter!(:clade => x -> x == "1" || x == "2b", taxa_traits)
+```
+
+```{julia}
+rename!(taxa_traits, Dict(:species => "scientificName"))
+scientificName = replace.(taxa_traits.scientificName, "C. " => "Calceolaria ")
+taxa_traits.scientificName = scientificName
+#make a specificEpithet col
+specificEpithet      = [split(taxa, " ")[2] for taxa in scientificName]
+#make an infraspecificEpithet col (splitting on var. or subsp.)
+infraspecificEpithet = Vector{Union{String,Missing}}()
+for taxa in scientificName
+    parts = split(taxa, " ")
+    if length(parts) >= 4
+        push!(infraspecificEpithet, parts[4])
+    else
+        push!(infraspecificEpithet, missing)
+    end?
+end
+
+insertcols!(taxa_traits, 2, :specificEpithet => specificEpithet)
+insertcols!(taxa_traits, 3, :infraspecificEpithet => infraspecificEpithet)
+```
+
+let's initialize dictionary of valid names to synonyms for just the taxa we want:
+
+```{julia}
+synonymdict = Dict{String, Vector}()
+for taxa in scientificName
+    synonymdict[taxa] = [taxa]
+end
+```
+
+## load in powo checklist
+
+I ran a Kew / Plants of the World Online checklist for Calceolaria species at the botanical country level
+on 2026-02-04, using native/introduced taxa.
+
+```{julia}
+
+```
+
+pseudocode:
+1. using keys in dict, first check they are valid/accepted names
+    1.1 if not, isolate list of discrepancies to check back with anahí
+    1.2 check to see if any typos in names
+2. add synonyms to the vector for each key
+    2.2 from lines 1112 on, see if any string matches for our keys --> string split based on ===, if [1] then synonym, if [2], then valid
