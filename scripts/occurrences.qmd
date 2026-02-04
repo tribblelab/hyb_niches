@@ -1,0 +1,186 @@
+---
+title: "gbif_occs"
+output: html_document
+date: "2026-02-03"
+---
+
+download packages:
+```{r eval = FALSE}
+library(devtools)
+devtools::install_github("cmt2/candi_pipeline")
+
+list_of_packages <- c(
+  # Core ENM tools
+  "terra", "dismo", "ENMeval", "ENMTools", "biomod2",
+  # Spatial / Mapping
+  "sf", "rnaturalearth", "ggspatial", "leaflet",
+  "fields", "rangeBuilder",
+  # Visualization
+  "ggplot2", "viridis", "gridExtra",
+  # Data manipulation
+  "dplyr", "tidyr", "stringr", "gtools",
+  # Phylogenetics
+  "ape", "phytools",
+  # Biodiversity data
+  "ridigbio", "gatoRs",
+  # Other utilities
+  "multcompView", "usdm", "predicts", "rJava"
+)
+
+new.packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
+
+if (length(new.packages)) {
+  cat("\nInstalling missing CRAN packages:\n")
+  print(new.packages)
+  install.packages(new.packages)
+} else {
+  cat("\nAll required CRAN packages already installed.\n")
+}
+
+## ---- Load All CRAN Packages ----
+
+# Try loading all required CRAN packages.
+loaded <- sapply(list_of_packages, require, character.only = TRUE)
+
+if (any(!loaded)) {
+  cat("\nWARNING: These CRAN packages failed to load:\n")
+  print(list_of_packages[!loaded])
+} else {
+  cat("\nAll CRAN packages loaded successfully.\n")
+}
+
+github_repos <- c(
+  "vqv/ggbiplot"
+)
+
+for (repo in github_repos) {
+  pkg <- tail(strsplit(repo, "/")[[1]], 1)
+  if (!pkg %in% installed.packages()[,"Package"]) {
+    cat(paste("\nInstalling GitHub package:", repo, "\n"))
+    devtools::install_github(repo, upgrade = "never")
+  } else {
+    cat(paste("\nGitHub package already installed:", pkg, "\n"))
+  }
+}
+
+# Try loading GitHub packages.
+github_packages <- c("ggbiplot")
+github_loaded <- sapply(github_packages, require, character.only = TRUE)
+
+if (any(!github_loaded)) {
+  cat("\nWARNING: These GitHub packages failed to load:\n")
+  print(github_packages[!github_loaded])
+} else {
+  cat("\nAll GitHub packages loaded successfully.\n")
+}
+```
+
+```{r}
+library(ridigbio)       # Interface to iDigBio API
+library(gatoRs)         # Taxonomic and geographic cleaning
+library(fields)         # For calculating spatial distances
+library(sf)             # For spatial operations and visualization
+library(ggplot2)        # For plotting
+library(ggspatial)      # Scale bars and north arrows
+```
+
+```{r}
+#I don't think I need to add the synonyms that are already listed under GBIF, maybe just the synonyms
+    #that aren't -- those that are in Kew/POWO?
+Calceolaria_corymbosa <- c("Calceolaria corymbosa",
+                            "Calceolaria glabrata var. meyeniana")
+Calceolaria_thyrsiflora <- c("Calceolaria thyrsiflora", 
+                         "Fagelia thyrsiflora",
+                         "Calceolaria thyrsiflora var. dulcis",
+                         "Calceolaria thyrsiflora var. alliacea")
+
+gators_download(synonyms.list = Calceolaria_corymbosa,
+                write.file = TRUE,
+                filename = "data/pt_occs_raw/corymbosa_2026_02_03.csv")
+
+gators_download(synonyms.list = Calceolaria_thyrsiflora,
+                write.file = TRUE,
+                filename = "data/pt_occs_raw/thyrsiflora_2026_02_03.csv")
+
+rawdf1 <- read.csv("data/pt_occs_raw/corymbosa_2026_02_03.csv")
+rawdf2 <- read.csv("data/pt_occs_raw/thyrsiflora_2026_02_03.csv")
+names(rawdf1) # returns field headers         
+nrow(rawdf1) # returns the number of rows = occurrence records   
+
+leaflet(rawdf2) %>% 
+  addTiles() %>% 
+  addMarkers(label = paste0(rawdf$longitude,
+                            ", ",
+                            rawdf$latitude))
+```
+
+```{r}
+unique(rawdf1$scientificName)
+
+# Clean names with fuzzy matching
+df <- taxa_clean(df = rawdf1,
+                 synonyms.list = Calceolaria_corymbosa,
+                 taxa.filter = "fuzzy", # fuzzy allows some leeway over exact matching
+                 accepted.name = "Calceolaria corymbosa")
+#1286 points before
+#if we select exact, WAAAAAAY fewer points , like ~80
+
+df <- basic_locality_clean(df = df,
+                           remove.zero = TRUE,
+                           precision = TRUE,
+                           digits = 2,
+                           remove.skewed = TRUE)
+
+#884 points after
+
+df <- process_flagged(df, 
+                      interactive = FALSE, 
+                      scientific.name = "accepted_name")
+
+nrow(df) #786 points
+
+df <- remove_duplicates(df, 
+                        remove.unparseable = TRUE)
+
+nrow(df) #783 points
+
+df <- one_point_per_pixel(df)
+nrow(df) #570
+```
+
+```{r}
+nnDm <- rdist.earth(as.matrix(df[, c("longitude", "latitude")]),
+                    miles = FALSE)
+nnDmin <- do.call(rbind, 
+                  lapply(1:5, function(i) sort(nnDm[, i])[2]))
+min(nnDmin)  # e.g., 0.933 km
+
+df_fixed <- st_as_sf(df, 
+                     coords = c("longitude", "latitude"), 
+                     crs = 4326)
+
+world <- annotation_borders(database = "world", 
+               colour = "gray80", 
+               fill = "gray80")
+
+simple_map <- ggplot() +
+                world + 
+                geom_sf(data = df_fixed, 
+                        color = "blue") +
+                coord_sf(xlim = c(min(df$longitude) - 3, 
+                                  max(df$longitude) + 3),
+                         ylim = c(min(df$latitude) - 3,
+                                  max(df$latitude) + 3)) +
+                xlab("Longitude") + 
+                ylab("Latitude") +
+                annotation_scale() +
+                annotation_north_arrow(location = "tl", 
+                                       height = unit(1, "cm"),
+                                       width = unit(1, "cm"))
+
+write.csv(df, "data/pt_occs_clean/corymbosa_2026_02_23_cleaned.csv", row.names = FALSE)
+
+leaflet(df_fixed) %>%
+  addMarkers(label = paste0(df$longitude, ", ", df$latitude)) %>%
+  addTiles()
+```
