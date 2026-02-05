@@ -61,12 +61,82 @@ I ran a Kew / Plants of the World Online checklist for Calceolaria species at th
 on 2026-02-04, using native/introduced taxa.
 
 ```{julia}
-
+lines = readlines("data/powochecklist.txt")
+#pull lines starting from valid species (skipping headers)
+subset = lines[9:1110]
+#join back into a single string
+text = join(subset, "\n")
+#split on one or more empty lines
+blocks = split(text, r"\n\s*\n+")
 ```
 
-pseudocode:
-1. using keys in dict, first check they are valid/accepted names
-    1.1 if not, isolate list of discrepancies to check back with anahí
-    1.2 check to see if any typos in names
-2. add synonyms to the vector for each key
-    2.2 from lines 1112 on, see if any string matches for our keys --> string split based on ===, if [1] then synonym, if [2], then valid
+### compare names from anahí with powo valid names
+
+```{julia}
+#define regex pattern just to pull full name before species authority
+pat = Regex(
+    "^(.+?)\\s+(?=\\(|[A-Z])",
+    "m"
+)
+
+validnames = String[]
+#grab valid names and add to this vector
+for block in blocks
+    push!(validnames, strip(match(pat, block)[1]))
+end
+
+discrepancies = String[]
+for name in scientificName
+    if name ∉ validnames
+        push!(discrepancies, name)
+    end
+end
+
+discrepancies
+```
+
+fixit: deal with these discrepancies
+
+1.  "Calceolaria dentata subsp. cummingiana” —> Kew has one m in “cumingiana” but on the internet I see 2 ms (“cummingiana”) in other sources
+2.  "Calceolaria ascendens subsp. exigua” —> Kew says this is a synonym for "Calceolaria ascendens subsp. glandulifera"
+3.  "Calceolaria petiolaris” —> Kew says this is a synonym for “C. petioalaris"
+4.  "Calceolaria corymbosa subsp. montana” —> Kew says this is a synonym for "Calceolaria mollissima"
+5.  "Calceolaria crenatifolia”  —> Kew doesn’t have anything for “crenatifolia”, but they do have “crenatiflora” accepted
+6.  "Calceolaria corymbosa subsp. santiagana” —> I think you have a typo, should be "santiagina"
+
+### add synonyms to dictionary
+
+```{julia}
+powosynonyms = lines[1112:end]
+
+for name in scientificName
+    #fixit: deal with discrepancy taxa eventually
+    if name ∉ discrepancies
+        pat = Regex("^\\Q$name\\E\\s+(?=\\(|[A-Z])")
+        potentialmatches = findall( x -> occursin(pat, x), powosynonyms)
+        if !isempty(potentialmatches)
+            for i in potentialmatches
+                line = powosynonyms[i]
+                synonym = split(line, "=== ")[2]
+                #fixit: remove species authority from end of synonym, if applicable
+                push!(synonymdict[name], (synonym) )       
+            end
+        end
+    end
+end
+```
+
+check this worked:
+look at dictionary values with synonyms (list length > 1)
+```{julia}
+for k in keys(synonymdict)
+    if length(synonymdict[k]) > 1
+        @show k synonymdict[k]
+    end
+end
+```
+
+fixits:
+0. deal with discrepancy taxa (if statement on line 113)
+1. line 121, removing species authority from synonyms (maybe?, see next point)
+2. edge case like Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon.
