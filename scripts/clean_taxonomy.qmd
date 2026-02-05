@@ -19,9 +19,9 @@ We're only focusing on clade 1 (south) + 2b (central-northish), so let's filter 
 ```{julia}
 taxa_traits = DataFrame(CSV.File("data/SupTable4-TraitsSpecies.csv"))
 #clean up column names - change from all caps to lowercase
-rename!(taxa_traits, lowercase.(names(taxa_traits)))
+rename!(lowercase, taxa_traits)
 #remove spaces
-rename!(taxa_traits, replace.(names(taxa_traits), ' '=> '_'))
+rename!(x -> replace(x, ' ' => '_'), taxa_traits)
 filter!(:clade => x -> x == "1" || x == "2b", taxa_traits)
 ```
 
@@ -39,20 +39,11 @@ for taxa in scientificName
         push!(infraspecificEpithet, parts[4])
     else
         push!(infraspecificEpithet, missing)
-    end?
+    end
 end
 
 insertcols!(taxa_traits, 2, :specificEpithet => specificEpithet)
 insertcols!(taxa_traits, 3, :infraspecificEpithet => infraspecificEpithet)
-```
-
-let's initialize dictionary of valid names to synonyms for just the taxa we want:
-
-```{julia}
-synonymdict = Dict{String, Vector}()
-for taxa in scientificName
-    synonymdict[taxa] = [taxa]
-end
 ```
 
 ## load in powo checklist
@@ -95,14 +86,70 @@ end
 discrepancies
 ```
 
-fixit: deal with these discrepancies
+### reconcile discrepancies with powo
 
-1.  "Calceolaria dentata subsp. cummingiana” —> Kew has one m in “cumingiana” but on the internet I see 2 ms (“cummingiana”) in other sources
-2.  "Calceolaria ascendens subsp. exigua” —> Kew says this is a synonym for "Calceolaria ascendens subsp. glandulifera"
-3.  "Calceolaria petiolaris” —> Kew says this is a synonym for “C. petioalaris"
-4.  "Calceolaria corymbosa subsp. montana” —> Kew says this is a synonym for "Calceolaria mollissima"
-5.  "Calceolaria crenatifolia”  —> Kew doesn’t have anything for “crenatifolia”, but they do have “crenatiflora” accepted
-6.  "Calceolaria corymbosa subsp. santiagana” —> I think you have a typo, should be "santiagina"
+1.  "Calceolaria ascendens subsp. exigua” —> Kew says this is a synonym for "Calceolaria ascendens subsp. glandulifera"
+>> This one is C. ascendens glandulifera
+we already have C. ascendens glandulifera in the df, so let's delete this line.
+
+```{julia}
+#delete this entry from df
+deleteat!(taxa_traits, findall(==("Calceolaria ascendens subsp. exigua"), taxa_traits.scientificName))
+```
+
+2.  "Calceolaria petiolaris” —> Kew says this is a synonym for “C. petioalaris"
+>> You're right. This is a typo. It is C. petioalaris
+
+```{julia}
+#replace petiolaris with "petioalaris"
+replace!(taxa_traits.scientificName, "Calceolaria petiolaris" => "Calceolaria petioalaris")
+replace!(taxa_traits.specificEpithet, "petiolaris" => "petioalaris")
+```
+
+3.  "Calceolaria corymbosa subsp. montana” —> Kew says this is a synonym for "Calceolaria mollissima"
+>> The right species to use here is C. corymbosa montana (mollissima is an old name)
+
+instead of changing the dataframe or dictionary, I'll just add an if statement to the synonym matching with the POWO checklist below.
+
+4.  "Calceolaria crenatifolia”  —> Kew doesn’t have anything for “crenatifolia”, but they do have “crenatiflora” accepted
+>> Another typo. This is C. crenatiflora indeed.
+
+```{julia}
+#replace crenatifolia with "crenatiflora"
+replace!(taxa_traits.scientificName, "Calceolaria crenatifolia" => "Calceolaria crenatiflora")
+replace!(taxa_traits.specificEpithet, "crenatifolia" => "crenatiflora")
+```
+
+5.  "Calceolaria corymbosa subsp. santiagana” —> I think you have a typo, should be "santiagina"
+>> Another typo. This is C. corymbosa santiagina (with an "i")
+
+```{julia}
+#replace santiagana with "santiagina"
+replace!(taxa_traits.scientificName, "Calceolaria corymbosa subsp. santiagana" => "Calceolaria corymbosa subsp. santiagina")
+replace!(taxa_traits.infraspecificEpithet, "santiagana" => "santiagina")
+```
+
+write out clean version of df:
+```{julia}
+CSV.write("data/traits_species_cleaned-2026_02_05.csv", taxa_traits)
+```
+
+let's initialize dictionary of valid names to synonyms for just the taxa we want:
+
+```{julia}
+synonymdict = Dict{String, Vector}()
+for taxa in scientificName
+    synonymdict[taxa] = [taxa]
+end
+```
+
+6.  "Calceolaria dentata subsp. cummingiana” —> Kew has one m in “cumingiana” but on the internet I see 2 ms (“cummingiana”) in other sources
+>> This one is C. dentata cummingiana (with two "m"s)
+
+```{julia}
+#let's manually add "dentata subsp. cumingiana" to synonyms to cover our bases
+push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria dentata subsp. cumingiana"))
+```
 
 ### add synonyms to dictionary
 
@@ -110,17 +157,18 @@ fixit: deal with these discrepancies
 powosynonyms = lines[1112:end]
 
 for name in scientificName
-    #fixit: deal with discrepancy taxa eventually
-    if name ∉ discrepancies
-        pat = Regex("^\\Q$name\\E\\s+(?=\\(|[A-Z])")
-        potentialmatches = findall( x -> occursin(pat, x), powosynonyms)
-        if !isempty(potentialmatches)
-            for i in potentialmatches
-                line = powosynonyms[i]
-                synonym = split(line, "=== ")[2]
-                #fixit: remove species authority from end of synonym, if applicable
-                push!(synonymdict[name], (synonym) )       
-            end
+    if name == "Calceolaria corymbosa subsp. montana"
+        push!(synonymdict[name], ("Calceolaria mollissima"))
+        name = "Calceolaria mollissima"
+    end
+    pat = Regex("^\\Q$name\\E\\s+(?=\\(|[A-Z])")
+    potentialmatches = findall( x -> occursin(pat, x), powosynonyms)
+    if !isempty(potentialmatches)
+        for i in potentialmatches
+            line = powosynonyms[i]
+            synonym = split(line, "=== ")[2]
+            #fixit: remove species authority from end of synonym, if applicable
+            push!(synonymdict[name], (synonym))       
         end
     end
 end
@@ -137,6 +185,8 @@ end
 ```
 
 fixits:
-0. deal with discrepancy taxa (if statement on line 113)
-1. line 121, removing species authority from synonyms (maybe?, see next point)
-2. edge case like Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon.
+1. fixit: if statement for mollissima not working in my synonym search?
+2. fixit: my synonym search isn't working as intended I think
+3. line 121, removing species authority from synonyms (maybe?, see next point)
+4. edge case like Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon.
+5. check to see if I have anything like one sample C. filicaulis and another C. filicaulis luxurians --> in which case, do you filter out all the luxurians for the former? what makes sense for niche modeling? how many occurrences do i have for taxa that are at the infraspecific level?
