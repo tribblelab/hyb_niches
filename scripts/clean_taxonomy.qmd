@@ -12,7 +12,7 @@ date: "2026-02-04"
 using CSV, DataFrames
 ```
 
-## load in data
+## load in taxa list df
 
 We're only focusing on clade 1 (south) + 2b (central-northish), so let's filter down to that clade.
 
@@ -151,24 +151,25 @@ end
 push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria dentata subsp. cumingiana"))
 ```
 
-### add synonyms to dictionary
+## create synonym dictionary
 
 ```{julia}
 powosynonyms = lines[1112:end]
 
 for name in scientificName
+    keyname = name
     if name == "Calceolaria corymbosa subsp. montana"
         push!(synonymdict[name], ("Calceolaria mollissima"))
         name = "Calceolaria mollissima"
     end
-    pat = Regex("^\\Q$name\\E\\s+(?=\\(|[A-Z])")
-    potentialmatches = findall( x -> occursin(pat, x), powosynonyms)
+    validnamepat = Regex("=== \\Q$name\\E\\s+(?=\\(|[A-Z])")
+    synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
+    potentialmatches = findall( x -> occursin(validnamepat, x), powosynonyms)
     if !isempty(potentialmatches)
         for i in potentialmatches
             line = powosynonyms[i]
-            synonym = split(line, "=== ")[2]
-            #fixit: remove species authority from end of synonym, if applicable
-            push!(synonymdict[name], (synonym))       
+            synonym = strip(match(synonympat, line)[1])
+            push!(synonymdict[keyname], (synonym))       
         end
     end
 end
@@ -185,8 +186,5 @@ end
 ```
 
 fixits:
-1. fixit: if statement for mollissima not working in my synonym search?
-2. fixit: my synonym search isn't working as intended I think
-3. line 121, removing species authority from synonyms (maybe?, see next point)
-4. edge case like Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon.
-5. check to see if I have anything like one sample C. filicaulis and another C. filicaulis luxurians --> in which case, do you filter out all the luxurians for the former? what makes sense for niche modeling? how many occurrences do i have for taxa that are at the infraspecific level?
+1. edge case like Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon. do I need species authorities stored somewhere?
+2. check to see if I have anything like one sample C. filicaulis and another C. filicaulis luxurians --> in which case, do you filter out all the luxurians for the former? what makes sense for niche modeling? how many occurrences do i have for taxa that are at the infraspecific level?
