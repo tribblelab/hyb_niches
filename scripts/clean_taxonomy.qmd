@@ -10,6 +10,7 @@ date: "2026-02-04"
 
 ```{julia}
 using CSV, DataFrames
+using JLD2
 ```
 
 ## load in taxa list df
@@ -129,11 +130,6 @@ replace!(taxa_traits.scientificName, "Calceolaria corymbosa subsp. santiagana" =
 replace!(taxa_traits.infraspecificEpithet, "santiagana" => "santiagina")
 ```
 
-write out clean version of df:
-```{julia}
-CSV.write("data/traits_species_cleaned-2026_02_05.csv", taxa_traits)
-```
-
 let's initialize dictionary of valid names to synonyms for just the taxa we want:
 
 ```{julia}
@@ -185,12 +181,81 @@ for k in keys(synonymdict)
 end
 ```
 
+```{julia}
+save("data/synonymdict.jld2", synonymdict)
+```
+
 ## consider edge cases
 
 examples:
 1. Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon. do I need species authorities stored somewhere?
 
 ```{julia}
+# create a set of names that appear as synonyms
+synonym_names = Set{String}()
+synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
+
+for line in powosynonyms
+    if occursin("===", line)
+        m = match(synonympat, line)
+        if m !== nothing
+            synonym = strip(m[1])
+            push!(synonym_names, synonym)
+        end
+    end
+end
+
+# find taxa that appear in both valid names and synonym names
+valid_set = Set(validnames)
+duplicated_taxa = intersect(valid_set, synonym_names)
+# of those, find the taxa in our dataset
+intersect(taxa_traits.scientificName, duplicated_taxa)
+```
+
+let's modify the dataframe to add in who is our correct species authority.
+
+```{julia}
+# create a dictionary mapping species names to their authorities
+authority_dict = Dict{String, String}()
+
+for block in blocks
+    # get the first line of the block (the main species entry)
+    first_line = split(block, "\n")[1]
+    
+    # extract the name
+    name_match = match(pat, first_line)
+    if name_match !== nothing
+        name = strip(name_match[1])
+        
+        # extract the specific epithet (and infraspecific if present)
+        name_parts = split(name, " ")
+        epithet = name_parts[2]  # get the specific epithet
+        if length(name_parts) > 2
+            # for subspecies/varieties, include those parts too
+            epithet = join(name_parts[2:end], " ")
+        end
+        
+        # extract authority: everything after the name until the comma or period
+        # this regex captures text between the epithet and the first comma or period
+        authority_pattern = Regex("\\b$(epithet)\\s+(.+?),")
+        authority_match = match(authority_pattern, first_line)
+        
+        if authority_match !== nothing
+            authority = strip(authority_match[1])
+            # remove anything after " in " (including " in " itself)
+            authority = replace(authority, r"\s+in\s+.*$" => "")
+            authority_dict[name] = authority
+        end
+    end
+endå
+
+# Add the speciesAuthority column to taxa_traits
+taxa_traits.speciesAuthority = [get(authority_dict, name, missing) for name in taxa_traits.scientificName]
+```
+
+write out clean version of df:
+```{julia}
+CSV.write("data/traits_species_cleaned-2026_02_09.csv", taxa_traits)
 ```
 
 2. check to see if I have anything like one sample C. filicaulis and another C. filicaulis luxurians --> in which case, do you filter out all the luxurians for the former? what makes sense for niche modeling? how many occurrences do i have for taxa that are at the infraspecific level?
