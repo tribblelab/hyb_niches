@@ -185,6 +185,21 @@ for k in keys(synonymdict)
 end
 ```
 
-fixits:
-1. edge case like Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon. do I need species authorities stored somewhere?
+## consider edge cases
+
+examples:
+1. Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon. do I need species authorities stored somewhere?
+
+```{julia}
+```
+
 2. check to see if I have anything like one sample C. filicaulis and another C. filicaulis luxurians --> in which case, do you filter out all the luxurians for the former? what makes sense for niche modeling? how many occurrences do i have for taxa that are at the infraspecific level?
+
+```{julia}
+#filter data frame for matches at specificEpithet
+gdf = groupby(taxa_traits, :specificEpithet)
+duplicated_specifictaxa = filter(g -> nrow(g) > 1, gdf) |> DataFrame
+ismissing(duplicated_specifictaxa) #false
+```
+
+No, we don't have any instances of this. good!
