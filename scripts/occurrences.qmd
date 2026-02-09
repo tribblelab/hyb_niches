@@ -4,11 +4,17 @@ output: html_document
 date: "2026-02-03"
 ---
 
-download packages:
+# Pull GBIF / iDigBio occurrence data
+
+To get started, we're going to be pulling code from the [Soltis lab
+ENM Botany 2025 workshop](https://soltislab.github.io/BotanyENMWorkshops/Botany2025/Botany2025.html). 
+
+## package management
+
+### download packages
+
 ```{r eval = FALSE}
 library(devtools)
-devtools::install_github("cmt2/candi_pipeline")
-
 list_of_packages <- c(
   # Core ENM tools
   "terra", "dismo", "ENMeval", "ENMTools", "biomod2",
@@ -75,6 +81,7 @@ if (any(!github_loaded)) {
 }
 ```
 
+### load packages - R
 ```{r}
 library(ridigbio)       # Interface to iDigBio API
 library(gatoRs)         # Taxonomic and geographic cleaning
@@ -83,6 +90,15 @@ library(sf)             # For spatial operations and visualization
 library(ggplot2)        # For plotting
 library(ggspatial)      # Scale bars and north arrows
 ```
+
+### load packages - julia
+```{julia}
+using DataFrames, RCall
+using JLD2
+R"library(gatoRs)"
+```
+
+## practice pulling occurrences for just 2 taxa
 
 ```{r}
 #I don't think I need to add the synonyms that are already listed under GBIF, maybe just the synonyms
@@ -148,6 +164,8 @@ df <- one_point_per_pixel(df)
 nrow(df) #570
 ```
 
+### practice plotting
+
 ```{r}
 nnDm <- rdist.earth(as.matrix(df[, c("longitude", "latitude")]),
                     miles = FALSE)
@@ -184,3 +202,96 @@ leaflet(df_fixed) %>%
   addMarkers(label = paste0(df$longitude, ", ", df$latitude)) %>%
   addTiles()
 ```
+
+## pull occurrences for all taxa
+
+```{julia}
+# load in dictionary
+synonymdict = load("data/synonymdict.jld2")
+# load in dataframe
+taxa_traits = DataFrame(CSV.File("data/traits_species_cleaned-2026_02_09.csv"))
+
+contestedtaxa = ["Calceolaria integrifolia",
+                "Calceolaria cavanillesii",
+                "Calceolaria nudicaulis",
+                "Calceolaria uniflora",
+                "Calceolaria biflora",
+                "Calceolaria angustiflora",
+                "Calceolaria heterophylla"]
+
+for taxa in keys(synonymdict)
+  synlist = synonymdict[taxa]
+  filename = replace(taxa, " " => "_")
+  filepath = "data/pt_occs_raw/$(filename)-2026_02_09.csv"
+  @rput synlist
+  @rput filepath
+  R"gators_download(synonyms.list = synlist, write.file = TRUE, filename= filepath)"
+end
+```
+
+fixit: deal with contested taxa
+batch cleaning for all species
+```{julia}
+for taxa in keys(synonymdict)
+    println("Processing: $taxa")
+    
+    # Get the synonym list for this species
+    synlist = synonymdict[taxa]
+    
+    # Find the corresponding file (you'll need to adapt this to match your file naming)
+    # Assuming files are named like "data/raw/Calceolaria_species.csv"
+    filename = replace(taxa, " " => "_")
+    filepath = "data/pt_occs_clean/$(filename).csv"
+    
+    # Check if file exists
+    if !isfile(filepath)
+        println("  File not found: $filepath, skipping...")
+        continue
+    end
+    
+    # Pass the data to R
+    @rput filepath
+    @rput synlist
+    
+    # Run the R cleaning pipeline
+    R"""
+    df <- read.csv(filepath)
+    
+    df <- taxa_clean(df,
+                     synonyms.list = synlist, 
+                     taxa.filter = "fuzzy",
+                     accepted.name = synlist[1])
+    df <- basic_locality_clean(df, 
+                               remove.zero = TRUE, 
+                               precision = TRUE, 
+                               digits = 2, 
+                               remove.skewed = TRUE)
+    df <- process_flagged(df, 
+                          interactive = FALSE, 
+                          scientific.name = "accepted_name")
+    df <- remove_duplicates(df, 
+                            remove.unparseable = TRUE)
+    df <- one_point_per_pixel(df)
+    #df <- thin_points(df, 
+    #                  distance = 0.002, 
+    #                  reps = 100)
+    """
+    
+    # Get the cleaned dataframe back and save it
+    outfile = "data/02_cleaning/$(filename)_2025_06_27_cleaned.csv"
+    @rput outfile
+    
+    R"""
+    write.csv(df, 
+              outfile, 
+              row.names = FALSE)
+    rm(df, outfile)
+    """
+    
+    println("  Saved to: $outfile")
+end
+
+println("\nProcessing complete!")
+```
+
+### check minimum number of occurrences
