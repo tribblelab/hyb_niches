@@ -133,9 +133,9 @@ replace!(taxa_traits.infraspecificEpithet, "santiagana" => "santiagina")
 let's initialize dictionary of valid names to synonyms for just the taxa we want:
 
 ```{julia}
-synonymdict = Dict{String, Vector}()
-for taxa in scientificName
-    synonymdict[taxa] = [taxa]
+synonymdict = Dict{String, Vector{Tuple{String, Union{String, Missing}}}}()
+for name in scientificName
+    synonymdict[name] = Tuple{String, Union{String, Missing}}[]
 end
 ```
 
@@ -144,7 +144,7 @@ end
 
 ```{julia}
 #let's manually add "dentata subsp. cumingiana" to synonyms to cover our bases
-push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria dentata subsp. cumingiana"))
+push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria dentata subsp. cumingiana", "(Witasek) C.Ehrh."))
 ```
 
 ## create synonym dictionary
@@ -152,105 +152,79 @@ push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria denta
 ```{julia}
 powosynonyms = lines[1112:end]
 
+# create authority dictionary for valid names
+authority_dict = Dict{String, String}()
+
+for block in blocks
+    first_line = split(block, "\n")[1]
+    name_match = match(pat, first_line)
+    
+    if name_match !== nothing
+        name = strip(name_match[1])
+        name_parts = split(name, " ")
+        epithet = length(name_parts) > 2 ? join(name_parts[2:end], " ") : name_parts[2]
+        
+        authority_match = match(Regex("\\b$(epithet)\\s+(.+?),"), first_line)
+        if authority_match !== nothing
+            authority = strip(authority_match[1])
+            authority = replace(authority, r"\s+in\s+.*$" => "")
+            authority_dict[name] = authority
+        end
+    end
+end
+
+# Initialize synonymdict with valid names first
+synonymdict = Dict{String, Vector{Tuple{String, Union{String, Missing}}}}()
+
+for name in scientificName
+    valid_auth = get(authority_dict, name, missing)
+    synonymdict[name] = [(name, valid_auth)]
+end
+
+# Add synonyms to the dictionary
+synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
+
 for name in scientificName
     keyname = name
     if name == "Calceolaria corymbosa subsp. montana"
-        push!(synonymdict[name], ("Calceolaria mollissima"))
+        push!(synonymdict[name], ("Calceolaria mollissima", missing))
         name = "Calceolaria mollissima"
     end
+
     validnamepat = Regex("=== \\Q$name\\E\\s+(?=\\(|[A-Z])")
-    synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
-    potentialmatches = findall( x -> occursin(validnamepat, x), powosynonyms)
+    potentialmatches = findall(x -> occursin(validnamepat, x), powosynonyms)
+    
     if !isempty(potentialmatches)
         for i in potentialmatches
             line = powosynonyms[i]
             synonym = strip(match(synonympat, line)[1])
-            push!(synonymdict[keyname], (synonym))       
+            syn_parts = split(synonym, " ")
+            syn_epithet = length(syn_parts) > 2 ? join(syn_parts[2:end], " ") : syn_parts[2]
+            
+            auth_match = match(Regex("\\b$(syn_epithet)\\s+(.+?),"), line)
+            syn_authority = missing
+            if auth_match !== nothing
+                syn_authority = strip(auth_match[1])
+                syn_authority = replace(syn_authority, r"\s+in\s+.*$" => "")
+            end
+            
+            push!(synonymdict[keyname], (synonym, syn_authority))       
         end
     end
 end
-```
 
-check this worked:
-look at dictionary values with synonyms (list length > 1)
-```{julia}
+# add speciesAuthority column to taxa_traits
+taxa_traits.speciesAuthority = [get(authority_dict, name, missing) for name in taxa_traits.scientificName]
+
+# preview synonyms
 for k in keys(synonymdict)
     if length(synonymdict[k]) > 1
         @show k synonymdict[k]
     end
 end
-```
 
-```{julia}
-save("data/synonymdict.jld2", synonymdict)
-```
-
-## consider edge cases
-
-examples:
-1. Calceolaria heterophylla --> two definitions, one valid one not. The one not is a synonym for a different taxon. do I need species authorities stored somewhere?
-
-```{julia}
-# create a set of names that appear as synonyms
-synonym_names = Set{String}()
-synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
-
-for line in powosynonyms
-    if occursin("===", line)
-        m = match(synonympat, line)
-        if m !== nothing
-            synonym = strip(m[1])
-            push!(synonym_names, synonym)
-        end
-    end
-end
-
-# find taxa that appear in both valid names and synonym names
-valid_set = Set(validnames)
-duplicated_taxa = intersect(valid_set, synonym_names)
-# of those, find the taxa in our dataset
-intersect(taxa_traits.scientificName, duplicated_taxa)
-```
-
-let's modify the dataframe to add in who is our correct species authority.
-
-```{julia}
-# create a dictionary mapping species names to their authorities
-authority_dict = Dict{String, String}()
-
-for block in blocks
-    # get the first line of the block (the main species entry)
-    first_line = split(block, "\n")[1]
-    
-    # extract the name
-    name_match = match(pat, first_line)
-    if name_match !== nothing
-        name = strip(name_match[1])
-        
-        # extract the specific epithet (and infraspecific if present)
-        name_parts = split(name, " ")
-        epithet = name_parts[2]  # get the specific epithet
-        if length(name_parts) > 2
-            # for subspecies/varieties, include those parts too
-            epithet = join(name_parts[2:end], " ")
-        end
-        
-        # extract authority: everything after the name until the comma or period
-        # this regex captures text between the epithet and the first comma or period
-        authority_pattern = Regex("\\b$(epithet)\\s+(.+?),")
-        authority_match = match(authority_pattern, first_line)
-        
-        if authority_match !== nothing
-            authority = strip(authority_match[1])
-            # remove anything after " in " (including " in " itself)
-            authority = replace(authority, r"\s+in\s+.*$" => "")
-            authority_dict[name] = authority
-        end
-    end
-endå
-
-# Add the speciesAuthority column to taxa_traits
-taxa_traits.speciesAuthority = [get(authority_dict, name, missing) for name in taxa_traits.scientificName]
+# save dictionary
+save("data/synonymdict.jld2", "synonymdict", synonymdict)
 ```
 
 write out clean version of df:
