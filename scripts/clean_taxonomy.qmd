@@ -223,6 +223,7 @@ So, let's not filter this list until we map synonyms to their accepted names.
 
 ```{julia}
 # Initialize vectors for the homonym dataframe
+scientificName_vec = String[]
 genus_vec = String[]
 specificEpithet_vec = String[]
 accepted_vec = Bool[]
@@ -245,6 +246,7 @@ for taxon in duplicated_taxa
     valid_authority = get(authority_dict, taxon, missing)
     
     # Add the valid entry (accepted = TRUE)
+    push!(scientificName_vec, taxon)
     push!(genus_vec, genus)
     push!(specificEpithet_vec, epithet)
     push!(accepted_vec, true)
@@ -289,6 +291,7 @@ for taxon in duplicated_taxa
             valid_name_auth = get(authority_dict, valid_name, missing)
             
             # Add the synonym entry (accepted = FALSE)
+            push!(scientificName_vec, taxon)
             push!(genus_vec, genus)
             push!(specificEpithet_vec, epithet)
             push!(accepted_vec, false)
@@ -301,6 +304,7 @@ end
 
 # Create the homonym dataframe
 homonym_df = DataFrame(
+    scientificName = scientificName_vec,
     genus = genus_vec,
     specificEpithet = specificEpithet_vec,
     accepted = accepted_vec,
@@ -358,6 +362,25 @@ for k in keys(synonymdict)
     end
 end
 ```
+
+### filter homonym_df to only include species of interest
+
+now, we can filter the `homonym_df` to only include values in our synonym dictionary.
+```{julia}
+synonymdict_values = Set{String}()
+for (key, value_list) in synonymdict
+    for (syn_name, syn_auth) in value_list
+        push!(synonymdict_values, syn_name)
+    end
+end
+
+homonym_df = filter(homonym_df) do row
+    name_match = row.scientificName in synonymdict_values
+    valid_match = !ismissing(row.validName) && row.validName in synonymdict_values
+    name_match || valid_match
+end
+```
+
 
 write out clean version of `taxa_traits`, my homonym df, my synonym dict:
 ```{julia}
