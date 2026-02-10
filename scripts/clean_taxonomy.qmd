@@ -147,12 +147,13 @@ end
 push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria dentata subsp. cumingiana", "(Witasek) C.Ehrh."))
 ```
 
-## create synonym dictionary
+## gather my valid names vs. synonyms & their authorities
 
+### get species authorities for valid names
+
+first, get the species authorities for all our valid names (each line in the `blocks` object):
 ```{julia}
-powosynonyms = lines[1112:end]
-
-# create authority dictionary for valid names
+# Create authority dictionary for valid names
 authority_dict = Dict{String, String}()
 
 for block in blocks
@@ -173,6 +174,145 @@ for block in blocks
     end
 end
 
+# Add speciesAuthority column to taxa_traits
+taxa_traits.speciesAuthority = [get(authority_dict, name, missing) for name in taxa_traits.scientificName]
+```
+
+now we have `authority_dict` that takes all valid names (including those we don't have sampled)
+to their species authority, and we've updated `taxa_traits`.
+
+### parse all synonym names
+
+then, let's evaluate the synonyms section of the POWO checklist.
+we can collect all synonyms and see if there are synonymic epithets
+that also match accepted epithets (`duplicated_taxa`)
+
+```{julia}
+powosynonyms = lines[1112:end]
+synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
+
+synonym_names = Set{String}()
+
+# collect ALL synonym names (even those we haven't sampled) from entire powosynonyms section
+for line in powosynonyms
+    if occursin("===", line)
+        m = match(synonympat, line)
+        if m !== nothing
+            synonym = strip(m[1])
+            push!(synonym_names, synonym)
+        end
+    end
+end
+```
+
+### find epithets that are both accepted & synonyms
+
+```{julia}
+# find duplicated taxa (appear as both valid and synonym)
+valid_set = Set(validnames)
+duplicated_taxa = intersect(valid_set, synonym_names)
+```
+
+duplicated_taxa = Set(["Calceolaria perfoliata", "Calceolaria integrifolia", "Calceolaria glandulosa", "Calceolaria biflora", "Calceolaria crenata", "Calceolaria pinnata", "Calceolaria paralia", "Calceolaria hypoleuca", "Calceolaria nudicaulis", "Calceolaria cavanillesii", "Calceolaria nivalis", "Calceolaria brachiata", "Calceolaria deflexa", "Calceolaria ferruginea", "Calceolaria angustiflora", "Calceolaria parvifolia", "Calceolaria heterophylla", "Calceolaria uniflora"])
+
+Note, some of these names may not be valid names that *we have sampled*, but they may be a synonym to
+one we have sampled (ex. Calceolaria hypoleuca Kraenzl. is a synonym of Calceolaria soratensis Kraenzl.).
+So, let's not filter this list until we map synonyms to their accepted names.
+
+#### make dataframe mapping epithets that are both accepted & synonyms to their authorities
+
+```{julia}
+# Initialize vectors for the homonym dataframe
+genus_vec = String[]
+specificEpithet_vec = String[]
+accepted_vec = Bool[]
+authority_vec = String[]
+validName_vec = Union{String, Missing}[]
+synonymAuthority_vec = Union{String, Missing}[]
+
+# Process each duplicated taxon at species level only
+for taxon in duplicated_taxa
+    # Only process species-level (2 words)
+    parts = split(taxon, " ")
+    if length(parts) != 2
+        continue
+    end
+    
+    genus = parts[1]
+    epithet = parts[2]
+    
+    # Get valid authority from authority_dict (already computed)
+    valid_authority = get(authority_dict, taxon, missing)
+    
+    # Add the valid entry (accepted = TRUE)
+    push!(genus_vec, genus)
+    push!(specificEpithet_vec, epithet)
+    push!(accepted_vec, true)
+    push!(authority_vec, valid_authority !== missing ? valid_authority : "")
+    push!(validName_vec, missing)
+    push!(synonymAuthority_vec, missing)
+    
+    # Find all synonym entries (but only species-level synonyms)
+    for line in powosynonyms
+        if startswith(line, taxon * " ") && occursin("===", line)
+            parts_line = split(line, "===")
+            synonym_part = strip(parts_line[1])
+            
+            # Make sure the synonym itself is species-level (exactly 2 words before the authority)
+            # Extract just the name part before the authority
+            syn_name_match = match(synonympat, synonym_part)
+            if syn_name_match !== nothing
+                syn_name = strip(syn_name_match[1])
+                syn_name_parts = split(syn_name, " ")
+                
+                # Skip if not exactly 2 words (genus + species)
+                if length(syn_name_parts) != 2
+                    continue
+                end
+            else
+                continue
+            end
+            
+            valid_part = strip(parts_line[2])
+            
+            # Extract synonym authority
+            syn_auth_match = match(Regex("\\b$(epithet)\\s+(.+?),"), synonym_part)
+            syn_authority = ""
+            if syn_auth_match !== nothing
+                syn_authority = strip(syn_auth_match[1])
+                syn_authority = replace(syn_authority, r"\s+in\s+.*$" => "")
+            end
+            
+            # Extract the valid name it points to
+            valid_name_match = match(Regex("^([A-Z][a-z]+\\s+[a-z]+(?:\\s+(?:subsp\\.|var\\.)\\s+[a-z]+)?)"), valid_part)
+            valid_name = valid_name_match !== nothing ? strip(valid_name_match[1]) : ""
+            valid_name_auth = get(authority_dict, valid_name, missing)
+            
+            # Add the synonym entry (accepted = FALSE)
+            push!(genus_vec, genus)
+            push!(specificEpithet_vec, epithet)
+            push!(accepted_vec, false)
+            push!(authority_vec, syn_authority)
+            push!(validName_vec, valid_name)
+            push!(synonymAuthority_vec, valid_name_auth)
+        end
+    end
+end
+
+# Create the homonym dataframe
+homonym_df = DataFrame(
+    genus = genus_vec,
+    specificEpithet = specificEpithet_vec,
+    accepted = accepted_vec,
+    authority = authority_vec,
+    validName = validName_vec,
+    synonymAuthority = synonymAuthority_vec
+)
+```
+
+### build our synonym dictionary (mapping valid names to synonyms)
+
+```{julia}
 # Initialize synonymdict with valid names first
 synonymdict = Dict{String, Vector{Tuple{String, Union{String, Missing}}}}()
 
@@ -181,16 +321,14 @@ for name in scientificName
     synonymdict[name] = [(name, valid_auth)]
 end
 
-# Add synonyms to the dictionary
-synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
-
+# Add synonyms to the dictionary for our dataset
 for name in scientificName
     keyname = name
     if name == "Calceolaria corymbosa subsp. montana"
         push!(synonymdict[name], ("Calceolaria mollissima", missing))
         name = "Calceolaria mollissima"
     end
-
+    
     validnamepat = Regex("=== \\Q$name\\E\\s+(?=\\(|[A-Z])")
     potentialmatches = findall(x -> occursin(validnamepat, x), powosynonyms)
     
@@ -213,26 +351,24 @@ for name in scientificName
     end
 end
 
-# add speciesAuthority column to taxa_traits
-taxa_traits.speciesAuthority = [get(authority_dict, name, missing) for name in taxa_traits.scientificName]
-
 # preview synonyms
 for k in keys(synonymdict)
     if length(synonymdict[k]) > 1
         @show k synonymdict[k]
     end
 end
-
-# save dictionary
-save("data/synonymdict.jld2", "synonymdict", synonymdict)
 ```
 
-write out clean version of df:
+write out clean version of `taxa_traits`, my homonym df, my synonym dict:
 ```{julia}
+save("data/synonymdict.jld2", synonymdict)
+CSV.write("data/homonyms.csv", homonym_df)
 CSV.write("data/traits_species_cleaned-2026_02_09.csv", taxa_traits)
 ```
 
-2. check to see if I have anything like one sample C. filicaulis and another C. filicaulis luxurians --> in which case, do you filter out all the luxurians for the former? what makes sense for niche modeling? how many occurrences do i have for taxa that are at the infraspecific level?
+## consider edge cases
+
+1. check to see if I have anything like one sample C. filicaulis and another C. filicaulis luxurians --> in which case, do you filter out all the luxurians for the former? what makes sense for niche modeling? how many occurrences do i have for taxa that are at the infraspecific level?
 
 ```{julia}
 #filter data frame for matches at specificEpithet
