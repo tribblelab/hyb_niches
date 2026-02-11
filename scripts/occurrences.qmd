@@ -95,6 +95,7 @@ library(ggspatial)      # Scale bars and north arrows
 ```{julia}
 using DataFrames, RCall
 using JLD2
+using Plots
 R"library(gatoRs)"
 ```
 
@@ -196,7 +197,7 @@ simple_map <- ggplot() +
                                        height = unit(1, "cm"),
                                        width = unit(1, "cm"))
 
-write.csv(df, "data/pt_occs_clean/corymbosa_2026_02_23_cleaned.csv", row.names = FALSE)
+write.csv(df, "data/pt_occs_clean/corymbosa_2026_02_03_cleaned.csv", row.names = FALSE)
 
 leaflet(df_fixed) %>%
   addMarkers(label = paste0(df$longitude, ", ", df$latitude)) %>%
@@ -211,14 +212,6 @@ synonymdict = load("data/synonymdict.jld2")
 # load in dataframe
 taxa_traits = DataFrame(CSV.File("data/traits_species_cleaned-2026_02_09.csv"))
 
-contestedtaxa = ["Calceolaria integrifolia",
-                "Calceolaria cavanillesii",
-                "Calceolaria nudicaulis",
-                "Calceolaria uniflora",
-                "Calceolaria biflora",
-                "Calceolaria angustiflora",
-                "Calceolaria heterophylla"]
-
 for taxa in keys(synonymdict)
   synlist = synonymdict[taxa]
   filename = replace(taxa, " " => "_")
@@ -229,25 +222,40 @@ for taxa in keys(synonymdict)
 end
 ```
 
-fixit: deal with contested taxa
-batch cleaning for all species
+batch cleaning for all species:
 ```{julia}
-for taxa in keys(synonymdict)
+justepithets = Dict()
+for (taxa, syns) in synonymdict
+  onlysynnames = []
+  if length(syns) > 1
+    @show taxa
+    for i in 1:length(syns)
+      push!(onlysynnames,syns[i][1])
+    end
+    justepithets[taxa] = onlysynnames
+  else 
+    justepithets[taxa] = [syns[1][1]]
+  end
+end
+
+for taxa in keys(justepithets)
     println("Processing: $taxa")
     
     # Get the synonym list for this species
-    synlist = synonymdict[taxa]
+    synlist = justepithets[taxa]
     
     # Find the corresponding file (you'll need to adapt this to match your file naming)
     # Assuming files are named like "data/raw/Calceolaria_species.csv"
     filename = replace(taxa, " " => "_")
-    filepath = "data/pt_occs_clean/$(filename).csv"
+    filepath = "data/pt_occs_raw/$(filename)-2026_02_09.csv"
     
     # Check if file exists
+    #=
     if !isfile(filepath)
         println("  File not found: $filepath, skipping...")
         continue
     end
+    =#
     
     # Pass the data to R
     @rput filepath
@@ -261,24 +269,24 @@ for taxa in keys(synonymdict)
                      synonyms.list = synlist, 
                      taxa.filter = "fuzzy",
                      accepted.name = synlist[1])
-    df <- basic_locality_clean(df, 
-                               remove.zero = TRUE, 
-                               precision = TRUE, 
-                               digits = 2, 
-                               remove.skewed = TRUE)
-    df <- process_flagged(df, 
-                          interactive = FALSE, 
-                          scientific.name = "accepted_name")
-    df <- remove_duplicates(df, 
-                            remove.unparseable = TRUE)
-    df <- one_point_per_pixel(df)
+    #df <- basic_locality_clean(df, 
+    #                           remove.zero = TRUE, 
+    #                           precision = TRUE, 
+    #                           digits = 2, 
+    #                           remove.skewed = TRUE)
+    #df <- process_flagged(df, 
+    #                      interactive = FALSE, 
+    #                      scientific.name = "accepted_name")
+    #df <- remove_duplicates(df, 
+    #                        remove.unparseable = TRUE)
+    #df <- one_point_per_pixel(df)
     #df <- thin_points(df, 
     #                  distance = 0.002, 
     #                  reps = 100)
     """
     
     # Get the cleaned dataframe back and save it
-    outfile = "data/02_cleaning/$(filename)_2025_06_27_cleaned.csv"
+    outfile = "data/pt_occs_clean/$(filename)_2026_02_10_cleaned.csv"
     @rput outfile
     
     R"""
@@ -295,3 +303,49 @@ println("\nProcessing complete!")
 ```
 
 ### check minimum number of occurrences
+```{julia}
+nrow_before = []
+nrow_after = []
+
+for taxa in keys(synonymdict)
+  filename = replace(taxa, " " => "_")
+  rawdf = DataFrame(CSV.File("data/pt_occs_raw/$(filename)-2026_02_09.csv"))
+  push!(nrow_before, nrow(rawdf))
+  cleandf = DataFrame(CSV.File("data/pt_occs_clean/$(filename)_2026_02_10_cleaned.csv"))
+  push!(nrow_after, nrow(cleandf))
+end
+
+nrowcomp = DataFrame([collect(keys(synonymdict)), nrow_before, nrow_after], [:taxa, :nrow_before, :nrow_after])
+
+filteredtaxa = nrowcomp[ ( nrowcomp.nrow_before .!= nrowcomp.nrow_after ), :]
+```
+
+let's look through these:
+1. Calceolaria alba
+> this is because many rows were Calceolaria thyrsiflora for some reason? can't see why. so good filtering here.
+   
+2. Calceolaria ascendens subsp. ascendens
+> removes many Calceolaria rugosa Hook. which is actually a synonym --> bad filtering. but it's not in my synonym list `synonymdict["Calceolaria ascendens subsp. ascendens"]`
+
+3. Calceolaria dentata subsp. cummingiana
+> ok, there's a synonym before (Calceolaria cumingiana Witasek) that's not retained after. but it's not in my synonym list `synonymdict["Calceolaria dentata subsp. cummingiana"]`. bad filtering.
+
+4. Calceolaria collina subsp. conferta
+> removing Calceolaria fulva f. viscosa --> good filtering, this is a synonym of Calceolaria fulva.
+
+5. Calceolaria filicaulis subsp. filicaulis
+> removes Calceolaria palenae --> bad filtering, this is actually a synonym. but it's not in my synonym list `synonymdict["Calceolaria filicaulis subsp. filicaulis"]`
+
+before I go down rabbit hole of attempting strict filtering (I might have to use species authorities? but how?),
+let's see how many taxa do not have enough occurrences.
+
+```{julia}
+toosmall = nrowcomp[ ( nrowcomp.nrow_before .< 25), :]
+histogram(nrowcomp.nrow_before)
+```
+
+fixits:
+- test out not doing "fuzzy" matching, do strict from my synonym dict. (how use species authorities?)
+  - especially for members in my `homonyms.csv` file
+- go back to my synonym dictionary creation in my clean_taxonomy file, double check that taxa at the infraspecific level also are allowed synonyms (ex. investigate "Calceolaria filicaulis subsp. filicaulis")
+- go through a practice example again to finetune `basic_locality_clean` and on --> something's funky.
