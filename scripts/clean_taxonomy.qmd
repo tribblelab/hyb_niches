@@ -333,7 +333,9 @@ for name in scientificName
         name = "Calceolaria mollissima"
     end
     
-    validnamepat = Regex("=== \\Q$name\\E\\s+(?=\\(|[A-Z])")
+    # Match === followed by the name, then either whitespace or end of string
+    # This works for both "=== Name Author" and "=== Name subsp. infraname"
+    validnamepat = Regex("===\\s+\\Q$name\\E(?:\\s|\$)")
     potentialmatches = findall(x -> occursin(validnamepat, x), powosynonyms)
     
     if !isempty(potentialmatches)
@@ -343,7 +345,10 @@ for name in scientificName
             syn_parts = split(synonym, " ")
             syn_epithet = length(syn_parts) > 2 ? join(syn_parts[2:end], " ") : syn_parts[2]
             
-            auth_match = match(Regex("\\b$(syn_epithet)\\s+(.+?),"), line)
+            # Escape special regex characters in the epithet
+            escaped_epithet = replace(syn_epithet, r"([.*+?^$()[\]{}|\\])" => s"\\\1")
+            
+            auth_match = match(Regex("\\b$(escaped_epithet)\\s+(.+?),"), line)
             syn_authority = missing
             if auth_match !== nothing
                 syn_authority = strip(auth_match[1])
