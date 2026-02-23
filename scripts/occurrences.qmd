@@ -94,6 +94,7 @@ library(ggspatial)      # Scale bars and north arrows
 ### load packages - julia
 ```{julia}
 using DataFrames, RCall
+using CSV
 using JLD2
 using Plots
 R"library(gatoRs)"
@@ -212,91 +213,172 @@ synonymdict = load("data/synonymdict.jld2")
 # load in dataframe
 taxa_traits = DataFrame(CSV.File("data/traits_species_cleaned-2026_02_09.csv"))
 
+# Track failures and no-data taxa
+failed_taxa = String[]
+successful_taxa = String[]
+no_data_taxa = String[]
+
 for taxa in keys(synonymdict)
-  synlist = synonymdict[taxa]
-  filename = replace(taxa, " " => "_")
-  filepath = "data/pt_occs_raw/$(filename)-2026_02_09.csv"
-  @rput synlist
-  @rput filepath
-  R"gators_download(synonyms.list = synlist, write.file = TRUE, filename= filepath)"
+    synlist = [syn[1] for syn in synonymdict[taxa]]
+    filename = replace(taxa, " " => "_")
+    filepath = "data/pt_occs_raw/$(filename)-2026_02_18.csv"
+    
+    # Check if file already exists
+    if isfile(filepath)
+        println("  Skipping - file already exists")
+        push!(successful_taxa, taxa)
+        continue
+    end
+    
+    @rput synlist
+    @rput filepath
+    
+    try
+        R"gators_download(synonyms.list = synlist, write.file = TRUE, filename = filepath)"
+        println("  Success!")
+        push!(successful_taxa, taxa)
+        sleep(3)
+        
+    catch e
+        error_msg = string(e)
+        
+        if occursin("No records found", error_msg)
+            println("  No occurrence data found for this taxon")
+            push!(no_data_taxa, taxa)
+            sleep(1)
+        else
+            println("  ERROR: $e")
+            push!(failed_taxa, taxa)
+            sleep(10)
+        end
+    end
+end
+
+if !isempty(no_data_taxa)
+    println("\nTaxa with no occurrence records:")
+    for taxa in no_data_taxa
+        println("  - $taxa")
+    end
+end
+
+if !isempty(failed_taxa)
+    println("\nFailed taxa (errors):")
+    for taxa in failed_taxa
+        println("  - $taxa")
+    end
 end
 ```
 
+no failed taxa, no no-data taxa. cool!
+
 batch cleaning for all species:
 ```{julia}
-justepithets = Dict()
-for (taxa, syns) in synonymdict
-  onlysynnames = []
-  if length(syns) > 1
-    @show taxa
-    for i in 1:length(syns)
-      push!(onlysynnames,syns[i][1])
-    end
-    justepithets[taxa] = onlysynnames
-  else 
-    justepithets[taxa] = [syns[1][1]]
-  end
-end
+# Initialize tracking dataframe
+filtering_stats = DataFrame(
+    taxa = String[],
+    raw = Int[],
+    after_taxa_clean = Int[],
+    after_remove_duplicates = Int[],
+    rows_missing_coords = Int[],
+    rows_with_coords = Int[],
+    after_locality_filt = Int[]
+    #after_remove_flagged = Int[],
+    #after_1ptper_pixel = Int[]
+)
 
-for taxa in keys(justepithets)
-    println("Processing: $taxa")
-    
-    # Get the synonym list for this species
-    synlist = justepithets[taxa]
-    
-    # Find the corresponding file (you'll need to adapt this to match your file naming)
-    # Assuming files are named like "data/raw/Calceolaria_species.csv"
+for taxa in keys(synonymdict)    
+    # get the synonym list for this species
+    synlist = [syn[1] for syn in synonymdict[taxa]]
     filename = replace(taxa, " " => "_")
-    filepath = "data/pt_occs_raw/$(filename)-2026_02_09.csv"
+    filepath = "data/pt_occs_raw/$(filename)-2026_02_18.csv"
     
-    # Check if file exists
-    #=
-    if !isfile(filepath)
-        println("  File not found: $filepath, skipping...")
-        continue
-    end
-    =#
-    
-    # Pass the data to R
+    # pass to R
     @rput filepath
     @rput synlist
     
-    # Run the R cleaning pipeline
+    # run R cleaning pipeline with row tracking
     R"""
     df <- read.csv(filepath)
+    nrow_raw <- nrow(df)
     
     df <- taxa_clean(df,
                      synonyms.list = synlist, 
                      taxa.filter = "fuzzy",
                      accepted.name = synlist[1])
-    #df <- basic_locality_clean(df, 
-    #                           remove.zero = TRUE, 
-    #                           precision = TRUE, 
-    #                           digits = 2, 
-    #                           remove.skewed = TRUE)
-    #df <- process_flagged(df, 
-    #                      interactive = FALSE, 
-    #                      scientific.name = "accepted_name")
-    #df <- remove_duplicates(df, 
-    #                        remove.unparseable = TRUE)
-    #df <- one_point_per_pixel(df)
-    #df <- thin_points(df, 
-    #                  distance = 0.002, 
-    #                  reps = 100)
+    nrow_taxa_clean <- nrow(df)
+    
+    df <- remove_duplicates(df, 
+                            remove.unparseable = TRUE)
+    nrow_remove_dup <- nrow(df)
+    
+    # Separate rows with NA lat/long for potential georeferencing
+    df_na <- df[is.na(df$latitude) | is.na(df$longitude), ]
+    df_clean <- df[!is.na(df$latitude) & !is.na(df$longitude), ]
+    
+    nrow_na <- nrow(df_na)
+    nrow_with_coords <- nrow(df_clean)
+    
+    df_clean <- basic_locality_clean(df_clean, 
+                                remove.zero = TRUE, 
+                                precision = TRUE, 
+                                digits = 2, 
+                                remove.skewed = TRUE)
+    nrow_locality <- nrow(df_clean)
+    
+    #df_clean <- process_flagged(df_clean, 
+    #                       interactive = FALSE, 
+    #                       scientific.name = "accepted_name")
+    #nrow_flagged <- nrow(df_clean)
+    
+    #df_clean <- one_point_per_pixel(df_clean)
+    #nrow_pixel <- nrow(df_clean)
     """
     
-    # Get the cleaned dataframe back and save it
-    outfile = "data/pt_occs_clean/$(filename)_2026_02_10_cleaned.csv"
+    # Get row counts from R
+    @rget nrow_raw
+    @rget nrow_taxa_clean
+    @rget nrow_remove_dup
+    @rget nrow_na
+    @rget nrow_with_coords
+    @rget nrow_locality
+    #@rget nrow_flagged
+    #@rget nrow_pixel
+    
+    # add to tracking dataframe
+    push!(filtering_stats, (taxa, nrow_raw, nrow_taxa_clean, nrow_remove_dup, 
+                            nrow_na, nrow_with_coords, nrow_locality))
+    #push!(filtering_stats, (taxa, nrow_raw, nrow_taxa_clean, nrow_remove_dup, 
+    #                         nrow_locality, nrow_flagged, nrow_pixel))
+    
+    println("  $taxa: Raw=$nrow_raw → Taxa clean=$nrow_taxa_clean → Remove dup=$nrow_remove_dup")
+    println("    Split: $nrow_with_coords with coords, $nrow_na missing coords")
+    
+    # save cleaned df with coordinates
+    outfile = "data/pt_occs_clean/$(filename)-2026_02_18_cleaned.csv"
     @rput outfile
     
     R"""
-    write.csv(df, 
+    write.csv(df_clean, 
               outfile, 
               row.names = FALSE)
-    rm(df, outfile)
     """
     
     println("  Saved to: $outfile")
+    
+    # save rows with NA coordinates (if any exist)
+    if nrow_na > 0
+        outfile_na = "data/pt_occs_to_georeference/$(filename)-2026_02_18_no_coords.csv"
+        @rput outfile_na
+        
+        R"""
+        write.csv(df_na, 
+                  outfile_na, 
+                  row.names = FALSE)
+        """
+        println("  Saved $nrow_na rows needing georeferencing to: $outfile_na")
+    end
+    
+    R"rm(df, df_clean, df_na, outfile)"
 end
 
 println("\nProcessing complete!")
@@ -304,37 +386,35 @@ println("\nProcessing complete!")
 
 ### check minimum number of occurrences
 ```{julia}
-nrow_before = []
-nrow_after = []
+# add calculated columns for seeing filtering before and after nrow
+filtering_stats.taxa_clean_removed = filtering_stats.raw .- filtering_stats.after_taxa_clean
+filtering_stats.duplicates_removed = filtering_stats.after_taxa_clean .- filtering_stats.after_remove_duplicates
+filtering_stats.total_removed = filtering_stats.raw .- filtering_stats.after_remove_duplicates
+filtering_stats.percent_retained = round.((filtering_stats.after_remove_duplicates ./ filtering_stats.raw) .* 100, digits=1)
 
-for taxa in keys(synonymdict)
-  filename = replace(taxa, " " => "_")
-  rawdf = DataFrame(CSV.File("data/pt_occs_raw/$(filename)-2026_02_09.csv"))
-  push!(nrow_before, nrow(rawdf))
-  cleandf = DataFrame(CSV.File("data/pt_occs_clean/$(filename)_2026_02_10_cleaned.csv"))
-  push!(nrow_after, nrow(cleandf))
-end
+# show taxa with filtering
+filtered_taxa = filtering_stats[filtering_stats.total_removed .> 0, :]
+println("\n" * "="^60)
+println("Taxa with records removed ($(nrow(filtered_taxa)) taxa):")
+println(filtered_taxa)
 
-nrowcomp = DataFrame([collect(keys(synonymdict)), nrow_before, nrow_after], [:taxa, :nrow_before, :nrow_after])
-
-filteredtaxa = nrowcomp[ ( nrowcomp.nrow_before .!= nrowcomp.nrow_after ), :]
+# save the stats
+#CSV.write("data/filtering_stats_2026_02_18.csv", filtering_stats)
+#println("\nFiltering statistics saved to data/filtering_stats_2026_02_18.csv")
 ```
 
-let's look through these:
+let's look through some of these:
 1. Calceolaria alba
 > this is because many rows were Calceolaria thyrsiflora for some reason? can't see why. so good filtering here.
    
-2. Calceolaria ascendens subsp. ascendens
-> removes many Calceolaria rugosa Hook. which is actually a synonym --> bad filtering. but it's not in my synonym list `synonymdict["Calceolaria ascendens subsp. ascendens"]`
-
-3. Calceolaria dentata subsp. cummingiana
-> ok, there's a synonym before (Calceolaria cumingiana Witasek) that's not retained after. but it's not in my synonym list `synonymdict["Calceolaria dentata subsp. cummingiana"]`. bad filtering.
-
-4. Calceolaria collina subsp. conferta
+2. Calceolaria collina subsp. conferta
 > removing Calceolaria fulva f. viscosa --> good filtering, this is a synonym of Calceolaria fulva.
 
-5. Calceolaria filicaulis subsp. filicaulis
-> removes Calceolaria palenae --> bad filtering, this is actually a synonym. but it's not in my synonym list `synonymdict["Calceolaria filicaulis subsp. filicaulis"]`
+3. Calceolaria corymbosa subsp. corymbosa
+> removes TONS of Calceolaria corymbosa (without any infraspecific label), so good job.
+
+4. Calceolaria uniflora
+> removes many Calceolaria virgata (which is a valid taxon), so good job.
 
 before I go down rabbit hole of attempting strict filtering (I might have to use species authorities? but how?),
 let's see how many taxa do not have enough occurrences.
@@ -344,8 +424,16 @@ toosmall = nrowcomp[ ( nrowcomp.nrow_before .< 25), :]
 histogram(nrowcomp.nrow_before)
 ```
 
+## visualize occurrences before & after filtering
+
+```{julia}
+```
+
 fixits:
-- test out not doing "fuzzy" matching, do strict from my synonym dict. (how use species authorities?)
-  - especially for members in my `homonyms.csv` file
-- go back to my synonym dictionary creation in my clean_taxonomy file, double check that taxa at the infraspecific level also are allowed synonyms (ex. investigate "Calceolaria filicaulis subsp. filicaulis")
-- go through a practice example again to finetune `basic_locality_clean` and on --> something's funky.
+- edge cases for members in my `homonyms.csv` file --> 
+    - if name contains bad species authority --> delete occs.
+    - else, check if locality makes sense or is more in line with other definition?
+- create a dictionary of native ranges? don't think gatoRs does anything with native range --> just relies on cultivated tag?
+  - pull native range dictionary from POWO --> create dictionary
+  - create function to pull botanical country codes from shapefile (?)
+  - use `CoordinateCleaner` to pull weird occurrences, and use native range shapefiles (?)
