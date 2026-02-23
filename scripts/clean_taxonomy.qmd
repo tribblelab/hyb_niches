@@ -144,7 +144,7 @@ end
 
 ```{julia}
 #let's manually add "dentata subsp. cumingiana" to synonyms to cover our bases
-push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria dentata subsp. cumingiana", "(Witasek) C.Ehrh."))
+push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria dentata subsp. cumingiana", "(Witasek) C.Ehrh."), ("Calceolaria dentata var. cumingiana", "(Witasek) C.Reiche"), ("Calceolaria dentata subsp. cummingiana", "(Witasek) C.Ehrh."), ("Calceolaria cumingiana", "Witasek"))
 ```
 
 ## gather my valid names vs. synonyms & their authorities
@@ -317,11 +317,9 @@ homonym_df = DataFrame(
 ### build our synonym dictionary (mapping valid names to synonyms)
 
 ```{julia}
-# Initialize synonymdict with valid names first
-synonymdict = Dict{String, Vector{Tuple{String, Union{String, Missing}}}}()
-
 for name in scientificName
     valid_auth = get(authority_dict, name, missing)
+    if name == "Calceolaria dentata subsp. cummingiana"; continue; end
     synonymdict[name] = [(name, valid_auth)]
 end
 
