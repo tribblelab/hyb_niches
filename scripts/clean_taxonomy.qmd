@@ -11,6 +11,7 @@ date: "2026-02-04"
 ```{julia}
 using CSV, DataFrames
 using JLD2
+using GeoIO, GeoStats
 ```
 
 ## load in taxa list df
@@ -18,7 +19,7 @@ using JLD2
 We're only focusing on clade 1 (south) + 2b (central-northish), so let's filter down to that clade.
 
 ```{julia}
-taxa_traits = DataFrame(CSV.File("data/SupTable4-TraitsSpecies.csv"))
+taxa_traits = DataFrame(CSV.File("data/taxonomy_trait_data/SupTable4-TraitsSpecies.csv"))
 #clean up column names - change from all caps to lowercase
 rename!(lowercase, taxa_traits)
 #remove spaces
@@ -53,7 +54,7 @@ I ran a Kew / Plants of the World Online checklist for Calceolaria species at th
 on 2026-02-04, using native/introduced taxa.
 
 ```{julia}
-lines = readlines("data/powochecklist.txt")
+lines = readlines("data/taxonomy_trait_data/powochecklist.txt")
 #pull lines starting from valid species (skipping headers)
 subset = lines[9:1110]
 #join back into a single string
@@ -387,9 +388,15 @@ end
 
 write out clean version of `taxa_traits`, my homonym df, my synonym dict:
 ```{julia}
-save("data/synonymdict.jld2", synonymdict)
-CSV.write("data/homonyms.csv", homonym_df)
-CSV.write("data/traits_species_cleaned-2026_02_09.csv", taxa_traits)
+save("data/taxonomy_trait_data/synonymdict.jld2", synonymdict)
+CSV.write("data/taxonomy_trait_data/homonyms.csv", homonym_df)
+CSV.write("data/taxonomy_trait_data/traits_species_cleaned-2026_02_09.csv", taxa_traits)
+```
+
+## gather native ranges from checklist 
+
+```{julia}
+GeoIO.load("data/taxonomy_trait_data/bot_country_shapefiles/level3.dbf")
 ```
 
 ## consider edge cases
