@@ -273,12 +273,74 @@ no failed taxa, no no-data taxa. cool!
 
 batch cleaning for all species:
 ```{julia}
+# Load homonyms file to check for bad authorities
+homonyms = DataFrame(CSV.File("data/homonyms.csv"))
+false_entries = homonyms[homonyms.accepted .== false, :]
+true_entries = homonyms[homonyms.accepted .== true, :]
+
+# Create a dictionary for quick lookup: taxon name -> bad authority
+bad_authorities = Dict{String, String}()
+for row in eachrow(false_entries)
+    bad_authorities[row.scientificName] = row.authority
+end
+
+# Create reverse lookup: 
+# If validName from FALSE entry is in our dataset, we need to filter OUT the TRUE entry
+# BUT only if validName != scientificName (skip self-referential cases)
+# Example: "Calceolaria glandulosa Benth." (FALSE) points to "Calceolaria nitida"
+#          "Calceolaria nitida" IS in our dataset
+#          So when processing "Calceolaria nitida", filter OUT "Calceolaria glandulosa Poepp. ex Benth." (a valid name!)
+authorities_to_exclude = Dict{String, Vector{String}}()  # validName -> [authorities to exclude]
+
+dataset_taxa = Set(keys(synonymdict))
+
+for row in eachrow(false_entries)
+    valid_name = row.validName
+    sci_name = row.scientificName
+    
+    # Skip if no validName
+    if ismissing(valid_name) || valid_name == ""
+        continue
+    end
+
+    # Skip self-referential cases (validName == scientificName)
+    if valid_name == sci_name
+        continue
+    end
+    
+    # Check if this validName is in our dataset
+    if valid_name in dataset_taxa
+        # Find the TRUE entry for this scientificName
+        true_match = filter(r -> r.scientificName == sci_name && r.accepted == true, homonyms)
+        
+        if nrow(true_match) > 0
+            true_authority = true_match[1, :authority]
+            
+            # When processing validName, exclude the TRUE authority
+            if !haskey(authorities_to_exclude, valid_name)
+                authorities_to_exclude[valid_name] = String[]
+            end
+            push!(authorities_to_exclude[valid_name], true_authority)
+        end
+    end
+end
+
+println("Taxa with bad authorities to filter: $(length(bad_authorities))")
+println("Taxa needing reverse exclusion: $(length(authorities_to_exclude))")
+for (valid_name, exclude_auths) in authorities_to_exclude
+    for auth in exclude_auths
+        println("  $valid_name will EXCLUDE authority: '$auth'")
+    end
+end
+
 # Initialize tracking dataframe
 filtering_stats = DataFrame(
     taxa = String[],
     raw = Int[],
     after_taxa_clean = Int[],
     after_remove_duplicates = Int[],
+    removed_bad_authorities = Int[],
+    removed_reverse_exclusions = Int[],
     rows_missing_coords = Int[],
     rows_with_coords = Int[],
     after_locality_filt = Int[]
@@ -292,9 +354,17 @@ for taxa in keys(synonymdict)
     filename = replace(taxa, " " => "_")
     filepath = "data/pt_occs_raw/$(filename)-2026_02_18.csv"
     
+    # Check if this taxon has a bad authority to filter
+    bad_auth = get(bad_authorities, taxa, nothing)
+    
+    # Check if this taxon needs reverse exclusion (filter out TRUE authorities)
+    exclude_auths = get(authorities_to_exclude, taxa, String[])
+
     # pass to R
     @rput filepath
     @rput synlist
+    @rput bad_auth
+    @rput exclude_auths
     
     # run R cleaning pipeline with row tracking
     R"""
@@ -307,9 +377,29 @@ for taxa in keys(synonymdict)
                      accepted.name = synlist[1])
     nrow_taxa_clean <- nrow(df)
     
+    # remove duplicates between GBIF and iDigBio
     df <- remove_duplicates(df, 
                             remove.unparseable = TRUE)
     nrow_remove_dup <- nrow(df)
+
+    # Filter out rows with bad authorities (for homonym cases)
+    nrow_removed_bad_auth <- 0
+    if (!is.null(bad_auth) && bad_auth != "") {
+        df_before <- nrow(df)
+        df <- df[!grepl(bad_auth, df$scientificName, fixed = TRUE), ]
+        nrow_removed_bad_auth <- df_before - nrow(df)
+    }
+    
+    # Filter out rows with reverse exclusion authorities
+    # Example: for Calceolaria nitida, exclude "Poepp. ex Benth." 
+    nrow_removed_reverse <- 0
+    if (length(exclude_auths) > 0) {
+        df_before <- nrow(df)
+        for (auth in exclude_auths) {
+            df <- df[!grepl(auth, df$scientificName, fixed = TRUE), ]
+        }
+        nrow_removed_reverse <- df_before - nrow(df)
+    }
     
     # Separate rows with NA lat/long for potential georeferencing
     df_na <- df[is.na(df$latitude) | is.na(df$longitude), ]
@@ -338,6 +428,8 @@ for taxa in keys(synonymdict)
     @rget nrow_raw
     @rget nrow_taxa_clean
     @rget nrow_remove_dup
+    @rget nrow_removed_bad_auth
+    @rget nrow_removed_reverse
     @rget nrow_na
     @rget nrow_with_coords
     @rget nrow_locality
@@ -346,11 +438,18 @@ for taxa in keys(synonymdict)
     
     # add to tracking dataframe
     push!(filtering_stats, (taxa, nrow_raw, nrow_taxa_clean, nrow_remove_dup, 
+                            nrow_removed_bad_auth, nrow_removed_reverse,
                             nrow_na, nrow_with_coords, nrow_locality))
     #push!(filtering_stats, (taxa, nrow_raw, nrow_taxa_clean, nrow_remove_dup, 
     #                         nrow_locality, nrow_flagged, nrow_pixel))
     
     println("  $taxa: Raw=$nrow_raw → Taxa clean=$nrow_taxa_clean → Remove dup=$nrow_remove_dup")
+    if nrow_removed_bad_auth > 0
+        println("    ⚠️  Removed $nrow_removed_bad_auth rows with bad authority: '$bad_auth'")
+    end
+    if nrow_removed_reverse > 0
+        println("    ⚠️  Removed $nrow_removed_reverse rows with excluded authorities: $(join(exclude_auths, ", "))")
+    end
     println("    Split: $nrow_with_coords with coords, $nrow_na missing coords")
     
     # save cleaned df with coordinates
@@ -431,9 +530,18 @@ histogram(nrowcomp.nrow_before)
 
 fixits:
 - edge cases for members in my `homonyms.csv` file --> 
-    - if name contains bad species authority --> delete occs.
-    - else, check if locality makes sense or is more in line with other definition?
+```{julia}
+homonymsa = intersect(taxa_traits.scientificName, homonyms.scientificName)
+homonymsb = intersect(taxa_traits.scientificName, homonyms.validName)
+homonyms_indataset = union(homonymsa, homonymsb)
+```
+
+there's 13 of these, we'll need to be extra careful and double check:
+  1. occurrences of the synonym/homonym without species authority
+  2. look at overlap of range between synonyms
+
 - create a dictionary of native ranges? don't think gatoRs does anything with native range --> just relies on cultivated tag?
   - pull native range dictionary from POWO --> create dictionary
   - create function to pull botanical country codes from shapefile (?)
   - use `CoordinateCleaner` to pull weird occurrences, and use native range shapefiles (?)
+- get summary stats for cultivated vs. inat vs. etc
