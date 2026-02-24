@@ -1,6 +1,8 @@
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+GeoIO = "f5a160d5-e41d-4189-8b61-d57781c419e3"
+GeoStats = "dcc97b0b-8ce5-5539-9008-bb190f959ef6"
 JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 RCall = "6f49c342-dc21-5d91-9882-a32aef131414"
