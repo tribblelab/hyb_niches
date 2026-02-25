@@ -385,18 +385,55 @@ homonym_df = filter(homonym_df) do row
 end
 ```
 
+## gather native ranges from checklist 
+
+```{julia}
+# Get the set of taxa in our dataset
+dataset_taxa = Set(taxa_traits.scientificName)
+
+# Dictionary to store taxon -> country codes
+country_dict = Dict{String, Vector{String}}()
+
+# Pattern to extract taxon name
+pat = Regex("^(.+?)\\s+(?=\\(|[A-Z])", "m")
+
+# Pattern to extract 3-letter uppercase country codes
+country_pat = r"\b([A-Z]{3})\b"
+
+for block in blocks
+    # Extract the taxon name
+    name_match = match(pat, block)
+    taxon_name = strip(name_match[1])
+
+    # Only process if in our dataset
+    # deal with taxa where we're using a different name compared to the valid POWO names
+    if taxon_name == "Calceolaria dentata subsp. cumingiana"
+        taxon_name = "Calceolaria dentata subsp. cummingiana"
+    elseif taxon_name == "Calceolaria mollissima"
+        taxon_name = "Calceolaria corymbosa subsp. montana"
+    elseif !(taxon_name in dataset_taxa)
+        continue
+    end
+    
+    # Find all 3-letter uppercase codes
+    country_codes = String[]
+    for m in eachmatch(country_pat, block)
+        code = m[1]
+        push!(country_codes, code)
+    end
+        
+    country_dict[taxon_name] = country_codes
+end
+
+# Add to taxa_traits dataframe
+taxa_traits.botanicalCountries = [get(country_dict, name, String[]) for name in taxa_traits.scientificName]
+```
 
 write out clean version of `taxa_traits`, my homonym df, my synonym dict:
 ```{julia}
 save("data/taxonomy_trait_data/synonymdict.jld2", synonymdict)
 CSV.write("data/taxonomy_trait_data/homonyms.csv", homonym_df)
-CSV.write("data/taxonomy_trait_data/traits_species_cleaned-2026_02_09.csv", taxa_traits)
-```
-
-## gather native ranges from checklist 
-
-```{julia}
-GeoIO.load("data/taxonomy_trait_data/bot_country_shapefiles/level3.dbf")
+CSV.write("data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv", taxa_traits)
 ```
 
 ## consider edge cases
