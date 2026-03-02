@@ -97,7 +97,16 @@ using DataFrames, RCall
 using CSV
 using JLD2
 using Plots
-R"library(gatoRs)"
+using GeoIO
+# Load required R packages
+R"""
+library(gatoRs)
+library(ggplot2)
+library(sf)
+library(ggspatial)
+library(gridExtra)
+library(CoordinateCleaner)
+"""
 ```
 
 ## practice pulling occurrences for just 2 taxa
@@ -211,7 +220,7 @@ leaflet(df_fixed) %>%
 # load in dictionary
 synonymdict = load("data/taxonomy_trait_data/synonymdict.jld2")
 # load in dataframe
-taxa_traits = DataFrame(CSV.File("data/taxonomy_trait_data/traits_species_cleaned-2026_02_09.csv"))
+taxa_traits = DataFrame(CSV.File("data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv"))
 
 # Track failures and no-data taxa
 failed_taxa = String[]
@@ -270,6 +279,8 @@ end
 ```
 
 no failed taxa, no no-data taxa. cool!
+
+## clean occurrence data
 
 batch cleaning for all species:
 ```{julia}
@@ -332,7 +343,9 @@ for (valid_name, exclude_auths) in authorities_to_exclude
         println("  $valid_name will EXCLUDE authority: '$auth'")
     end
 end
+```
 
+```{julia}
 # Initialize tracking dataframe
 filtering_stats = DataFrame(
     taxa = String[],
@@ -343,8 +356,8 @@ filtering_stats = DataFrame(
     removed_reverse_exclusions = Int[],
     rows_missing_coords = Int[],
     rows_with_coords = Int[],
-    after_locality_filt = Int[]
-    #after_remove_flagged = Int[],
+    after_locality_filt = Int[],
+    after_remove_flagged = Int[]
     #after_1ptper_pixel = Int[]
 )
 
@@ -417,10 +430,18 @@ for taxa in keys(synonymdict)
                                 remove.skewed = TRUE)
     nrow_locality <- nrow(df_clean)
     
-    #df_clean <- process_flagged(df_clean, 
-    #                       interactive = FALSE, 
-    #                       scientific.name = "accepted_name")
-    #nrow_flagged <- nrow(df_clean)
+    # remove points above or below lat/long bounding box
+    df_clean <- df_clean %>%
+         filter(latitude  >= -56,  latitude  <= 31.5,
+                longitude >= -117, longitude <= -33)
+    # some parts of texas fall into this range above so let's manually remove USA pts
+    df_clean <- df_clean %>% filter(country != "United States of America")
+    #fixit: incorporate native range polygons?
+    #df_clean <- clean_coordinates(df_clean,
+    #                              lon = "longitude", lat = "latitude", 
+    #                              species = "scientificName",
+    #                              value = "clean")
+    nrow_flagged <- nrow(df_clean)
     
     #df_clean <- one_point_per_pixel(df_clean)
     #nrow_pixel <- nrow(df_clean)
@@ -435,15 +456,13 @@ for taxa in keys(synonymdict)
     @rget nrow_na
     @rget nrow_with_coords
     @rget nrow_locality
-    #@rget nrow_flagged
+    @rget nrow_flagged
     #@rget nrow_pixel
     
     # add to tracking dataframe
     push!(filtering_stats, (taxa, nrow_raw, nrow_taxa_clean, nrow_remove_dup, 
                             nrow_removed_bad_auth, nrow_removed_reverse,
-                            nrow_na, nrow_with_coords, nrow_locality))
-    #push!(filtering_stats, (taxa, nrow_raw, nrow_taxa_clean, nrow_remove_dup, 
-    #                         nrow_locality, nrow_flagged, nrow_pixel))
+                            nrow_na, nrow_with_coords, nrow_locality, nrow_flagged))
     
     println("  $taxa: Raw=$nrow_raw → Taxa clean=$nrow_taxa_clean → Remove dup=$nrow_remove_dup")
     if nrow_removed_bad_auth > 0
@@ -457,32 +476,17 @@ for taxa in keys(synonymdict)
     # save cleaned df with coordinates
     outfile = "data/occurrence_data/pt_occs_clean/$(filename)-2026_02_18_cleaned.csv"
     @rput outfile
-    
-    R"""
-    write.csv(df_clean, 
-              outfile, 
-              row.names = FALSE)
-    """
-    
-    println("  Saved to: $outfile")
+    R"write.csv(df_clean, outfile, row.names = FALSE)"
     
     # save rows with NA coordinates (if any exist)
     if nrow_na > 0
         outfile_na = "data/occurrence_data/pt_occs_to_georeference/$(filename)-2026_02_18_no_coords.csv"
         @rput outfile_na
-        
-        R"""
-        write.csv(df_na, 
-                  outfile_na, 
-                  row.names = FALSE)
-        """
-        println("  Saved $nrow_na rows needing georeferencing to: $outfile_na")
+        R"write.csv(df_na, outfile_na, row.names = FALSE)"
     end
     
     R"rm(df, df_clean, df_na, outfile)"
 end
-
-println("\nProcessing complete!")
 ```
 
 ### check minimum number of occurrences
@@ -495,7 +499,6 @@ filtering_stats.percent_retained = round.((filtering_stats.after_remove_duplicat
 
 # show taxa with filtering
 filtered_taxa = filtering_stats[filtering_stats.total_removed .> 0, :]
-println("\n" * "="^60)
 println("Taxa with records removed ($(nrow(filtered_taxa)) taxa):")
 println(filtered_taxa)
 
@@ -539,35 +542,30 @@ CSV.write("data/occurrence_data/ranked_togeoref.csv", enoughobs)
 ## visualize occurrences before & after filtering
 
 ```{julia}
-# Load required R packages
-R"""
-library(ggplot2)
-library(sf)
-library(ggspatial)
-library(gridExtra)
-"""
-
 # Get list of taxa from synonymdict
-taxa_list = collect(keys(synonymdict))
+taxa_list = taxa_traits.scientificName
 
-println("Creating occurrence maps...")
-println("Processing $(length(taxa_list)) taxa...")
+# Load TDWG botanical country polygons once
+R"bot_regions = st_read('data/occurrence_data/bot_country_shapefiles/level3.shp', quiet = TRUE)"
 
-# Create PDF
-pdf_file = "data/occurrence_maps_before_after.pdf"
-
-R"""
-pdf($pdf_file, width = 14, height = 7)
-"""
+# Build lookup of taxon -> botanical country codes from taxa_traits
+taxa_to_nativerange_dict = Dict()
+for row in eachrow(taxa_traits)
+    taxa_to_nativerange_dict[row.scientificName] = row.botanicalCountries
+end
 
 plotted_count = 0
+
+# Create PDF
+pdf_file = "data/occurrence_data/occurrence_maps_before_after.pdf"
+R"pdf($pdf_file, width = 14, height = 7)"
 
 for (idx, taxa) in enumerate(taxa_list)
     println("Processing $idx/$(length(taxa_list)): $taxa")
     
     filename = replace(taxa, " " => "_")
-    raw_file = "data/occurrence_data/occurrence_data/pt_occs_raw/$(filename)-2026_02_18.csv"
-    clean_file = "data/occurrence_data/occurrence_data/pt_occs_clean/$(filename)-2026_02_18_cleaned.csv"
+    raw_file = "data/occurrence_data/pt_occs_raw/$(filename)-2026_02_18.csv"
+    clean_file = "data/occurrence_data/pt_occs_clean/$(filename)-2026_02_18_cleaned.csv"
     
     # Check if files exist
     if !isfile(raw_file) || !isfile(clean_file)
@@ -592,6 +590,8 @@ for (idx, taxa) in enumerate(taxa_list)
     @rput taxa
     @rput raw_file
     @rput clean_file
+    country_codes = get(taxa_to_nativerange_dict, taxa, String[])
+    @rput country_codes
     
     R"""
     # Read data
@@ -628,10 +628,23 @@ for (idx, taxa) in enumerate(taxa_list)
                                     fill = NA,
                                     size = 0.5)
     
+    # Taxon-specific botanical country polygons (if available)
+    bot_underlay <- bot_regions[bot_regions$LEVEL3_COD %in% country_codes, ]
+    underlay_layer <- if (nrow(bot_underlay) > 0) {
+        geom_sf(data = bot_underlay,
+                fill = "khaki1",
+                color = "goldenrod4",
+                alpha = 0.25,
+                linewidth = 0.3)
+    } else {
+        NULL
+    }
+
     # Create before map
     p1 <- ggplot() +
         world +
         countries +
+        underlay_layer +
         geom_point(data = raw_df, 
                    aes(x = longitude, y = latitude),
                    color = "blue",
@@ -649,6 +662,7 @@ for (idx, taxa) in enumerate(taxa_list)
     p2 <- ggplot() +
         world +
         countries +
+        underlay_layer +
         geom_point(data = clean_df, 
                    aes(x = longitude, y = latitude),
                    color = "darkgreen",
@@ -677,19 +691,74 @@ for (idx, taxa) in enumerate(taxa_list)
 end
 
 # Close PDF
-R"""
-dev.off()
-"""
-
-println("\n" * "="^70)
-println("SUMMARY")
-println("="^70)
-println("Plotted $plotted_count taxa")
-println("Saved to: $pdf_file")
-println("\nTo view: open $pdf_file")
+R"dev.off()"
 ```
 
-fixits:
+```{julia}
+function filter_countries(taxon::String, countries::Vector{String})
+    # fixit: could make this smarter and not hard code the date at the end and instead do some kind of string matching thing
+    path = "data/occurrence_data/pt_occs_clean/" * replace(taxon, " " => "_") * "-2026_02_18_cleaned.csv"
+    cleandf = DataFrame(CSV.File(path))
+    # check that countries are even in df
+    dfcountries = cleandf.country
+    if length(intersect(countries, dfcountries)) == 0
+        error("no input country provided in `countries` list matches countries existing in dataframe")
+    end
+
+    # filter every country out of df
+    for country in countries
+        filter!(:country => x -> x != country, cleandf)
+    end
+    # write out CSV again
+    CSV.write(path, cleandf)
+end
+```
+
+
+problems observed in maps:
+Ehrhart 2005 (Sys. Bot.):
+1. integrifolia - this manuscript defines / carves out several species from integrifolia s.l.,
+    defining integrifolia s.s. might be a problem if all these occurrences haven't been annotated / revisited post 2005.
+    but Peru can definitely be removed.
+
+```{julia}
+filter_countries("Calceolaria integrifolia", ["Peru"])
+```
+
+Ehrhart monograph:
+2. ascendens subsp. glandulifera
+fixit: deal with nivalis (get rid of all, but essentially deal with synonym problem)
+3. ascendens subsp. ascendens
+4. polifolia
+5. nitida
+6. cana - need to remove the Mexican point
+```{julia}
+filter_countries("Calceolaria cana", ["Mexico"])
+```
+
+7. purpurea
+8. corymbosa subsp. corymbosa
+9.  corymbosa subsp. montana 
+10. glandulosa subsp. glandulosa
+11. crenatiflora
+12. filicaulis subsp. filicaulis
+13. uniflora
+14. biflora
+15. undulata
+16. tenella
+17. hypericina
+18. dentata subsp. dentata
+
+Molau:
+19. inflexa - Molau says endemic to Peru. I don't know if I believe the two Bolivian points.
+20. umbellata - fixit: delete the -35ºS pt, it comes from GenBank.
+21. speciosa - fixit: need to dig into this data, US herbarium had their specimens digitized wrong. 
+        should be endemic to Cuzco departimiento, per Molau.
+22. angustiflora - matching Molau, if not missing some in southern Peru.
+23. chrysophaera - two points in Bolivia, which doesn't agree with Molau. but those two were det. by Puppo, who I trust.
+
+## fixits
+
 - edge cases for members in my `homonyms.csv` file --> 
 ```{julia}
 homonymsa = intersect(taxa_traits.scientificName, homonyms.scientificName)
@@ -701,8 +770,9 @@ there's 13 of these, we'll need to be extra careful and double check:
   1. occurrences of the synonym/homonym without species authority
   2. look at overlap of range between synonyms
 
-- create a dictionary of native ranges? don't think gatoRs does anything with native range --> just relies on cultivated tag?
-  - pull native range dictionary from POWO --> create dictionary
-  - create function to pull botanical country codes from shapefile (?)
-  - use `CoordinateCleaner` to pull weird occurrences, and use native range shapefiles (?)
+- cleaning coords:
+  - remove human obs? do something with trusted iNat observers?
+  - filter using native range botanical country polygons +/- some buffer?
 - get summary stats for cultivated vs. inat vs. etc
+- after georeferencing, figure out reporting back to herbaria?
+- update priority list for Nikitha
