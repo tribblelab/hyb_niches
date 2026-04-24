@@ -96,8 +96,6 @@ library(ggspatial)      # Scale bars and north arrows
 using DataFrames, RCall
 using CSV
 using JLD2
-using Plots
-using GeoIO
 # Load required R packages
 R"""
 library(gatoRs)
@@ -106,122 +104,22 @@ library(sf)
 library(ggspatial)
 library(gridExtra)
 library(CoordinateCleaner)
+library(dplyr) #needs to be loaded in last, so it defaults to correct `filter` fxn
 """
 ```
 
-## practice pulling occurrences for just 2 taxa
-
-```{r}
-#I don't think I need to add the synonyms that are already listed under GBIF, maybe just the synonyms
-    #that aren't -- those that are in Kew/POWO?
-Calceolaria_corymbosa <- c("Calceolaria corymbosa",
-                            "Calceolaria glabrata var. meyeniana")
-Calceolaria_thyrsiflora <- c("Calceolaria thyrsiflora", 
-                         "Fagelia thyrsiflora",
-                         "Calceolaria thyrsiflora var. dulcis",
-                         "Calceolaria thyrsiflora var. alliacea")
-
-gators_download(synonyms.list = Calceolaria_corymbosa,
-                write.file = TRUE,
-                filename = "data/occurrence_data/pt_occs_raw/corymbosa_2026_02_03.csv")
-
-gators_download(synonyms.list = Calceolaria_thyrsiflora,
-                write.file = TRUE,
-                filename = "data/occurrence_data/pt_occs_raw/thyrsiflora_2026_02_03.csv")
-
-rawdf1 <- read.csv("data/occurrence_data/pt_occs_raw/corymbosa_2026_02_03.csv")
-rawdf2 <- read.csv("data/occurrence_data/pt_occs_raw/thyrsiflora_2026_02_03.csv")
-names(rawdf1) # returns field headers         
-nrow(rawdf1) # returns the number of rows = occurrence records   
-
-leaflet(rawdf2) %>% 
-  addTiles() %>% 
-  addMarkers(label = paste0(rawdf$longitude,
-                            ", ",
-                            rawdf$latitude))
-```
-
-```{r}
-unique(rawdf1$scientificName)
-
-# Clean names with fuzzy matching
-df <- taxa_clean(df = rawdf1,
-                 synonyms.list = Calceolaria_corymbosa,
-                 taxa.filter = "fuzzy", # fuzzy allows some leeway over exact matching
-                 accepted.name = "Calceolaria corymbosa")
-#1286 points before
-#if we select exact, WAAAAAAY fewer points , like ~80
-
-df <- basic_locality_clean(df = df,
-                           remove.zero = TRUE,
-                           precision = TRUE,
-                           digits = 2,
-                           remove.skewed = TRUE)
-
-#884 points after
-
-df <- process_flagged(df, 
-                      interactive = FALSE, 
-                      scientific.name = "accepted_name")
-
-nrow(df) #786 points
-
-df <- remove_duplicates(df, 
-                        remove.unparseable = TRUE)
-
-nrow(df) #783 points
-
-df <- one_point_per_pixel(df)
-nrow(df) #570
-```
-
-### practice plotting
-
-```{r}
-nnDm <- rdist.earth(as.matrix(df[, c("longitude", "latitude")]),
-                    miles = FALSE)
-nnDmin <- do.call(rbind, 
-                  lapply(1:5, function(i) sort(nnDm[, i])[2]))
-min(nnDmin)  # e.g., 0.933 km
-
-df_fixed <- st_as_sf(df, 
-                     coords = c("longitude", "latitude"), 
-                     crs = 4326)
-
-world <- annotation_borders(database = "world", 
-               colour = "gray80", 
-               fill = "gray80")
-
-simple_map <- ggplot() +
-                world + 
-                geom_sf(data = df_fixed, 
-                        color = "blue") +
-                coord_sf(xlim = c(min(df$longitude) - 3, 
-                                  max(df$longitude) + 3),
-                         ylim = c(min(df$latitude) - 3,
-                                  max(df$latitude) + 3)) +
-                xlab("Longitude") + 
-                ylab("Latitude") +
-                annotation_scale() +
-                annotation_north_arrow(location = "tl", 
-                                       height = unit(1, "cm"),
-                                       width = unit(1, "cm"))
-
-write.csv(df, "data/occurrence_data/pt_occs_clean/corymbosa_2026_02_03_cleaned.csv", row.names = FALSE)
-
-leaflet(df_fixed) %>%
-  addMarkers(label = paste0(df$longitude, ", ", df$latitude)) %>%
-  addTiles()
-```
-
-## pull occurrences for all taxa
+## load in data
 
 ```{julia}
 # load in dictionary
 synonymdict = load("data/taxonomy_trait_data/synonymdict.jld2")
 # load in dataframe
 taxa_traits = DataFrame(CSV.File("data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv"))
+```
 
+## pull occurrences for all taxa
+
+```{julia}
 # Track failures and no-data taxa
 failed_taxa = String[]
 successful_taxa = String[]
@@ -230,7 +128,7 @@ no_data_taxa = String[]
 for taxa in keys(synonymdict)
     synlist = [syn[1] for syn in synonymdict[taxa]]
     filename = replace(taxa, " " => "_")
-    filepath = "data/occurrence_data/pt_occs_raw/$(filename)-2026_02_18.csv"
+    filepath = "data/occurrence_data/pt_occs_raw/$(filename)-2026_04_23.csv"
     
     # Check if file already exists
     if isfile(filepath)
@@ -361,11 +259,11 @@ filtering_stats = DataFrame(
     #after_1ptper_pixel = Int[]
 )
 
-for taxa in keys(synonymdict)    
+for taxa in keys(synonymdict)
     # get the synonym list for this species
     synlist = [syn[1] for syn in synonymdict[taxa]]
     filename = replace(taxa, " " => "_")
-    filepath = "data/occurrence_data/pt_occs_raw/$(filename)-2026_02_18.csv"
+    filepath = "data/occurrence_data/pt_occs_raw/$(filename)-2026_04_23.csv"
     
     # Check if this taxon has a bad authority to filter
     bad_auth = get(bad_authorities, taxa, nothing)
@@ -389,7 +287,7 @@ for taxa in keys(synonymdict)
                      taxa.filter = "fuzzy",
                      accepted.name = synlist[1])
     nrow_taxa_clean <- nrow(df)
-    
+
     # remove duplicates between GBIF and iDigBio
     df <- remove_duplicates(df, 
                             remove.unparseable = TRUE)
@@ -474,13 +372,13 @@ for taxa in keys(synonymdict)
     println("    Split: $nrow_with_coords with coords, $nrow_na missing coords")
     
     # save cleaned df with coordinates
-    outfile = "data/occurrence_data/pt_occs_clean/$(filename)-2026_02_18_cleaned.csv"
+    outfile = "data/occurrence_data/pt_occs_clean/$(filename)-2026_04_23_cleaned.csv"
     @rput outfile
     R"write.csv(df_clean, outfile, row.names = FALSE)"
     
     # save rows with NA coordinates (if any exist)
     if nrow_na > 0
-        outfile_na = "data/occurrence_data/pt_occs_to_georeference/$(filename)-2026_02_18_no_coords.csv"
+        outfile_na = "data/occurrence_data/pt_occs_to_georeference/$(filename)-2026_04_23_no_coords.csv"
         @rput outfile_na
         R"write.csv(df_na, outfile_na, row.names = FALSE)"
     end
@@ -505,26 +403,6 @@ println(filtered_taxa)
 # save the stats
 #CSV.write("data/filtering_stats_2026_02_18.csv", filtering_stats)
 #println("\nFiltering statistics saved to data/filtering_stats_2026_02_18.csv")
-```
-
-let's look through some of these:
-1. Calceolaria alba
-> this is because many rows were Calceolaria thyrsiflora for some reason? can't see why. so good filtering here.
-   
-2. Calceolaria collina subsp. conferta
-> removing Calceolaria fulva f. viscosa --> good filtering, this is a synonym of Calceolaria fulva.
-
-3. Calceolaria corymbosa subsp. corymbosa
-> removes TONS of Calceolaria corymbosa (without any infraspecific label), so good job.
-
-4. Calceolaria uniflora
-> removes many Calceolaria virgata (which is a valid taxon), so good job.
-
-let's see how many taxa do not have enough occurrences.
-
-```{julia}
-toosmall = nrowcomp[ ( nrowcomp.nrow_before .< 25), :]
-histogram(nrowcomp.nrow_before)
 ```
 
 create priority list for georeferencing:
@@ -564,8 +442,8 @@ for (idx, taxa) in enumerate(taxa_list)
     println("Processing $idx/$(length(taxa_list)): $taxa")
     
     filename = replace(taxa, " " => "_")
-    raw_file = "data/occurrence_data/pt_occs_raw/$(filename)-2026_02_18.csv"
-    clean_file = "data/occurrence_data/pt_occs_clean/$(filename)-2026_02_18_cleaned.csv"
+    raw_file = "data/occurrence_data/pt_occs_raw/$(filename)-2026_04_23.csv"
+    clean_file = "data/occurrence_data/pt_occs_clean/$(filename)-2026_04_23_cleaned.csv"
     
     # Check if files exist
     if !isfile(raw_file) || !isfile(clean_file)
@@ -585,6 +463,52 @@ for (idx, taxa) in enumerate(taxa_list)
         println("  Skipping - no valid coordinates")
         continue
     end
+
+    # Check for georeferenced points file (.csv or .xlsx)
+    georef_dir = "data/occurrence_data/pt_occs_georeferenced"
+    georef_df = nothing
+    for ext in [".csv", ".xlsx"]
+        # Match any file starting with the taxon filename in the georef directory
+        georef_candidates = filter(
+            f -> startswith(f, filename) && endswith(f, ext),
+            readdir(georef_dir)
+        )
+        if !isempty(georef_candidates)
+            georef_path = joinpath(georef_dir, first(georef_candidates))
+            println("  Found georeferenced file: $georef_path")
+            try
+                if ext == ".csv"
+                    georef_df = DataFrame(CSV.File(georef_path))
+                else
+                    # Read xlsx via R
+                    @rput georef_path
+                    R"georef_r <- readxl::read_excel(georef_path)"
+                    @rget georef_r
+                    georef_df = georef_r
+                end
+                # Normalize Viable column: strip whitespace, uppercase, filter TRUE
+                viable_col = findfirst(c -> uppercase(string(c)) == "VIABLE", names(georef_df))
+                if !isnothing(viable_col)
+                    rename!(georef_df, names(georef_df)[viable_col] => :Viable)
+                    georef_df[!, :Viable] = map(v -> uppercase(strip(string(v))), georef_df.Viable)
+                    georef_df = filter(row -> row.Viable == "TRUE", georef_df)
+                    # Coerce lat/lon to Float64 (CSV may read them as strings)
+                    georef_df[!, :latitude]  = map(v -> ismissing(v) ? missing : tryparse(Float64, string(v)), georef_df.latitude)
+                    georef_df[!, :longitude] = map(v -> ismissing(v) ? missing : tryparse(Float64, string(v)), georef_df.longitude)
+                    # Keep only rows with valid numeric coordinates
+                    georef_df = filter(row -> !ismissing(row.latitude) && !ismissing(row.longitude), georef_df)
+                    println("  Georeferenced viable points: $(nrow(georef_df))")
+                else
+                    println("  WARNING: No 'Viable' column found in $georef_path — skipping georef points")
+                    georef_df = nothing
+                end
+            catch e
+                println("  WARNING: Could not read georef file $georef_path: $e")
+                georef_df = nothing
+            end
+            break
+        end
+    end
     
     # Pass data to R
     @rput taxa
@@ -592,6 +516,14 @@ for (idx, taxa) in enumerate(taxa_list)
     @rput clean_file
     country_codes = get(taxa_to_nativerange_dict, taxa, String[])
     @rput country_codes
+    has_georef = !isnothing(georef_df) && nrow(georef_df) > 0
+    @rput has_georef
+    if has_georef
+        # Pass only the columns R needs for plotting — avoids RCall Int64→Int32 overflow
+        # on large ID values and keeps the transfer small
+        georef_df_plot = select(georef_df, :latitude, :longitude)
+        @rput georef_df_plot
+    end
     
     R"""
     # Read data
@@ -612,11 +544,20 @@ for (idx, taxa) in enumerate(taxa_list)
     raw_lat_min <- min(raw_df$latitude, na.rm = TRUE) - 3
     raw_lat_max <- max(raw_df$latitude, na.rm = TRUE) + 3
     
-    # Calculate bounds for cleaned data (tighter bounds based on cleaned points only)
-    clean_lon_min <- min(clean_df$longitude, na.rm = TRUE) - 2
-    clean_lon_max <- max(clean_df$longitude, na.rm = TRUE) + 2
-    clean_lat_min <- min(clean_df$latitude, na.rm = TRUE) - 2
-    clean_lat_max <- max(clean_df$latitude, na.rm = TRUE) + 2
+    # Calculate bounds for cleaned data (expand to include georef points if present)
+    all_clean_lon <- clean_df$longitude
+    all_clean_lat <- clean_df$latitude
+    if (has_georef) {
+        georef_df_plot$longitude <- as.numeric(georef_df_plot$longitude)
+        georef_df_plot$latitude  <- as.numeric(georef_df_plot$latitude)
+        georef_df_plot <- georef_df_plot[!is.na(georef_df_plot$latitude) & !is.na(georef_df_plot$longitude), ]
+        all_clean_lon <- c(all_clean_lon, georef_df_plot$longitude)
+        all_clean_lat <- c(all_clean_lat, georef_df_plot$latitude)
+    }
+    clean_lon_min <- min(all_clean_lon, na.rm = TRUE) - 2
+    clean_lon_max <- max(all_clean_lon, na.rm = TRUE) + 2
+    clean_lat_min <- min(all_clean_lat, na.rm = TRUE) - 2
+    clean_lat_max <- max(all_clean_lat, na.rm = TRUE) + 2
     
     # Get world and country borders
     world <- annotation_borders(database = "world", 
@@ -658,7 +599,14 @@ for (idx, taxa) in enumerate(taxa_list)
         theme_minimal() +
         theme(plot.title = element_text(size = 10))
     
-    # Create after map
+    # Build cleaned title with georef count if applicable
+    clean_title <- if (has_georef) {
+        paste0("Cleaned (n=", nrow(clean_df), " + ", nrow(georef_df_plot), " georef)")
+    } else {
+        paste0("Cleaned (n=", nrow(clean_df), ")")
+    }
+    
+    # Create after map (cleaned panel)
     p2 <- ggplot() +
         world +
         countries +
@@ -668,9 +616,18 @@ for (idx, taxa) in enumerate(taxa_list)
                    color = "darkgreen",
                    size = 1.5,
                    alpha = 0.6) +
+        { if (has_georef) {
+            geom_point(data = georef_df_plot,
+                       aes(x = longitude, y = latitude),
+                       color = "darkorange",
+                       shape = 17,   # filled triangle to distinguish from cleaned circles
+                       size = 2,
+                       alpha = 0.8)
+          } else { NULL }
+        } +
         coord_sf(xlim = c(clean_lon_min, clean_lon_max),
                  ylim = c(clean_lat_min, clean_lat_max)) +
-        labs(title = paste0("Cleaned (n=", nrow(clean_df), ")"),
+        labs(title = clean_title,
              x = "Longitude",
              y = "Latitude") +
         annotation_scale(location = "bl") +
@@ -694,10 +651,11 @@ end
 R"dev.off()"
 ```
 
+notably: this function edits the clean version original file.
 ```{julia}
 function filter_countries(taxon::String, countries::Vector{String})
     # fixit: could make this smarter and not hard code the date at the end and instead do some kind of string matching thing
-    path = "data/occurrence_data/pt_occs_clean/" * replace(taxon, " " => "_") * "-2026_02_18_cleaned.csv"
+    path = "data/occurrence_data/pt_occs_clean/" * replace(taxon, " " => "_") * "-2026_04_23_cleaned.csv"
     cleandf = DataFrame(CSV.File(path))
     # check that countries are even in df
     dfcountries = cleandf.country
@@ -772,7 +730,8 @@ there's 13 of these, we'll need to be extra careful and double check:
 
 - cleaning coords:
   - remove human obs? do something with trusted iNat observers?
+    - trusted iNat obs: `aacocucci` , `aliciasersic`
+    - "safe" taxa: "uniflora or triandra, or taxa that are invasive like tripartita. Others that you could keep maybe are purpurea, cana, hyssopifolia, fotherghillii, boliviana, lanigera, tenella, scapiflora, martinessi, glacialis, nitida, picta"
   - filter using native range botanical country polygons +/- some buffer?
 - get summary stats for cultivated vs. inat vs. etc
 - after georeferencing, figure out reporting back to herbaria?
-- update priority list for Nikitha
