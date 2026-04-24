@@ -1,0 +1,30 @@
+scientificName,genus,specificEpithet,accepted,authority,validName,synonymAuthority
+Calceolaria integrifolia,Calceolaria,integrifolia,true,L.,,
+Calceolaria integrifolia,Calceolaria,integrifolia,false,L.f.,Calceolaria dichotoma subsp. dichotoma,
+Calceolaria glandulosa,Calceolaria,glandulosa,true,Poepp. ex Benth.,,
+Calceolaria glandulosa,Calceolaria,glandulosa,false,Benth.,Calceolaria nitida,Colla
+Calceolaria biflora,Calceolaria,biflora,true,Lam.,,
+Calceolaria biflora,Calceolaria,biflora,false,Ruiz & Pav.,Calceolaria dichotoma subsp. dichotoma,
+Calceolaria crenata,Calceolaria,crenata,true,Lam.,,
+Calceolaria crenata,Calceolaria,crenata,false,Lindl.,Calceolaria ascendens subsp. ascendens,
+Calceolaria paralia,Calceolaria,paralia,true,Cav.,,
+Calceolaria paralia,Calceolaria,paralia,false,Hook.,Calceolaria corymbosa subsp. corymbosa,
+Calceolaria hypoleuca,Calceolaria,hypoleuca,true,Meyen,,
+Calceolaria hypoleuca,Calceolaria,hypoleuca,false,Benth.,Calceolaria lavandulifolia,Kunth
+Calceolaria hypoleuca,Calceolaria,hypoleuca,false,Kraenzl.,Calceolaria soratensis,Kraenzl.
+Calceolaria nudicaulis,Calceolaria,nudicaulis,true,Benth.,,
+Calceolaria nudicaulis,Calceolaria,nudicaulis,false,Meyen ex Walp. & Schauer,Calceolaria biflora,Lam.
+Calceolaria cavanillesii,Calceolaria,cavanillesii,true,Phil.,,
+Calceolaria cavanillesii,Calceolaria,cavanillesii,false,Pers. ex Steud.,Calceolaria fothergillii,Aiton
+Calceolaria nivalis,Calceolaria,nivalis,true,Kunth,,
+Calceolaria nivalis,Calceolaria,nivalis,false,Steud. & Hochst. ex Benth.,Calceolaria ascendens subsp. ascendens,
+Calceolaria brachiata,Calceolaria,brachiata,true,Kraenzl.,,
+Calceolaria brachiata,Calceolaria,brachiata,false,Willd. ex Link,Calceolaria flexuosa subsp. flexuosa,
+Calceolaria angustiflora,Calceolaria,angustiflora,true,Ruiz & Pav.,,
+Calceolaria angustiflora,Calceolaria,angustiflora,false,Hook.,Calceolaria angustiflora,Ruiz & Pav.
+Calceolaria parvifolia,Calceolaria,parvifolia,true,Wedd.,,
+Calceolaria parvifolia,Calceolaria,parvifolia,false,Phil.,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.
+Calceolaria heterophylla,Calceolaria,heterophylla,true,Ruiz & Pav.,,
+Calceolaria heterophylla,Calceolaria,heterophylla,false,Willd.,Calceolaria tripartita,Ruiz & Pav.
+Calceolaria uniflora,Calceolaria,uniflora,true,Lam.,,
+Calceolaria uniflora,Calceolaria,uniflora,false,Ruiz & Pav.,Calceolaria virgata,Ruiz & Pav.
