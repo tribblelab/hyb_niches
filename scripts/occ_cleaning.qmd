@@ -1,0 +1,229 @@
+---
+title: "occ_sanitychecks"
+output: html_document
+date: "2026-05-01"
+---
+
+# cleaning up occurrence data by taxon
+
+## load packages - julia
+
+```{julia}
+using DataFrames, CSV
+```
+
+## load packages - rcall etc
+
+```{julia}
+using RCall
+R"""
+library(readxl)
+"""
+```
+
+## load in files
+
+```{julia}
+taxa_traits = DataFrame(CSV.File("data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv"))
+homonyms = DataFrame(CSV.File("data/taxonomy_trait_data/homonyms.csv"))
+taxa_list = taxa_traits.scientificName
+```
+
+## reconcile georeferenced file + clean
+
+```{julia}
+for (idx, taxa) in enumerate(taxa_list)
+    filename = replace(taxa, " " => "_")
+    taxon_stem = replace(filename, r"-\d{4}_\d{2}.*$" => "")
+    georef_dir = "data/occurrence_data/pt_occs_georeferenced"
+    georef_df = nothing
+    for ext in [".csv", ".xlsx"]
+        # Match any file starting with the taxon filename in the georef directory
+        georef_candidates = filter(
+            f -> startswith(f, filename) && endswith(f, ext),
+            readdir(georef_dir)
+        )
+        if !isempty(georef_candidates)
+            georef_path = joinpath(georef_dir, first(georef_candidates))
+            println("  Found georeferenced file: $georef_path")
+            try
+                if ext == ".csv"
+                    georef_df = DataFrame(CSV.File(georef_path))
+                else
+                    # Read xlsx via R
+                    @rput georef_path
+                    R"georef_r <- readxl::read_excel(georef_path)"
+                    @rget georef_r
+                    georef_df = georef_r
+                end
+                # Normalize Viable column: strip whitespace, uppercase, filter TRUE
+                viable_col = findfirst(c -> uppercase(string(c)) == "VIABLE", names(georef_df))
+                if !isnothing(viable_col)
+                    rename!(georef_df, names(georef_df)[viable_col] => :Viable)
+                    georef_df[!, :Viable] = map(v -> uppercase(strip(string(v))), georef_df.Viable)
+                    georef_df = filter(row -> row.Viable == "TRUE", georef_df)
+                    # Coerce lat/lon to Float64 (CSV may read them as strings)
+                    georef_df[!, :latitude]  = map(v -> ismissing(v) ? missing : tryparse(Float64, string(v)), georef_df.latitude)
+                    georef_df[!, :longitude] = map(v -> ismissing(v) ? missing : tryparse(Float64, string(v)), georef_df.longitude)
+                    # Keep only rows with valid numeric coordinates
+                    georef_df = filter(row -> !ismissing(row.latitude) && !ismissing(row.longitude), georef_df)
+                    println("  Georeferenced viable points: $(nrow(georef_df))")
+                else
+                    println("  WARNING: No 'Viable' column found in $georef_path — skipping georef points")
+                    georef_df = nothing
+                end
+            catch e
+                println("  WARNING: Could not read georef file $georef_path: $e")
+                georef_df = nothing
+            end
+            break
+            
+        end #is not empty
+    end
+
+   if !isnothing(georef_df) && nrow(georef_df) > 0
+        # Find the no_coords file — this is the DwC base for georef records
+        no_coords_candidates = filter(
+            f -> startswith(f, taxon_stem) && endswith(f, "_no_coords.csv"),
+            readdir("data/occurrence_data/pt_occs_to_georeference")
+        )
+
+        # Find the cleaned file — records that already had coordinates
+        clean_candidates = filter(
+            f -> startswith(f, taxon_stem) && occursin("cleaned", f) && endswith(f, ".csv"),
+            readdir("data/occurrence_data/pt_occs_clean")
+        )
+
+        if isempty(no_coords_candidates)
+            println("  WARNING: No no_coords file found for $taxon_stem — skipping georef merge")
+        elseif isempty(clean_candidates)
+            println("  WARNING: No cleaned file found for $taxon_stem — skipping georef merge")
+        else
+            no_coords_path = joinpath("data/occurrence_data/pt_occs_to_georeference", first(no_coords_candidates))
+            no_coords_df = DataFrame(CSV.File(no_coords_path))
+
+            clean_path = joinpath("data/occurrence_data/pt_occs_clean", first(clean_candidates))
+            clean_df = DataFrame(CSV.File(clean_path))
+
+            # Filter no_coords to only viable georef IDs
+            georef_ids = Set(georef_df.ID)
+            georef_rows = filter(row -> string(row.ID) in Set(string.(collect(georef_ids))), no_coords_df)
+
+            if nrow(georef_rows) == 0
+                println("  WARNING: No overlapping IDs between georef and no_coords file")
+            else
+                # Replace lat/lon with georeferenced coordinates
+                georef_lookup = Dict(
+                    string(row.ID) => (lat=row.latitude, lon=row.longitude)
+                    for row in eachrow(georef_df)
+                )
+                georef_rows[!, :latitude]  = map(row -> georef_lookup[string(row.ID)].lat, eachrow(georef_rows))
+                georef_rows[!, :longitude] = map(row -> georef_lookup[string(row.ID)].lon, eachrow(georef_rows))
+
+                # Add georef notes column to both frames so vcat works
+                notes_lookup = Dict(
+                    string(row.ID) => get(row, :Notes, missing)
+                    for row in eachrow(georef_df)
+                )
+                georef_rows[!, :georef_notes] = map(row -> get(notes_lookup, string(row.ID), missing), eachrow(georef_rows))
+                clean_df[!, :georef_notes] = Vector{Union{Missing, String}}(missing, nrow(clean_df))
+                
+                # Combine: existing coords records + newly georeferenced records
+                combined = vcat(clean_df, georef_rows, cols=:union)
+
+                println("  Combined: $(nrow(clean_df)) clean + $(nrow(georef_rows)) georef = $(nrow(combined)) total")
+
+                out_path = joinpath("data/occurrence_data/pt_occs_clean", taxon_stem * "_georef_merged.csv")
+                CSV.write(out_path, combined; transform=(col, val) -> something(val, missing))
+                println("  Written: $out_path")
+            end
+        end
+
+    else
+        println("  No viable georeferenced points — using cleaned file as-is")
+    end
+end 
+```
+
+## set up cleaning functions
+
+notably: this function edits the clean version original file.
+```{julia}
+function filter_countries(taxon::String, countries::Vector{String})
+    # fixit: could make this smarter and not hard code the date at the end and instead do some kind of string matching thing
+    path = "data/occurrence_data/pt_occs_clean/" * replace(taxon, " " => "_") * "-2026_04_23_cleaned.csv"
+    cleandf = DataFrame(CSV.File(path))
+    # check that countries are even in df
+    dfcountries = cleandf.country
+    if length(intersect(countries, dfcountries)) == 0
+        error("no input country provided in `countries` list matches countries existing in dataframe")
+    end
+
+    # filter every country out of df
+    for country in countries
+        filter!(:country => x -> x != country, cleandf)
+    end
+    # write out CSV again (replaces existing file)
+    CSV.write(path, cleandf)
+end
+```
+
+## clean up specific taxa
+
+problems observed in maps:
+- integrifolia - this manuscript defines / carves out several species from integrifolia s.l.,
+    defining integrifolia s.s. might be a problem if all these occurrences haven't been annotated / revisited post 2005.
+    but Peru can definitely be removed.
+
+```{julia}
+filter_countries("Calceolaria integrifolia", ["Peru"])
+```
+
+- ascendens subsp. glandulifera
+    - fixit: deal with nivalis (get rid of all, but essentially deal with synonym problem)
+- ascendens subsp. ascendens
+- polifolia
+- nitida
+- cana - need to remove the Mexican point
+
+```{julia}
+filter_countries("Calceolaria cana", ["Mexico"])
+```
+
+- purpurea
+- corymbosa subsp. corymbosa
+- corymbosa subsp. montana 
+- glandulosa subsp. glandulosa
+- crenatiflora
+- filicaulis subsp. filicaulis
+- uniflora
+- biflora
+- undulata
+- tenella
+- hypericina
+- dentata subsp. dentata
+- inflexa - Molau says endemic to Peru. I don't know if I believe the two Bolivian points.
+- umbellata - fixit: delete the -35ºS pt, it comes from GenBank.
+- angustiflora - matching Molau, if not missing some in southern Peru.
+- chrysophaera - two points in Bolivia, which doesn't agree with Molau. but those two were det. by Puppo, who I trust.
+
+## fixits
+
+- edge cases for members in my `homonyms.csv` file --> 
+```{julia}
+homonymsa = intersect(taxa_traits.scientificName, homonyms.scientificName)
+homonymsb = intersect(taxa_traits.scientificName, homonyms.validName)
+homonyms_indataset = union(homonymsa, homonymsb)
+```
+
+there's 13 of these, we'll need to be extra careful and double check:
+  1. occurrences of the synonym/homonym without species authority
+  2. look at overlap of range between synonyms
+
+- cleaning coords:
+  - remove human obs? do something with trusted iNat observers?
+    - trusted iNat obs: `aacocucci` , `aliciasersic`
+    - "safe" taxa: "uniflora or triandra, or taxa that are invasive like tripartita. Others that you could keep maybe are purpurea, cana, hyssopifolia, fotherghillii, boliviana, lanigera, tenella, scapiflora, martinessi, glacialis, nitida, picta"
+  - filter using native range botanical country polygons +/- some buffer?
+- get summary stats for cultivated vs. inat vs. etc
+- after georeferencing, figure out reporting back to herbaria?
