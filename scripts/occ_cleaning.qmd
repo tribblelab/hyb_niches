@@ -277,7 +277,6 @@ problems observed in maps:
 - integrifolia - this manuscript defines / carves out several species from integrifolia s.l.,
     defining integrifolia s.s. might be a problem if all these occurrences haven't been annotated / revisited post 2005.
     but Peru can definitely be removed.
-
 ```{julia}
 filter_countries("Calceolaria integrifolia", ["Peru"])
 ```
@@ -285,15 +284,38 @@ filter_countries("Calceolaria integrifolia", ["Peru"])
 - ascendens subsp. glandulifera
     - fixit: deal with nivalis (get rid of all, but essentially deal with synonym problem)
 - ascendens subsp. ascendens
-- polifolia
-- nitida
-- cana - need to remove the Mexican point
 
+- polifolia - remove two -35 points
+```{julia}
+filter_coords("Calceolaria polifolia", lat_min=-35, save=true)
+```
+
+
+- nitida - can remove points -31 and above and -35 and below
+```{julia}
+filter_coords("Calceolaria nitida", lat_max=-31, lat_min=-34.5, save=true)
+```
+
+- cana - need to remove the Mexican point
 ```{julia}
 filter_countries("Calceolaria cana", ["Mexico"])
 ```
 
-- purpurea
+- purpurea - remove point above -30 and below -35
+```{julia}
+filter_coords("Calceolaria purpurea", lat_max=-30, lat_min=-35, save=true)
+```
+
+
+-polyclada - remove point above -17
+```{julia}
+filter_coords("Calceolaria polyclada", lat_max=-17, save = true)
+``` 
+
+-teucrioides -remove point above -20
+```{julia}
+filter_coords("Calceolaria teucrioides", lat_max=-20, save=true)
+```
 
 - meyeniana subsp. meyeniana - one non georeferenced point that's out of range at -31
 ```{julia}
@@ -308,9 +330,26 @@ filter_coords("Calceolaria meyeniana subsp. meyeniana", lat_max=-31, save=true)
 filter_coords("Calceolaria glandulosa subsp. glandulosa", lat_max=-28, lat_min=-39.6, save=true) 
 ```
 
-- crenatiflora
-- filicaulis subsp. filicaulis
-- uniflora
+- crenatiflora - remove point above -15
+```{julia}
+filter_coords("Calceolaria crenatiflora", lat_max=-15, save=true)
+```
+
+- filicaulis subsp. filicaulis - remove points below -46 and above -32. 
+```{julia}
+filter_coords("Calceolaria filicaulis subsp. filicaulis", lat_min=-46, lat_max=-32, save=true)
+```
+
+-filicaulis subsp. luxurians - remove points above -30
+```{julia}
+filter_coords("Calceolaria filicaulis subsp. luxurians", lat_max=-30, save=true)
+```
+
+- uniflora -remove points above -45
+```{julia}
+filter_coords("Calceolaria uniflora", lat_max=-45, save=true)
+```
+
 - biflora
 
 -rupestris - -9 point out of range as described by Molau (not in Junin, Huancavelica, or Ayacucho)
@@ -323,7 +362,10 @@ filter_coords("Calceolaria rupestris", lat_max=-10, save=true)
 filter_coords("Calceolaria undulata", lat_min=-39, save=true) 
 ```
 
-- tenella
+- tenella - remove point above -36
+```{julia}
+filter_coords("Calceolaria tenella", lat_max=-36, save=true)
+```
 
 -picta - any point below -32 does not fit into range
 ```{julia}
@@ -335,7 +377,10 @@ filter_coords("Calceolaria picta", lat_min=-32, save=true)
 filter_coords("Calceolaria flavovirens", lat_max=-29, save=true)
 ```
 
-- hypericina
+- hypericina - remove -45 point and -72 point thats on the coast, endemic to andes
+```{julia}
+filter_coords("Calceolaria hypericina", lat_min=-45, lon_min=-71.3, save = true)
+```
 
 -cavanillesii - remove points below -39, outside of regions VII- IX range
 ```{julia}
@@ -373,38 +418,81 @@ filter_coords("Calceolaria myriophylla", lat_max=-9, lon_min=-74, save=true)
 ```
 
 - inflexa - Molau says endemic to Peru. I don't know if I believe the two Bolivian points.
+```{julia}
+filter_coords("Calceolaria inflexa", lon_max=-70, save=true)
+```
+
 - umbellata - fixit: delete the -35ºS pt, it comes from GenBank.
+```{julia}
+filter_coords("Calceolaria umbellata", lat_min=-35, save=true)
+```
+
 - angustiflora - matching Molau, if not missing some in southern Peru.
 - chrysophaera - two points in Bolivia, which doesn't agree with Molau. but those two were det. by Puppo, who I trust.
 
-- vaccinioides - remove spurious ~-7ºS point (too far north)
+-paposana - remove points above -23 and below -30
+```{julia}
+filter_coords("Calceolaria paposana", lat_max=-23, lat_min=-30, save=true)
+```
 
+-atahualpae subsp. atahualpae - Molau says endemic to Bolivia and southeastern Peru, remove -75 point (too far north)
+```{julia}
+filter_coords("Calceolaria atahualpae subsp. atahualpae", lon_min=-74.5, save=true)
+```
+
+- vaccinioides - remove spurious ~-7ºS point (too far north)
 ```{julia}
 filter_coords("Calceolaria vaccinioides", lat_max=-10.0, save=true)
 ```
 
 - barbata - remove -74 pt
-
 ```{julia}
 filter_coords("Calceolaria barbata", lon_max=-75, save=true)
 ```
 
 - bartsiifolia - remove -65 pt
-
 ```{julia}
 filter_coords("Calceolaria bartsiifolia", lon_min=-72, lat_min=-20, save=true)
 ```
 
 - undulata - remove one -39 point
-
 ```{julia}
 filter_coords("Calceolaria undulata", lat_min=-39, save=true)
 ```
 
 - revoluta: remove -9 pt
-
 ```{julia}
 filter_coords("Calceolaria revoluta", lat_max=-10, save=true)
+```
+
+-boliviana - remove -75 and -66 points, outside range of Northern Bolivia and SE Peru
+```{julia}
+filter_coords("Calceolaria boliviana", lon_min=-74, lon_max=-66, save=true)
+```
+
+-glacialis - remove points below -30
+```{julia}
+filter_coords("Calceolaria glacialis", lat_min = -30, save=true)
+```
+
+-pinifolia - remove point above -25
+```{julia}
+filter_coords("Calceolaria pinifolia", lat_max=-25, save=true)
+```
+
+-engleriana subsp. engleriana - remove -9 point, everything else looks good according to molau
+```{julia}
+filter_coords("Calceolaria engleriana subsp. engleriana", lat_max=-9, save=true)
+```
+
+-nudicaulis - remove point above -32
+```{julia}
+filter_coords("Calceolaria nudicaulis", lat_max=-32.5, save=true)
+```
+
+-thyrsiflora - remove point above -30
+```{julia}
+filter_coords("Calceolaria thyrsiflora", lat_max=-32, save=true)
 ```
 
 ## fixits
