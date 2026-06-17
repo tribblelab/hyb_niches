@@ -19,7 +19,7 @@ Pkg.instantiate()
 ### R
 
 packages:
-```{r}
+```R
 library(devtools)
 list_of_packages <- c(
   # Spatial / Mapping
