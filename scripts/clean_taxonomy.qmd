@@ -56,6 +56,7 @@ on 2026-02-04, using native/introduced taxa.
 ```{julia}
 lines = readlines("data/taxonomy_trait_data/powochecklist.txt")
 #pull lines starting from valid species (skipping headers)
+#lauren hard codes this
 subset = lines[9:1110]
 #join back into a single string
 text = join(subset, "\n")
@@ -189,6 +190,7 @@ we can collect all synonyms and see if there are synonymic epithets
 that also match accepted epithets (`duplicated_taxa`)
 
 ```{julia}
+#hard coding 
 powosynonyms = lines[1112:end]
 synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
 

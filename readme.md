@@ -54,3 +54,9 @@ if (any(!loaded)) {
   cat("\nAll CRAN packages loaded successfully.\n")
 }
 ```
+
+## following along:
+
+1. `scripts/clean_taxonomy.qmd`: take POWO checklist, gather valid names vs. synonyms to use in occurrence pulling
+2. `scripts/occ_pulling.qmd`: pull occurrence data from GBIF + iDigBio, do some of the automatic cleaning
+3. `scripts/occ_cleaning.qmd`: clean up remaining occurrence data by taxon based on country, coord. limits through cross checking with monographs
