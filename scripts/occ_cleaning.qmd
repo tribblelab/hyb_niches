@@ -274,39 +274,17 @@ end
 ## remove obs that aren't iNat or herbarium samples
 
 ```{julia}
-# let's combine all the different types of preserved specimen string
-replace!(all_occs.basisOfRecord, "preservedspecimen" => "PRESERVED_SPECIMEN")
-replace!(all_occs.basisOfRecord, "PreservedSpecimen" => "PRESERVED_SPECIMEN")
-replace!(all_occs.basisOfRecord, "Preserved Specimen" => "PRESERVED_SPECIMEN")
-
-material_citations = filter(row -> row.basisOfRecord == "MATERIAL_CITATION", all_occs) # this is just one row for ascendens subsp. ascendens, and shouldn't be in this taxon anyway, it's actually a valid new taxon: nivalis subsp. lanatifolia
-material_samples = filter(row -> row.basisOfRecord == "MATERIAL_SAMPLE", all_occs) # these come from GenBank --> need to be filtered
-living_specimens = filter(row -> row.basisOfRecord == "LIVING_SPECIMEN", all_occs) # all from RBG Edinburgh
-fossils = filter(row -> row.basisOfRecord == "FOSSIL_SPECIMEN", all_occs) # these are not actually fossils --> UC Berkeley garden specimens
-filter!(row -> row[:basisOfRecord] != "MATERIAL_SAMPLE", all_occs)
-filter!(row -> row[:basisOfRecord] != "MATERIAL_CITATION", all_occs)
-filter!(row -> row[:basisOfRecord] != "LIVING_SPECIMEN", all_occs)
-filter!(row -> row[:basisOfRecord] != "FOSSIL_SPECIMEN", all_occs)
-```
-
-```{julia}
 # load mega df (georef_merged preferred over cleaned per taxon)
 all_occs = load_pt_occs_df()
-nrow(all_occs) #6757
-
 # total points per taxon
 n_by_taxon = combine(groupby(all_occs, :taxon), nrow => :n_total)
 sort!(n_by_taxon, :n_total)
 low_n_taxa = filter((:n_total => f -> f < 15), n_by_taxon)
-```
 
-```{julia}
 n_by_taxon_min15 = filter((:n_total => f -> f >= 15), n_by_taxon)
 filter!(row -> row[:taxon] in n_by_taxon_min15.taxon, all_occs)
 nrow(all_occs) #6433
-```
 
-```{julia}
 # points by taxon × basisOfRecord
 n_by_bor = combine(groupby(all_occs, :taxon),
     :basisOfRecord => (b -> count(==("HUMAN_OBSERVATION"), b)) => :HUMAN_OBSERVATION,
@@ -335,7 +313,6 @@ filter_countries("Calceolaria integrifolia", ["Peru"])
 ```{julia}
 filter_coords("Calceolaria polifolia", lat_min=-35, save=true)
 ```
-
 
 - nitida - can remove points -31 and above and -35 and below
 ```{julia}
@@ -467,7 +444,7 @@ filter_coords("Calceolaria myriophylla", lat_max=-9, lon_min=-74, save=true)
 filter_coords("Calceolaria inflexa", lon_max=-70, save=true)
 ```
 
-- umbellata - fixit: delete the -35ºS pt, it comes from GenBank.
+- umbellata - delete the -35ºS pt, it comes from GenBank.
 ```{julia}
 filter_coords("Calceolaria umbellata", lat_min=-35, save=true)
 ```
@@ -633,7 +610,7 @@ for role_param in ["user_id", "ident_user_id"]:
 all_obs = list(all_obs_dict.values())
 
 # Save full data
-with open("calceolaria_ids.json", "w") as f:
+with open("../data/occurrence_data/calceolaria_ids.json", "w") as f:
     json.dump(all_obs, f, indent=2)
 
 # Print summary
@@ -660,7 +637,7 @@ function is_safe_taxon(taxon::String)
 end
 
 # Extract safe URLs from calceolaria_ids.json using Regex
-json_text = read("scripts/calceolaria_ids.json", String)
+json_text = read("data/occurrence_data/calceolaria_ids.json", String)
 safe_urls = Set([m.match for m in eachmatch(r"https://www\.inaturalist\.org/observations/\d+", json_text)])
 
 clean_dir = "data/occurrence_data/pt_occs_clean"
@@ -703,6 +680,8 @@ for t in taxa
 end
 ```
 
+## summary stats on remaining points
+
 ```{julia}
 # Compare the number of points in raw vs filtered
 clean_dir = "data/occurrence_data/pt_occs_clean"
@@ -738,6 +717,8 @@ end
 summary_df = DataFrame(summary_rows)
 CSV.write("data/occurrence_data/occ_cleaning_summary.csv", summary_df)
 ```
+
+## visualize
 
 ```{julia}
 # Open a single PDF device to save all the side-by-side plots
