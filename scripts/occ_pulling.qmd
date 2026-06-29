@@ -166,8 +166,8 @@ Fetch non-research-grade iNaturalist observations by aacocucci and aliciasersic
 traits_species_cleaned-2026_02_25.csv, then format them to match the
 pt_occs_clean CSV schema (iNaturalist rows).
 
-Output: data/occurrence_data/non_research_obs_raw.json        (full API details, filtered taxa)
-        data/occurrence_data/non_research_inat_formatted.csv  (ready to append to pt_occs_clean files)
+Output: data/occurrence_data/supp_data/non_research_obs_raw.json        (full API details, filtered taxa)
+        data/occurrence_data/supp_data/non_research_inat_formatted.csv  (ready to append to pt_occs_clean files)
 """
 
 import urllib.request
@@ -180,8 +180,8 @@ from datetime import datetime
 HEADERS    = {"User-Agent": "calceolaria-scraper/1.0"}
 REPO_ROOT  = "/Users/laurenfrankel/Desktop/hyb_niches"
 TRAITS_CSV = os.path.join(REPO_ROOT, "data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv")
-OUT_JSON   = os.path.join(REPO_ROOT, "data/occurrence_data/non_research_obs_raw.json")
-OUT_CSV    = os.path.join(REPO_ROOT, "data/occurrence_data/non_research_inat_formatted.csv")
+OUT_JSON   = os.path.join(REPO_ROOT, "data/occurrence_data/supp_data/non_research_obs_raw.json")
+OUT_CSV    = os.path.join(REPO_ROOT, "data/occurrence_data/supp_data/non_research_inat_formatted.csv")
 
 # ── 0. Load taxa list from traits CSV ────────────────────────────────────────
 
@@ -414,7 +414,7 @@ for k, v in sorted(taxon_counts.items()):
 
 ```{julia}
 # Append non-research grade iNat observations to the raw CSVs
-non_res_df = DataFrame(CSV.File("data/occurrence_data/non_research_inat_formatted.csv"; missingstring=["", "NA"]))
+non_res_df = DataFrame(CSV.File("data/occurrence_data/supp_data/non_research_inat_formatted.csv"; missingstring=["", "NA"]))
 
 raw_dir = "data/occurrence_data/pt_occs_raw"
 all_raw_files = filter(f -> endswith(f, ".csv"), readdir(raw_dir))
@@ -683,7 +683,7 @@ sort!(filtering_stats, :after_locality_filt, rev=false)
 # separate out those where the sum of :rows_missing_coords + :after_locality_filt < 15 (not as much of a priority)
 toofewobs = filter(row -> row.rows_missing_coords + row.after_locality_filt < 15, filtering_stats)
 enoughobs = filter(row -> row.rows_missing_coords + row.after_locality_filt >= 15, filtering_stats)
-CSV.write("data/occurrence_data/ranked_togeoref.csv", enoughobs)
+CSV.write("data/occurrence_data/summarytables_plots/ranked_togeoref.csv", enoughobs)
 ```
 
 ## prepare geolocate formatted files

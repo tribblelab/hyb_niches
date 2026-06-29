@@ -136,142 +136,7 @@ for (idx, taxa) in enumerate(taxa_list)
 end
 ```
 
-## set up cleaning functions
-
-notably: these functions edit the file in-place (georef_merged preferred over cleaned).
-
-```{julia}
-# Shared helper: resolve the best available CSV path for a taxon
-function resolve_taxon_path(taxon::String)
-    clean_dir = "data/occurrence_data/pt_occs_clean"
-    taxon_stem = replace(taxon, " " => "_")
-
-    georef_candidates = filter(
-        f -> startswith(f, taxon_stem) && endswith(f, "_georef_merged.csv"),
-        readdir(clean_dir)
-    )
-    cleaned_candidates = filter(
-        f -> startswith(f, taxon_stem) && occursin("cleaned", f) && endswith(f, ".csv"),
-        readdir(clean_dir)
-    )
-
-    if !isempty(georef_candidates)
-        path = joinpath(clean_dir, first(georef_candidates))
-        println("  Using georef_merged file: $path")
-        return path
-    elseif !isempty(cleaned_candidates)
-        path = joinpath(clean_dir, first(cleaned_candidates))
-        println("  Using cleaned file (no georef_merged found): $path")
-        return path
-    else
-        error("No cleaned or georef_merged file found for taxon: $taxon")
-    end
-end
-
-function filter_countries(taxon::String, countries::Vector{String})
-    path = resolve_taxon_path(taxon)
-    cleandf = DataFrame(CSV.File(path))
-
-    # check that at least one country is present in df
-    dfcountries = cleandf.country
-    if length(intersect(countries, dfcountries)) == 0
-        error("no input country provided in `countries` list matches countries existing in dataframe")
-    end
-
-    # filter every country out of df
-    for country in countries
-        filter!(:country => x -> x != country, cleandf)
-    end
-    CSV.write(path, cleandf)
-end
-
-# Remove rows outside the specified lat/lon bounding box.
-# All bounds are optional — specify only the axes you want to constrain.
-# Points with missing coordinates are dropped when a bound is supplied for that axis.
-# Always plots a preview map (green = kept, red × = removed).
-# Set save=true to write the filtered result back to the file.
-function filter_coords(taxon::String;
-    lat_min=nothing, lat_max=nothing,
-    lon_min=nothing, lon_max=nothing,
-    save::Bool=false)
-
-    if all(isnothing, (lat_min, lat_max, lon_min, lon_max))
-        error("At least one of lat_min, lat_max, lon_min, lon_max must be specified")
-    end
-
-    path = resolve_taxon_path(taxon)
-    df = DataFrame(CSV.File(path))
-
-    # Build a row-wise keep predicate
-    function keep(row)
-        lat = row.latitude
-        lon = row.longitude
-        if !isnothing(lat_min) || !isnothing(lat_max)
-            (ismissing(lat) || !isa(lat, Number)) && return false
-            !isnothing(lat_min) && lat < lat_min && return false
-            !isnothing(lat_max) && lat > lat_max && return false
-        end
-        if !isnothing(lon_min) || !isnothing(lon_max)
-            (ismissing(lon) || !isa(lon, Number)) && return false
-            !isnothing(lon_min) && lon < lon_min && return false
-            !isnothing(lon_max) && lon > lon_max && return false
-        end
-        return true
-    end
-
-    keep_mask = [keep(row) for row in eachrow(df)]
-    kept_df = df[keep_mask, :]
-    removed_df = df[.!keep_mask, :]
-    n_kept = nrow(kept_df)
-    n_removed = nrow(removed_df)
-
-    println("  Preview: $n_removed point(s) will be removed, $n_kept will be kept")
-
-    # Plot preview: green = kept, red × = removed
-    taxon_label = taxon
-    kept_lat = Vector{Union{Missing,Float64}}(kept_df.latitude)
-    kept_lon = Vector{Union{Missing,Float64}}(kept_df.longitude)
-    removed_lat = Vector{Union{Missing,Float64}}(removed_df.latitude)
-    removed_lon = Vector{Union{Missing,Float64}}(removed_df.longitude)
-    @rput taxon_label kept_lat kept_lon removed_lat removed_lon
-    R"""
-    kept_pts    <- data.frame(latitude  = as.numeric(kept_lat),
-                              longitude = as.numeric(kept_lon))
-    removed_pts <- data.frame(latitude  = as.numeric(removed_lat),
-                              longitude = as.numeric(removed_lon))
-    all_lat <- c(kept_pts$latitude,  removed_pts$latitude)
-    all_lon <- c(kept_pts$longitude, removed_pts$longitude)
-    world    <- annotation_borders(database="world", colour="gray80", fill="gray80")
-    borders  <- annotation_borders(database="world", colour="gray40", fill=NA, size=0.5)
-    p <- ggplot() + world + borders +
-        geom_point(data=kept_pts,
-                   aes(x=longitude, y=latitude),
-                   color="darkgreen", size=2, alpha=0.7) +
-        { if (nrow(removed_pts) > 0)
-              geom_point(data=removed_pts,
-                         aes(x=longitude, y=latitude),
-                         color="red", shape=4, size=3.5, stroke=1.2, alpha=0.9)
-          else NULL } +
-        coord_sf(xlim=c(min(all_lon, na.rm=TRUE)-2, max(all_lon, na.rm=TRUE)+2),
-                 ylim=c(min(all_lat, na.rm=TRUE)-2, max(all_lat, na.rm=TRUE)+2)) +
-        labs(title=paste0(taxon_label, "  —  green: kept (", nrow(kept_pts),
-                          ")   red ×: removed (", nrow(removed_pts), ")"),
-             x="Longitude", y="Latitude") +
-        theme_minimal() +
-        theme(plot.title=element_text(size=10))
-    print(p)
-    """
-
-    if save
-        CSV.write(path, kept_df)
-        println("  Written: $path")
-    else
-        println("  Preview only — re-run with save=true to apply.")
-    end
-end
-```
-
-## remove obs that aren't iNat or herbarium samples
+## get summary stats on how many occs per taxon
 
 ```{julia}
 # load mega df (georef_merged preferred over cleaned per taxon)
@@ -293,6 +158,121 @@ n_by_bor = combine(groupby(all_occs, :taxon),
 )
 
 n_by_bor
+```
+
+## remove iNat obs./IDs if not from Cocucci/Sersic
+
+from Anahí: "safe" taxa: "uniflora or triandra, or taxa that are invasive like tripartita. Others that you could keep maybe are purpurea, cana, hyssopifolia, fothergillii, boliviana, lanigera, tenella, scapiflora, martinessi, glacialis, nitida, picta"
+
+```{python}
+import requests, json, time
+
+headers = {"User-Agent": "calceolaria-scraper/1.0"}
+users = ["aacocucci", "aliciasersic"]
+users_str = ",".join(users)
+all_obs_dict = {}
+
+# Query 1: Observations BY these users
+# Query 2: Observations IDENTIFIED BY these users
+for role_param in ["user_id", "ident_user_id"]:
+    page = 1
+    while True:
+        r = requests.get("https://api.inaturalist.org/v1/observations",
+            headers=headers,
+            params={
+                role_param: users_str,
+                "taxon_id": 129854,      # Calceolaria genus
+                "rank": "species",       # only species-level IDs
+                "per_page": 200,
+                "page": page,
+                "order": "desc",
+                "order_by": "created_at"
+            }
+        )
+
+        if r.status_code != 200:
+            print(f"Error {r.status_code} for {role_param}: {r.text[:200]}")
+            break
+
+        data = r.json()
+        results = data.get("results", [])
+        total = data.get("total_results", 0)
+        print(f"{role_param} | page {page}: got {len(results)} of {total}")
+
+        for obs in results:
+            taxon = obs.get("taxon")
+            if not taxon:
+                continue
+            name = taxon.get("name", "")
+            
+            # ensure it's a species (has a space = genus + epithet)
+            if " " not in name:
+                continue
+            
+            obs_id = obs["id"]
+            if obs_id not in all_obs_dict:
+                all_obs_dict[obs_id] = {
+                    "obs_id": obs_id,
+                    "observer": obs["user"]["login"],
+                    "taxon_name": name,
+                    "taxon_id": taxon.get("id"),
+                    "date": str(obs.get("created_at", ""))[:10],
+                    "quality_grade": obs.get("quality_grade", "none"),
+                    "url": f"https://www.inaturalist.org/observations/{obs_id}"
+                }
+
+        if len(results) < 200 or page * 200 >= total:
+            break
+        page += 1
+        time.sleep(1)
+
+all_obs = list(all_obs_dict.values())
+
+# Save full data
+with open("../data/occurrence_data/supp_data/calceolaria_ids.json", "w") as f:
+    json.dump(all_obs, f, indent=2)
+
+# Print summary
+print(f"\nTotal species-level Calceolaria observations: {len(all_obs)}\n")
+print(f"{'Observer':<20} {'Taxon':<40} {'Date':<12} {'Grade':<12} {'Obs ID'}")
+print("-" * 100)
+for rec in all_obs:
+    print(f"{rec['observer']:<20} {rec['taxon_name']:<40} {rec['date']:<12} {rec['quality_grade']:<12} {rec['obs_id']}")
+```
+
+```{julia}
+all_files = filter(f -> endswith(f, ".csv"), readdir(clean_dir))
+taxa = sort(unique(taxon_stem.(all_files)))
+clean_dir = "data/occurrence_data/pt_occs_clean"
+filtered_dir = "data/occurrence_data/pt_occs_filtered"
+json_text = read("data/occurrence_data/supp_data/calceolaria_ids.json", String)
+safe_urls = Set([m.match for m in eachmatch(r"https://www\.inaturalist\.org/observations/\d+", json_text)])
+
+for t in taxa
+    fpath = resolve_clean_file(t, clean_dir)
+    isempty(fpath) && continue
+
+    df = DataFrame(CSV.File(fpath; missingstring=["", "NA"]))
+    if nrow(df) == 0
+        continue
+    end
+
+    if is_safe_taxon(t)
+        # Keep everything
+        CSV.write(joinpath(filtered_dir, basename(fpath)), df)
+    else
+        # Remove HUMAN_OBSERVATION unless their occurrenceID is in safe_urls
+        keep_mask = map(eachrow(df)) do row
+            if row.basisOfRecord == "HUMAN_OBSERVATION"
+                !ismissing(row.occurrenceID) && (row.occurrenceID in safe_urls)
+            else
+                true
+            end
+        end
+        filtered_df = df[keep_mask, :]
+        CSV.write(joinpath(filtered_dir, basename(fpath)), filtered_df)
+    end
+end
 ```
 
 ## clean up specific taxa
@@ -362,7 +342,7 @@ filter_coords("Calceolaria crenatiflora", lat_max=-15, save=true)
 filter_coords("Calceolaria filicaulis subsp. filicaulis", lat_min=-46, lat_max=-32, save=true)
 ```
 
--filicaulis subsp. luxurians - remove points above -30
+- filicaulis subsp. luxurians - remove points above -30
 ```{julia}
 filter_coords("Calceolaria filicaulis subsp. luxurians", lat_max=-30, save=true)
 ```
@@ -541,152 +521,10 @@ filter_coords("Calceolaria flexuosa subsp. chrysocalyx", lat_max=-8, save=true)
 filter_coords("Calceolaria germainii", lon_max=-68, save=true)
 ```
 
-## remove iNat obs./IDs if not from Cocucci/Sersic
-
-from Anahí: "safe" taxa: "uniflora or triandra, or taxa that are invasive like tripartita. Others that you could keep maybe are purpurea, cana, hyssopifolia, fothergillii, boliviana, lanigera, tenella, scapiflora, martinessi, glacialis, nitida, picta"
-
-```{python}
-import requests, json, time
-
-headers = {"User-Agent": "calceolaria-scraper/1.0"}
-users = ["aacocucci", "aliciasersic"]
-users_str = ",".join(users)
-all_obs_dict = {}
-
-# Query 1: Observations BY these users
-# Query 2: Observations IDENTIFIED BY these users
-for role_param in ["user_id", "ident_user_id"]:
-    page = 1
-    while True:
-        r = requests.get("https://api.inaturalist.org/v1/observations",
-            headers=headers,
-            params={
-                role_param: users_str,
-                "taxon_id": 129854,      # Calceolaria genus
-                "rank": "species",       # only species-level IDs
-                "per_page": 200,
-                "page": page,
-                "order": "desc",
-                "order_by": "created_at"
-            }
-        )
-
-        if r.status_code != 200:
-            print(f"Error {r.status_code} for {role_param}: {r.text[:200]}")
-            break
-
-        data = r.json()
-        results = data.get("results", [])
-        total = data.get("total_results", 0)
-        print(f"{role_param} | page {page}: got {len(results)} of {total}")
-
-        for obs in results:
-            taxon = obs.get("taxon")
-            if not taxon:
-                continue
-            name = taxon.get("name", "")
-            
-            # ensure it's a species (has a space = genus + epithet)
-            if " " not in name:
-                continue
-            
-            obs_id = obs["id"]
-            if obs_id not in all_obs_dict:
-                all_obs_dict[obs_id] = {
-                    "obs_id": obs_id,
-                    "observer": obs["user"]["login"],
-                    "taxon_name": name,
-                    "taxon_id": taxon.get("id"),
-                    "date": str(obs.get("created_at", ""))[:10],
-                    "quality_grade": obs.get("quality_grade", "none"),
-                    "url": f"https://www.inaturalist.org/observations/{obs_id}"
-                }
-
-        if len(results) < 200 or page * 200 >= total:
-            break
-        page += 1
-        time.sleep(1)
-
-all_obs = list(all_obs_dict.values())
-
-# Save full data
-with open("../data/occurrence_data/calceolaria_ids.json", "w") as f:
-    json.dump(all_obs, f, indent=2)
-
-# Print summary
-print(f"\nTotal species-level Calceolaria observations: {len(all_obs)}\n")
-print(f"{'Observer':<20} {'Taxon':<40} {'Date':<12} {'Grade':<12} {'Obs ID'}")
-print("-" * 100)
-for rec in all_obs:
-    print(f"{rec['observer']:<20} {rec['taxon_name']:<40} {rec['date']:<12} {rec['quality_grade']:<12} {rec['obs_id']}")
-```
-
-```{julia}
-# List of safe taxa based on user request
-safe_taxa = ["uniflora", "triandra", "tripartita", "purpurea", "cana", "hyssopifolia", "fothergillii", "boliviana", "lanigera", "tenella", "scapiflora", "martinessi", "glacialis", "nitida", "picta"]
-
-# Helper to check if a taxon is "safe"
-function is_safe_taxon(taxon::String)
-    t_lower = lowercase(taxon)
-    for s in safe_taxa
-        if occursin(s, t_lower)
-            return true
-        end
-    end
-    return false
-end
-
-# Extract safe URLs from calceolaria_ids.json using Regex
-json_text = read("data/occurrence_data/calceolaria_ids.json", String)
-safe_urls = Set([m.match for m in eachmatch(r"https://www\.inaturalist\.org/observations/\d+", json_text)])
-
-clean_dir = "data/occurrence_data/pt_occs_clean"
-filtered_dir = "data/occurrence_data/pt_occs_filtered"
-
-function taxon_stem(fname::String)::String
-    base = replace(fname, r"\.csv$" => "")
-    base = replace(base, r"_georef_merged$" => "")
-    base = replace(base, r"-\d{4}_\d{2}_\d{2}_cleaned$" => "")
-    return base
-end
-
-all_files = filter(f -> endswith(f, ".csv"), readdir(clean_dir))
-taxa = sort(unique(taxon_stem.(all_files)))
-
-for t in taxa
-    fpath = resolve_clean_file(t, clean_dir)
-    isempty(fpath) && continue
-
-    df = DataFrame(CSV.File(fpath; missingstring=["", "NA"]))
-    if nrow(df) == 0
-        continue
-    end
-
-    if is_safe_taxon(t)
-        # Keep everything
-        CSV.write(joinpath(filtered_dir, basename(fpath)), df)
-    else
-        # Remove HUMAN_OBSERVATION unless their occurrenceID is in safe_urls
-        keep_mask = map(eachrow(df)) do row
-            if row.basisOfRecord == "HUMAN_OBSERVATION"
-                !ismissing(row.occurrenceID) && (row.occurrenceID in safe_urls)
-            else
-                true
-            end
-        end
-        filtered_df = df[keep_mask, :]
-        CSV.write(joinpath(filtered_dir, basename(fpath)), filtered_df)
-    end
-end
-```
-
 ## summary stats on remaining points
 
 ```{julia}
 # Compare the number of points in raw vs filtered
-clean_dir = "data/occurrence_data/pt_occs_clean"
-filtered_dir = "data/occurrence_data/pt_occs_filtered"
-
 changed_taxa = String[]
 summary_rows = []
 
@@ -715,14 +553,14 @@ for fname in all_files
 end
 
 summary_df = DataFrame(summary_rows)
-CSV.write("data/occurrence_data/occ_cleaning_summary.csv", summary_df)
+CSV.write("data/occurrence_data/summarytables_plots/occ_cleaning_summary.csv", summary_df)
 ```
 
 ## visualize
 
 ```{julia}
 # Open a single PDF device to save all the side-by-side plots
-R"pdf('data/occurrence_data/filtered_occs_comparison.pdf', width=10, height=5)"
+R"pdf('data/occurrence_data/summarytables_plots/filtered_occs_comparison.pdf', width=10, height=5)"
 
 for fname in changed_taxa
     clean_path = joinpath(clean_dir, fname)
@@ -783,18 +621,16 @@ for fname in changed_taxa
 end
 
 R"dev.off()"
-println("Plots saved to data/occurrence_data/filtered_occs_comparison.pdf")
+println("Plots saved to data/occurrence_data/summarytables_plots/filtered_occs_comparison.pdf")
 ```
 
 ```{julia}
-plot_all_occurrence_maps()
-plot_all_occurrence_maps(only_clean=true, pdf_file="data/occurrence_data/occurrence_maps.pdf")
+plot_all_occurrence_maps(only_clean=true, pdf_file="data/occurrence_data/summarytables_plots/occurrence_maps.pdf")
 ```
 
 ## fixits
 
-- edge cases: not research grade, but id'ed by cocucci/sersic?
-- edge cases for members in my `homonyms.csv` file --> 
+- homonym overlaps
 ```{julia}
 homonymsa = intersect(taxa_traits.scientificName, homonyms.scientificName)
 homonymsb = intersect(taxa_traits.scientificName, homonyms.validName)
@@ -815,4 +651,5 @@ there's 13 of these, we'll need to be extra careful and double check:
     - Calceolaria_engleriana_subsp._lutea could be merged with Calceolaria_engleriana_subsp._engleriana
     - We have 6 Calceolaria_corymbosa subsp. --> ask Anahí about divergence / consult with Ehrhart?
 
+- remove NCBI occurrences that are in PRESERVED_SPECIMEN label?
 - after georeferencing, figure out reporting back to herbaria?
