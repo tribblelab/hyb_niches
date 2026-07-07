@@ -10,6 +10,7 @@ date: "2026-05-01"
 
 ```{julia}
 include("helper_fxns.jl")
+using StatsBase
 ```
 
 ## load in files
@@ -136,7 +137,74 @@ for (idx, taxa) in enumerate(taxa_list)
 end
 ```
 
+## check taxonomy
+
+fixit: for future reproducibility move this above georef split
+fixit: make a better function to automate this
+
+```{julia}
+homonymsa = intersect(taxa_traits.scientificName, homonyms.scientificName)
+homonymsb = intersect(taxa_traits.scientificName, homonyms.validName)
+homonyms_indataset = union(homonymsa, homonymsb)
+```
+
+check species that have 2+ unique scientificName values (potentially wrong taxa getting lumped in there)
+```{julia}
+clean_dir = "data/occurrence_data/pt_occs_clean"
+all_files = readdir(clean_dir)
+
+# get unique stems, then resolve each to its preferred file (georef > clean)
+stems = unique(taxon_stem.(all_files))
+resolved_files = filter(!isempty, [resolve_clean_file(s, clean_dir) for s in stems])
+
+# loop & collect scientificName count
+name_counts = Dict{String, Int}()
+
+for fpath in resolved_files
+    df = CSV.read(fpath, DataFrame; select=["scientificName"], types=Dict("scientificName" => String))
+    unique_names = unique(skipmissing(df.scientificName))
+    if length(unique_names) >= 2
+        println("\n$(basename(fpath)):")
+        for name in sort(unique_names)
+            println("  $name")
+        end
+    end
+end
+```
+
+```{julia}
+filter_scientific_names("Calceolaria cana", ["Calceolaria arachnoidea"])
+filter_scientific_names("Calceolaria morisii", ["Calceolaria salviifolia"])
+filter_scientific_names("Calceolaria undulata",
+    ["Calceolaria foliosa", "Calceolaria foliosa Meyen ex Walp. & Schauer"])
+filter_scientific_names("Calceolaria uniflora", ["Calceolaria biflora Lam."])
+filter_scientific_names("Calceolaria ascendens subsp. ascendens",
+    ["Calceolaria crenata", 
+    "Calceolaria crenata subsp. australis Molau",
+    "Calceolaria crenata × Calceolaria Ferruginea",
+    "Calceolaria nivalis subsp. nivalis",
+    "Calceolaria nivalis subsp. lanatifolia Puppo",
+    "Calceolaria nivalis subsp. cerasifolia (Benth.) Molau"])
+filter_scientific_names("Calceolaria ascendens subsp. glandulifera",
+    ["Calceolaria tripartita",
+    "Calceolaria parvifolia subsp. guentheri (Kraenzl.) Molau",
+    "Calceolaria parvifolia subsp. parvifolia"])
+filter_scientific_names("Calceolaria nitida",
+    ["Calceolaria glandulosa subsp. alicahuensis (Muñoz-Schick) C.Ehrh.",
+    "Calceolaria glandulosa subsp. glandulosa",
+    "Calceolaria glandulosa var. thyrsiformis Clos"])
+filter_scientific_names("Calceolaria integrifolia",
+    ["Calceolaria rugosa Hook.",
+    "Calceolaria rugosa",
+    "Calceolaria scabiosifolia Sieber ex Sims"])
+filter_scientific_names("Calceolaria corymbosa subsp. corymbosa", 
+    ["Calceolaria paralia"])
+
+```
+
 ## get summary stats on how many occs per taxon
+
+fixit: move this later, change `load_pt_occs_df` fxn
 
 ```{julia}
 # load mega df (georef_merged preferred over cleaned per taxon)
@@ -241,10 +309,10 @@ for rec in all_obs:
 ```
 
 ```{julia}
-all_files = filter(f -> endswith(f, ".csv"), readdir(clean_dir))
-taxa = sort(unique(taxon_stem.(all_files)))
 clean_dir = "data/occurrence_data/pt_occs_clean"
 filtered_dir = "data/occurrence_data/pt_occs_filtered"
+all_files = filter(f -> endswith(f, ".csv"), readdir(clean_dir))
+taxa = sort(unique(taxon_stem.(all_files)))
 json_text = read("data/occurrence_data/supp_data/calceolaria_ids.json", String)
 safe_urls = Set([m.match for m in eachmatch(r"https://www\.inaturalist\.org/observations/\d+", json_text)])
 
@@ -286,7 +354,7 @@ filter_countries("Calceolaria integrifolia", ["Peru"])
 ```
 
 - ascendens subsp. glandulifera
-    - fixit: deal with nivalis (get rid of all, but essentially deal with synonym problem)
+
 - ascendens subsp. ascendens
 
 - polifolia - remove two -35 points
@@ -521,39 +589,72 @@ filter_coords("Calceolaria flexuosa subsp. chrysocalyx", lat_max=-8, save=true)
 filter_coords("Calceolaria germainii", lon_max=-68, save=true)
 ```
 
+- parvifolia subsp. parvifolia
+
+```{julia}
+filter_coords("Calceolaria parvifolia subsp. parvifolia", lat_max = -14, save=true)
+```
+
 ## summary stats on remaining points
 
 ```{julia}
-# Compare the number of points in raw vs filtered
-changed_taxa = String[]
+non_res_csv  = "data/occurrence_data/supp_data/non_research_inat_formatted.csv"
+date_suffix  = "2026_04_23"
+
+# Load non-research-grade iNat additions (to count per taxon)
+non_res_df = isfile(non_res_csv) ?
+    DataFrame(CSV.File(non_res_csv; missingstring=["", "NA"])) :
+    DataFrame(taxon=String[], n=Int[])
+
+# Resolve one clean file per taxon stem (georef_merged preferred)
+all_clean_files = filter(f -> endswith(f, ".csv"), readdir(clean_dir))
+stems = sort(unique(taxon_stem.(all_clean_files)))
+
 summary_rows = []
+changed_taxa = String[]
 
-all_files = filter(f -> endswith(f, ".csv"), readdir(clean_dir))
+for stem in stems
+    clean_path = resolve_clean_file(stem, clean_dir)
+    isempty(clean_path) && continue
 
-for fname in all_files
-    clean_path = joinpath(clean_dir, fname)
-    filtered_path = joinpath(filtered_dir, fname)
+    filtered_path = joinpath(filtered_dir, basename(clean_path))
 
-    if !isfile(filtered_path)
-        continue
+    # ── clean (pre-filter) ───────────────────────────────────────────────────
+    df_clean = DataFrame(CSV.File(clean_path; missingstring=["", "NA"]))
+    n_preserved = count(r -> !ismissing(r.basisOfRecord) &&
+                             r.basisOfRecord == "PRESERVED_SPECIMEN", eachrow(df_clean))
+    n_inat_clean = count(r -> !ismissing(r.basisOfRecord) &&
+                              r.basisOfRecord == "HUMAN_OBSERVATION", eachrow(df_clean))
+
+    # ── filtered (post-filter) ───────────────────────────────────────────────
+    if isfile(filtered_path)
+        df_filt = DataFrame(CSV.File(filtered_path; missingstring=["", "NA"]))
+        n_final = nrow(df_filt)
+    else
+        df_filt = df_clean
+        n_final = nrow(df_clean)
     end
 
-    df_clean = DataFrame(CSV.File(clean_path; missingstring=["", "NA"]))
-    df_filt = DataFrame(CSV.File(filtered_path; missingstring=["", "NA"]))
+    n_inat_removed = n_inat_clean - count(r -> !ismissing(r.basisOfRecord) &&
+                                               r.basisOfRecord == "HUMAN_OBSERVATION",
+                                           eachrow(df_filt))
 
-    n_clean = nrow(df_clean)
-    n_filt = nrow(df_filt)
+    push!(summary_rows, (
+        taxon               = stem,
+        final_points        = n_final,
+        preserved_specimen  = n_preserved,
+        inat_removed        = n_inat_removed,
+        all_inat_allowed    = is_safe_taxon(stem),
+    ))
 
-    t_name = taxon_stem(fname)
-    push!(summary_rows, (taxon=t_name, original=n_clean, remaining_total=n_filt, removed=n_clean - n_filt))
-
-    if n_clean > n_filt
-        push!(changed_taxa, fname)
+    if nrow(df_filt) < nrow(df_clean)
+        push!(changed_taxa, basename(clean_path))
     end
 end
 
 summary_df = DataFrame(summary_rows)
 CSV.write("data/occurrence_data/summarytables_plots/occ_cleaning_summary.csv", summary_df)
+println("Summary written — $(nrow(summary_df)) taxa")
 ```
 
 ## visualize
@@ -570,7 +671,7 @@ for fname in changed_taxa
     df_filt = DataFrame(CSV.File(filtered_path; missingstring=["", "NA"]))
 
     # Skip taxa that had fewer than 15 points originally
-    if nrow(df_clean) < 15
+    if nrow(df_clean) < 5
         continue
     end
 
@@ -625,22 +726,10 @@ println("Plots saved to data/occurrence_data/summarytables_plots/filtered_occs_c
 ```
 
 ```{julia}
-plot_all_occurrence_maps(only_clean=true, pdf_file="data/occurrence_data/summarytables_plots/occurrence_maps.pdf")
+plot_all_occurrence_maps(only_clean=true, pdf_file="data/occurrence_data/summarytables_plots/occurrence_maps.pdf", min_points = 5)
 ```
 
 ## fixits
-
-- homonym overlaps
-```{julia}
-homonymsa = intersect(taxa_traits.scientificName, homonyms.scientificName)
-homonymsb = intersect(taxa_traits.scientificName, homonyms.validName)
-homonyms_indataset = union(homonymsa, homonymsb)
-```
-
-there's 13 of these, we'll need to be extra careful and double check:
-  1. occurrences of the synonym/homonym without species authority
-  2. look at overlap of range between synonyms
-(make sure nivalis Puppo subsp. gets removed from ascendens)
 
 - taxa that could be merged at infraspecific level and brought up above 15+ pts:
     - Calceolaria_meyeniana_subsp._meyeniana (we didn't pull just meyeniana but could do that?)

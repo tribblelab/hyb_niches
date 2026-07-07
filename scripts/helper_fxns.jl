@@ -498,21 +498,34 @@ function resolve_taxon_path(taxon::String)
     return path
 end
 
-function filter_countries(taxon::String, countries::Vector{String})
-    path = resolve_taxon_path(taxon)
-    cleandf = DataFrame(CSV.File(path))
+function filter_countries(taxon::String, countries::Vector{String}; save::Bool=true)
+    clean_path = resolve_taxon_path(taxon)
+    filtered_path = joinpath("data/occurrence_data/pt_occs_filtered", basename(clean_path))
 
-    # check that at least one country is present in df
-    dfcountries = cleandf.country
-    if length(intersect(countries, dfcountries)) == 0
-        error("no input country provided in `countries` list matches countries existing in dataframe")
-    end
+    paths = [clean_path]
+    isfile(filtered_path) && push!(paths, filtered_path)
 
-    # filter every country out of df
-    for country in countries
-        filter!(:country => x -> x != country, cleandf)
+    for path in paths
+        df = DataFrame(CSV.File(path))
+
+        # check that at least one target country is present (only enforce this on the clean file,
+        # since the filtered file may have already dropped some of these rows)
+        if path == clean_path
+            dfcountries = df.country
+            if length(intersect(countries, dfcountries)) == 0
+                error("no input country provided in `countries` list matches countries existing in dataframe")
+            end
+        end
+
+        for country in countries
+            filter!(:country => x -> x != country, df)
+        end
+
+        if save
+            CSV.write(path, df)
+            println(" Written: $path")
+        end
     end
-    CSV.write(path, cleandf)
 end
 
 # Remove rows outside the specified lat/lon bounding box.
@@ -529,10 +542,12 @@ function filter_coords(taxon::String;
         error("At least one of lat_min, lat_max, lon_min, lon_max must be specified")
     end
 
-    path = resolve_taxon_path(taxon)
-    df = DataFrame(CSV.File(path))
+    clean_path = resolve_taxon_path(taxon)
+    filtered_path = joinpath("data/occurrence_data/pt_occs_filtered", basename(clean_path))
 
-    # Build a row-wise keep predicate
+    paths = [clean_path]
+    isfile(filtered_path) && push!(paths, filtered_path)
+
     function keep(row)
         lat = row.latitude
         lon = row.longitude
@@ -549,6 +564,8 @@ function filter_coords(taxon::String;
         return true
     end
 
+    # Preview plot is built from the clean (unfiltered-by-provenance) version only
+    df = DataFrame(CSV.File(clean_path))
     keep_mask = [keep(row) for row in eachrow(df)]
     kept_df = df[keep_mask, :]
     removed_df = df[.!keep_mask, :]
@@ -591,6 +608,50 @@ function filter_coords(taxon::String;
         theme(plot.title=element_text(size=10))
     print(p)
     """
+
+    if !save
+        println(" Preview only — re-run with save=true to apply.")
+        return nothing
+    end
+
+    # Apply the same lat/lon predicate to BOTH the clean file and (if present) the filtered file,
+    # so pt_occs_clean and pt_occs_filtered stay consistent for this taxon.
+    for path in paths
+        df_p = DataFrame(CSV.File(path))
+        mask_p = [keep(row) for row in eachrow(df_p)]
+        CSV.write(path, df_p[mask_p, :])
+        println(" Written: $path")
+    end
+end
+
+"""
+    filter_scientific_names(taxon, names_to_remove; save=true)
+
+Remove rows whose `scientificName` matches any value in `names_to_remove` from
+the resolved clean file for `taxon`. Prints a count of removed rows.
+
+# Example
+```julia
+filter_scientific_names("Calceolaria undulata",
+    ["Calceolaria foliosa", "Calceolaria foliosa Meyen ex Walp. & Schauer"])
+```
+"""
+function filter_scientific_names(taxon::String, names_to_remove::Vector{String}; save::Bool=true)
+    path = resolve_taxon_path(taxon)
+    df = DataFrame(CSV.File(path; missingstring=["", "NA"]))
+
+    remove_set = Set(names_to_remove)
+    keep_mask = map(r -> ismissing(r.scientificName) || !(r.scientificName in remove_set), eachrow(df))
+
+    n_removed = count(.!keep_mask)
+    if n_removed == 0
+        println("  No rows matched the given scientificName values — nothing removed.")
+        return
+    end
+
+    kept_df = df[keep_mask, :]
+    names_str = join(names_to_remove, ", ")
+    println("  Removing $n_removed row(s) with scientificName in: $names_str")
 
     if save
         CSV.write(path, kept_df)
