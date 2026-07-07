@@ -419,24 +419,23 @@ non_res_df = DataFrame(CSV.File("data/occurrence_data/supp_data/non_research_ina
 raw_dir = "data/occurrence_data/pt_occs_raw"
 all_raw_files = filter(f -> endswith(f, ".csv"), readdir(raw_dir))
 
-for (taxon, subdf) in pairs(groupby(non_res_df, :accepted_name))
-    taxon_str = replace(taxon.accepted_name, " " => "_")
-    
-    # Find matching file in filtered_dir
-    # choose the second one with higher date
-    # fixit: this is hard coded
-    matching_file = filter(f -> startswith(f, taxon_str * "-"), all_raw_files)[2]
+for subdf in groupby(non_res_df, :accepted_name)
+    taxon_str = replace(subdf.accepted_name[1], " " => "_")
+
+    # Find matching files; pick the one with the latest date suffix
+    candidates = filter(f -> startswith(f, taxon_str * "-"), all_raw_files)
+    if isempty(candidates)
+        @warn "No raw file found for $taxon_str — skipping"
+        continue
+    end
+    matching_file = last(sort(candidates))
     fpath = joinpath(raw_dir, matching_file)
-    
-    # Read existing file
+
+    # Read existing file and append
     existing_df = DataFrame(CSV.File(fpath; missingstring=["", "NA"]))
-    
-    # Append the rows
-    combined_df = vcat(existing_df, subdf, cols=:union)
-    
-    # Remove any complete duplicates just in case
+    combined_df = vcat(existing_df, DataFrame(subdf); cols=:union)
     unique!(combined_df)
-    
+
     CSV.write(fpath, combined_df)
     println("Appended $(nrow(subdf)) non-research records to $(fpath)")
 end
