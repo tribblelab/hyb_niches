@@ -1,0 +1,252 @@
+---
+title: "niche_modeling"
+output: html_document
+date: "2026-06-25"
+---
+
+# goal
+
+take clean occurrence data, model niches, then calculate niche overlap between pairs
+
+## load packages
+
+```{r}
+library(devtools)
+install_github("cmt2/candi_pipeline", force = TRUE)
+```
+
+```{r}
+library(raster)
+library(dismo)
+library(sf)
+library(geodata)
+#library(candi)
+```
+
+## test on one taxon
+
+following: https://soltislab.github.io/BotanyENMWorkshops/Botany2025/Botany2025.html
+
+```{r}
+alldf = read.csv("data/occurrence_data/pt_occs_filtered/Calceolaria_chaetostemon_georef_merged.csv")
+alldfsp = st_as_sf(alldf, coords = c("longitude", "latitude"), crs = 4326)
+```
+
+```{r}
+get_world_clim <- function(clim_dir = "data/niche_modeling/bioclim/climate/wc2.1_2.5m") {
+
+  # Load already-downloaded WorldClim 2.5 arc-min bioclim tifs
+  files <- list.files(path = clim_dir, pattern = "\\.tif$", full.names = TRUE)
+
+  if (length(files) == 0) {
+    stop("No .tif files found in ", clim_dir,
+         ". Download first with geodata::worldclim_global(var='bio', res=2.5)")
+  }
+
+  # Combine all rasters into a stack
+  cs <- raster::stack(files)
+  return(cs)
+
+}
+
+clim_data <- get_world_clim()
+```
+
+```{r}
+make_corr_matrix <- function(occurrences, environment_data){
+  #trim environmental layers to the extent of the occurrence data
+  #this trimmed version ONLY for the purpose of correlation analysis
+
+  #getting the max and min lon and lat for the extent of the clipping mask
+  collapsed_occ_list <- do.call(rbind, occurrences)
+  max_lat <- max(collapsed_occ_list$latitude)
+  min_lat <- min(collapsed_occ_list$latitude)
+  max_lon <- max(collapsed_occ_list$longitude)
+  min_lon <- min(collapsed_occ_list$longitude)
+  rect_lats <- c(max_lat, max_lat, min_lat, min_lat)
+  rect_lons <- c(max_lon, min_lon, min_lon, max_lon)
+  rect_coords <- cbind(rect_lons, rect_lats)
+
+  ##make spatial polygon##
+  p <- sp::Polygon(rect_coords)
+  ps <- sp::Polygons(list(p),1)
+  polygon_mask <- sp::SpatialPolygons(list(ps))
+
+  ##crop raster stack##
+  cropped_clim_corr <- raster::crop(environment_data, polygon_mask)
+
+  #correlation analysis between layers
+  print("Calculating correlation coefficients of climatic variables")
+  corr <- raster::layerStats(cropped_clim_corr, 'pearson', na.rm=TRUE)
+  c_matrix <- corr$`pearson correlation coefficient`
+  name <- paste0("correlationBioClim", Sys.Date(), ".csv")
+  print(paste0("Saving correlation coefficients to file in your current working directory: ",
+               getwd(), "/", name))
+  write.csv(c_matrix, file = name)
+
+  #make a correlation plot, highlighting  absolute values greater than 0.8
+  df <- raster::as.data.frame(c_matrix)
+  ggplot2::ggcorr(df, geom = "blank", label = TRUE, hjust = 0.75) +
+    ggplot2::geom_point(size = 10, aes(alpha = abs(coefficient) > 0.8)) +
+    ggplot2::scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
+    ggplot2::guides(color = FALSE, alpha = FALSE)
+
+  #export plot as a pdf, saved as correlation_plot.pdf in your working directory
+  name <- paste0("correlationsBioClim", Sys.Date(), ".pdf")
+  print(paste0("Saving PDF of correlation coefficients plot to your current working directory: ",
+               getwd(), "/", name))
+  print("Correlation coefficients greater than .8 or less than -.8 are highlighted in grey.")
+  ggplot2::ggsave(name, plot = last_plot(), device = "pdf", path = NULL,
+         scale = 1, width = NA, height = NA)
+
+  return(c)
+}
+```
+
+```{r}
+#' model niches
+#'
+#' A function to create maxent species distribution models for large numbers of taxa.
+#' @param occ_data A **named** list of dataframes; each element is a dataframe of
+#'   occurrence data for one species (must have `longitude` and `latitude` columns).
+#' @param enviro_data A RasterStack of environmental rasters.
+#' @param reps The number of replicates. Default is 3.
+#' @param reptype Maxent replicatetype: "bootstrap", "subsample", or "crossvalidate".
+#'   Default is "bootstrap".
+#' @param output_dir Directory for saving prediction rasters. Created if absent.
+#'   Use "" to skip saving to disk.
+#' @return A named list with two elements: `maxent_objs` and `predictions`.
+model_niches <- function(occ_data, enviro_data, reps = 3, reptype = "bootstrap", output_dir = "") {
+
+  # Create output directory if specified and doesn't exist
+  if (nchar(output_dir) > 0 && !dir.exists(output_dir)) {
+    dir.create(output_dir, recursive = TRUE)
+    message("Created output directory: ", output_dir)
+  }
+
+  maxent_objs <- list()
+  predictions <- list()
+
+  for (i in seq_along(occ_data)) {
+
+    sp_name <- sub(" ", "_", names(occ_data)[i])
+
+    # only proceed if this isn't a duplicate entry
+    if (sp_name %in% names(maxent_objs)) {
+      message("Skipping duplicate: ", sp_name)
+      predictions[[i]] <- NA
+      names(predictions)[i]  <- NA
+      next
+    }
+
+    message("Working on ", sp_name, " (species ", i, " of ", length(occ_data), ")")
+
+    ##### Prepare occurrence data: select lon/lat columns, drop NAs, convert to matrix
+    a  <- dplyr::select(occ_data[[i]], longitude, latitude)
+    a  <- a[complete.cases(a), ]
+
+    if (nrow(a) < 1) {
+      warning(sp_name, ": no usable coordinates — skipping.")
+      predictions[[i]] <- NA
+      names(predictions)[i] <- sp_name
+      maxent_objs[[i]] <- NA
+      names(maxent_objs)[i] <- sp_name
+      next
+    }
+
+    sp <- as.matrix(a)   # dismo::maxent needs a plain matrix
+
+    #####  MAXENT modeling
+    mx <- tryCatch(
+      dismo::maxent(enviro_data, sp, removeDuplicates = TRUE,
+                    replicates = reps, replicatetype = reptype),
+      error = function(e) {
+        warning(sp_name, ": maxent failed — ", conditionMessage(e))
+        NULL
+      }
+    )
+
+    if (is.null(mx)) {
+      predictions[[i]] <- NA
+      names(predictions)[i] <- sp_name
+      maxent_objs[[i]] <- NA
+      names(maxent_objs)[i] <- sp_name
+      next
+    }
+
+    maxent_objs[[i]] <- mx
+    names(maxent_objs)[i] <- sp_name
+
+    # check that at least some variables contribute to the model
+    # (var.importance is not exported; extract directly from mx@results)
+    total_perc_contribution <- tryCatch({
+      contrib_idx <- grep("contribution", rownames(mx@results), ignore.case = TRUE)
+      if (length(contrib_idx) > 0) sum(mx@results[contrib_idx, ], na.rm = TRUE) else 1
+    }, error = function(e) 1)  # if extraction fails, default to non-zero and proceed
+
+    if (total_perc_contribution != 0) {
+
+      pred <- tryCatch({
+
+        # set extent based on point locations plus a 5 % buffer
+        e2 <- raster::extent(sp) * 1.05
+
+        # Always predict in memory first — passing filename= directly to
+        # dismo::predict triggers an 'invalid scipen' bug in newer raster
+        # versions. Write to disk separately via raster::writeRaster instead.
+        pred_raster <- dismo::predict(mx, enviro_data, ext = e2)
+
+        if (nchar(output_dir) > 0) {
+          raster::writeRaster(pred_raster,
+                              filename  = paste0(output_dir, sp_name, ".asc"),
+                              overwrite = TRUE)
+          message("  Saved: ", paste0(output_dir, sp_name, ".asc"))
+        }
+
+        pred_raster
+
+      }, error = function(e) {
+        warning(sp_name, ": prediction failed — ", conditionMessage(e))
+        NA
+      })
+
+      predictions[[i]] <- pred
+      names(predictions)[i] <- sp_name
+
+    } else {
+      warning(sp_name, ": all variable contributions are 0 — skipping prediction.")
+      predictions[[i]] <- NA
+      names(predictions)[i] <- sp_name
+    }
+  }
+
+  return(list(maxent_objs = maxent_objs, predictions = predictions))
+}
+```
+
+## test on Calceolaria alba
+
+```{r}
+# Load Calceolaria alba occurrence data (filtered / georef-merged)
+alba_df <- read.csv(
+  "data/occurrence_data/pt_occs_filtered/Calceolaria_alba_georef_merged.csv"
+)
+alba_df <- alba_df[!is.na(alba_df$longitude) & !is.na(alba_df$latitude), ]
+message("Calceolaria alba: ", nrow(alba_df), " usable occurrence points")
+
+# Wrap in a named list as required by model_niches
+occ_list <- list("Calceolaria alba" = alba_df)
+
+# Run model — 3 bootstrap replicates, output saved to data/niche_modeling/outputs/
+results_alba <- model_niches(
+  occ_data    = occ_list,
+  enviro_data = clim_data,
+  reps        = 3,
+  reptype     = "bootstrap",
+  output_dir  = "data/niche_modeling/outputs/"
+)
+
+# Inspect results
+print(results_alba$maxent_objs)
+plot(results_alba$predictions[["Calceolaria_alba"]], main = "Calceolaria alba — MaxEnt prediction")
+```
