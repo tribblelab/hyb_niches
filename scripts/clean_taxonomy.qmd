@@ -369,12 +369,94 @@ for k in keys(synonymdict)
 end
 ```
 
+### build a species-level synonym dictionary for taxa sampled at the infraspecific level
+
+for every taxon we sampled at the infraspecific level (ex. "Calceolaria meyeniana subsp. meyeniana"),
+we also want to be able to pull occurrences at the specific level ("Calceolaria meyeniana").
+`synonymdict` only has the synonyms of the infraspecific taxa we sampled, so pooling those misses:
+
+- the species name itself,
+- the accepted infraspecific taxa of that species that we *didn't* sample (ex. "Calceolaria meyeniana subsp. glabrata"),
+- synonyms of the species as a whole & of those unsampled infraspecific taxa.
+
+so, let's build `species_synonymdict`, mapping each species-level name to everything POWO places
+under that species (at any rank), plus anything we manually added to `synonymdict` for our sampled infraspecific taxa
+(ex. "Calceolaria mollissima" for corymbosa, the "cumingiana" spellings for dentata).
+
+```{julia}
+# species-level name => infraspecific taxa we sampled
+species_to_infrataxa = Dict{String, Vector{String}}()
+for row in eachrow(taxa_traits)
+    ismissing(row.infraspecificEpithet) && continue
+    sp_name = "Calceolaria $(row.specificEpithet)"
+    push!(get!(species_to_infrataxa, sp_name, String[]), row.scientificName)
+end
+
+species_synonymdict = Dict{String, Vector{Tuple{String, Union{String, Missing}}}}()
+
+for (sp_name, infrataxa) in species_to_infrataxa
+    syns = Tuple{String, Union{String, Missing}}[]
+
+    # 1. accepted names: the species itself + all of its accepted infraspecific taxa (sampled or not)
+    push!(syns, (sp_name, get(authority_dict, sp_name, missing)))
+    for validname in validnames
+        if startswith(validname, sp_name * " ")
+            push!(syns, (validname, get(authority_dict, validname, missing)))
+        end
+    end
+
+    # 2. everything we already gathered (incl. manual additions) for the infraspecific taxa we sampled
+    for infrataxon in infrataxa
+        append!(syns, get(synonymdict, infrataxon, []))
+    end
+
+    # 3. synonyms of the species or of any of its infraspecific taxa
+    # (the name after === is followed by whitespace for both "=== Name Author" and "=== Name subsp. infraname")
+    validnamepat = Regex("===\\s+\\Q$sp_name\\E(?:\\s|\$)")
+    for line in powosynonyms
+        occursin(validnamepat, line) || continue
+        synonym = strip(match(synonympat, line)[1])
+        syn_parts = split(synonym, " ")
+        syn_epithet = length(syn_parts) > 2 ? join(syn_parts[2:end], " ") : syn_parts[2]
+
+        # Escape special regex characters in the epithet
+        escaped_epithet = replace(syn_epithet, r"([.*+?^$()[\]{}|\\])" => s"\\\1")
+
+        auth_match = match(Regex("\\b$(escaped_epithet)\\s+(.+?),"), line)
+        syn_authority = missing
+        if auth_match !== nothing
+            syn_authority = strip(auth_match[1])
+            syn_authority = replace(syn_authority, r"\s+in\s+.*$" => "")
+        end
+
+        push!(syns, (synonym, syn_authority))
+    end
+
+    # drop repeated names (keeping the first, so accepted names keep their authority)
+    species_synonymdict[sp_name] = unique(first, syns)
+end
+
+# preview species-level synonyms
+for k in sort(collect(keys(species_synonymdict)))
+    println(k, " (", length(species_synonymdict[k]), " names; sampled: ", join(species_to_infrataxa[k], ", "), ")")
+    for (syn_name, syn_auth) in species_synonymdict[k]
+        println("    ", syn_name, "  ", coalesce(syn_auth, ""))
+    end
+end
+```
+
 ### filter homonym_df to only include species of interest
 
 now, we can filter the `homonym_df` to only include values in our synonym dictionary.
 ```{julia}
 synonymdict_values = Set{String}()
 for (key, value_list) in synonymdict
+    for (syn_name, syn_auth) in value_list
+        push!(synonymdict_values, syn_name)
+    end
+end
+# also keep homonyms relevant to the species-level pulls
+for (key, value_list) in species_synonymdict
     for (syn_name, syn_auth) in value_list
         push!(synonymdict_values, syn_name)
     end
@@ -431,9 +513,10 @@ end
 taxa_traits.botanicalCountries = [get(country_dict, name, String[]) for name in taxa_traits.scientificName]
 ```
 
-write out clean version of `taxa_traits`, my homonym df, my synonym dict:
+write out clean version of `taxa_traits`, my homonym df, my synonym dict, my species-level synonym dict:
 ```{julia}
 save("data/taxonomy_trait_data/synonymdict.jld2", synonymdict)
+save("data/taxonomy_trait_data/species_synonymdict.jld2", species_synonymdict)
 CSV.write("data/taxonomy_trait_data/homonyms.csv", homonym_df)
 CSV.write("data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv", taxa_traits)
 ```
