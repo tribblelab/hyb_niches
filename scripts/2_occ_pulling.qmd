@@ -1,0 +1,240 @@
+---
+title: "gbif_occs"
+output: html_document
+date: "2026-02-03"
+---
+
+# Pull GBIF / iDigBio occurrence data
+
+To get started, we're going to be pulling code from the [Soltis lab
+ENM Botany 2025 workshop](https://soltislab.github.io/BotanyENMWorkshops/Botany2025/Botany2025.html). 
+
+## package management
+
+### download packages
+
+```{r eval = FALSE}
+library(devtools)
+list_of_packages <- c(
+  # Core ENM tools
+  "terra", "dismo", "ENMeval", "ENMTools", "biomod2",
+  # Spatial / Mapping
+  "sf", "rnaturalearth", "ggspatial", "leaflet",
+  "fields", "rangeBuilder",
+  # Visualization
+  "ggplot2", "viridis", "gridExtra",
+  # Data manipulation
+  "dplyr", "tidyr", "stringr", "gtools",
+  # Phylogenetics
+  "ape", "phytools",
+  # Biodiversity data
+  "ridigbio", "gatoRs",
+  # Other utilities
+  "multcompView", "usdm", "predicts", "rJava"
+)
+
+new.packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
+
+if (length(new.packages)) {
+  cat("\nInstalling missing CRAN packages:\n")
+  print(new.packages)
+  install.packages(new.packages)
+} else {
+  cat("\nAll required CRAN packages already installed.\n")
+}
+
+## ---- Load All CRAN Packages ----
+
+# Try loading all required CRAN packages.
+loaded <- sapply(list_of_packages, require, character.only = TRUE)
+
+if (any(!loaded)) {
+  cat("\nWARNING: These CRAN packages failed to load:\n")
+  print(list_of_packages[!loaded])
+} else {
+  cat("\nAll CRAN packages loaded successfully.\n")
+}
+
+github_repos <- c(
+  "vqv/ggbiplot"
+)
+
+for (repo in github_repos) {
+  pkg <- tail(strsplit(repo, "/")[[1]], 1)
+  if (!pkg %in% installed.packages()[,"Package"]) {
+    cat(paste("\nInstalling GitHub package:", repo, "\n"))
+    devtools::install_github(repo, upgrade = "never")
+  } else {
+    cat(paste("\nGitHub package already installed:", pkg, "\n"))
+  }
+}
+
+# Try loading GitHub packages.
+github_packages <- c("ggbiplot")
+github_loaded <- sapply(github_packages, require, character.only = TRUE)
+
+if (any(!github_loaded)) {
+  cat("\nWARNING: These GitHub packages failed to load:\n")
+  print(github_packages[!github_loaded])
+} else {
+  cat("\nAll GitHub packages loaded successfully.\n")
+}
+```
+
+### load packages - julia
+```{julia}
+include("helper_fxns.jl")
+include("../../niche-modeling-utils/scripts/fileutils.jl")
+include("../../niche-modeling-utils/scripts/occpulling.jl")
+include("../../niche-modeling-utils/scripts/datacleaning.jl")
+include("../../niche-modeling-utils/scripts/plottingutils.jl")
+using JLD2
+```
+
+## load in data
+
+```{julia}
+# load in dictionary
+synonymdict = load("data/taxonomy_trait_data/synonymdict.jld2")
+# species-level synonyms for taxa sampled at the infraspecific level (built in clean_taxonomy.qmd)
+species_synonymdict = load("data/taxonomy_trait_data/species_synonymdict.jld2")
+# load in dataframe
+taxa_traits = DataFrame(CSV.File("data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv"))
+```
+
+## pull occurrences for all taxa
+
+```{julia}
+#| eval: false
+raw_dir = "data/occurrence_data/pt_occs_raw"
+pulled = pull_occurrences(synonymdict, raw_dir)
+```
+
+no failed taxa, no no-data taxa. cool!
+
+## pull species-level occurrences for infraspecific taxa
+
+For all taxa sampled at the infraspecific level, pull occurrences once at the species level using `species_synonymdict` (built in `clean_taxonomy.qmd`). Unlike pooling the synonym lists of the subspecies we sampled, this includes the species name itself, the accepted infraspecific taxa we *didn't* sample, and the synonyms of the species as a whole. Filicaulis is intentionally excluded (subspp. kept separate).
+
+```{julia}
+#| eval: false
+# filicaulis subspp. are kept separate
+species_taxa = filter(sp_name -> !occursin("filicaulis", sp_name), sort(collect(keys(species_synonymdict))))
+species_pulled = pull_occurrences(species_synonymdict, raw_dir; taxa=species_taxa)
+```
+
+## grab non research grade Cocucci/Sersic iNat obs.
+
+the python for this lives in `scripts/pull_nonresearch_inat.py` and is run as a script: running it line by line in the
+interactive python console splits the loops at their blank lines, which silently keeps only the last observation.
+
+```{julia}
+#| eval: false
+run(`python3 scripts/pull_nonresearch_inat.py`)
+```
+
+## append non-research occurrences to raw datasets
+
+```{julia}
+#| eval: false
+# Append non-research grade iNat observations to the raw CSVs
+non_res_df = DataFrame(CSV.File("data/occurrence_data/supp_data/non_research_inat_formatted.csv"; missingstring=["", "NA"]))
+append_occurrences(non_res_df, raw_dir; taxon_col=:accepted_name)
+```
+
+## clean occurrence data
+
+batch cleaning for all species:
+```{julia}
+# Load homonyms file: names that are used for more than one taxon, under different authorities
+homonyms = DataFrame(CSV.File("data/taxonomy_trait_data/homonyms.csv"))
+
+# clean both the taxa as sampled & the species-level pulls for taxa sampled at the infraspecific level
+all_synonymdict = merge(synonymdict, species_synonymdict)
+
+# For each taxon, collect the homonyms ("name authority") that belong to a *different* taxon,
+# so we can filter them out of that taxon's occurrences.
+# Example: "Calceolaria nitida" has the synonym "Calceolaria glandulosa Benth.",
+#          so when processing "Calceolaria nitida", filter OUT "Calceolaria glandulosa Poepp. ex Benth." (a valid name!)
+# Example: "Calceolaria meyeniana" has the synonym "Calceolaria cheiranthoides Reiche ex Witasek",
+#          so filter OUT "Calceolaria cheiranthoides Phil. ex Reiche" (a synonym of dentata subsp. dentata)
+homonyms_to_exclude = find_homonyms_to_exclude(all_synonymdict, homonyms)
+
+println("Taxa with homonyms to filter: $(length(homonyms_to_exclude))")
+for taxa in sort(collect(keys(homonyms_to_exclude)))
+    println("  $taxa will EXCLUDE: $(join(homonyms_to_exclude[taxa], "; "))")
+end
+```
+
+```{julia}
+filtering_stats = clean_occurrences(
+    all_synonymdict,
+    raw_dir,
+    "data/occurrence_data/pt_occs_clean",
+    "data/occurrence_data/pt_occs_to_georeference";
+    homonyms_to_exclude=homonyms_to_exclude,
+    # remove points above or below lat/long bounding box
+    lat_min=-56, lat_max=31.5,
+    lon_min=-117, lon_max=-33,
+    # some parts of texas fall into this range above so let's manually remove USA pts
+    countries_to_remove=["United States of America"],
+    drop_missing_country=true
+)
+#fixit: incorporate native range polygons?
+```
+
+### check minimum number of occurrences
+```{julia}
+# add calculated columns for seeing filtering before and after nrow
+filtering_stats.taxa_clean_removed = filtering_stats.raw .- filtering_stats.after_taxa_clean
+filtering_stats.duplicates_removed = filtering_stats.after_taxa_clean .- filtering_stats.after_remove_duplicates
+filtering_stats.total_removed = filtering_stats.raw .- filtering_stats.after_remove_duplicates
+filtering_stats.percent_retained = round.((filtering_stats.after_remove_duplicates ./ filtering_stats.raw) .* 100, digits=1)
+
+# show taxa with filtering
+filtered_taxa = filtering_stats[filtering_stats.total_removed .> 0, :]
+println("Taxa with records removed ($(nrow(filtered_taxa)) taxa):")
+println(filtered_taxa)
+
+# save the stats
+#CSV.write("data/filtering_stats_2026_02_18.csv", filtering_stats)
+#println("\nFiltering statistics saved to data/filtering_stats_2026_02_18.csv")
+```
+
+create priority list for georeferencing:
+```{julia}
+# sort descending on rows missing coords (prioritizing rows w/ many we can georeference)
+sort!(filtering_stats, :rows_missing_coords, rev=true)
+# sort ascending on rows with very few coords as is (w/ lat/longs)
+sort!(filtering_stats, :after_locality_filt, rev=false)
+# separate out those where the sum of :rows_missing_coords + :after_locality_filt < 15 (not as much of a priority)
+toofewobs = filter(row -> row.rows_missing_coords + row.after_locality_filt < 15, filtering_stats)
+enoughobs = filter(row -> row.rows_missing_coords + row.after_locality_filt >= 15, filtering_stats)
+CSV.write("data/occurrence_data/summarytables_plots/ranked_togeoref.csv", enoughobs)
+```
+
+## prepare geolocate formatted files
+
+```{julia}
+prepare_geolocate_files(
+    "data/occurrence_data/pt_occs_to_georeference",
+    "data/occurrence_data/pt_occs_to_georeference_geolocate_format"
+)
+```
+
+## visualize occurrences before & after filtering
+
+```{julia}
+plot_all_occurrence_maps(
+    traits_path="data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv",
+    raw_dir="data/occurrence_data/pt_occs_raw",
+    clean_dir="data/occurrence_data/pt_occs_clean",
+    georef_dir="data/occurrence_data/pt_occs_georeferenced",
+    filtered_dir="data/occurrence_data/pt_occs_filtered",
+    shapefile_path="data/occurrence_data/supp_data/bot_country_shapefiles/level3.shp",
+    pdf_file="data/occurrence_data/summarytables_plots/occurrence_maps_before_after-2026_10_07.pdf",
+    species_ranges_path="data/taxonomy_trait_data/species_level_ranges.csv",
+    only_clean=false,
+    min_points=15
+)
+```

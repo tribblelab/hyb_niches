@@ -10,6 +10,10 @@ date: "2026-05-01"
 
 ```{julia}
 include("helper_fxns.jl")
+include("../../niche-modeling-utils/scripts/fileutils.jl")
+include("../../niche-modeling-utils/scripts/occpulling.jl")
+include("../../niche-modeling-utils/scripts/datacleaning.jl")
+include("../../niche-modeling-utils/scripts/plottingutils.jl")
 using StatsBase
 ```
 
@@ -26,7 +30,6 @@ taxa_list = taxa_traits.scientificName
 ```{julia}
 for (idx, taxa) in enumerate(taxa_list)
     filename = replace(taxa, " " => "_")
-    taxon_stem = replace(filename, r"-\d{4}_\d{2}.*$" => "")
     georef_dir = "data/occurrence_data/pt_occs_georeferenced"
     georef_df = nothing
     for ext in [".csv", ".xlsx"]
@@ -76,25 +79,25 @@ for (idx, taxa) in enumerate(taxa_list)
     if !isnothing(georef_df) && nrow(georef_df) > 0
         # Find the no_coords file — this is the DwC base for georef records
         no_coords_candidates = filter(
-            f -> startswith(f, taxon_stem) && endswith(f, "_no_coords.csv"),
+            f -> taxon_stem(f) == filename && endswith(f, "_no_coords.csv"),
             readdir("data/occurrence_data/pt_occs_to_georeference")
         )
 
         # Find the cleaned file — records that already had coordinates
         clean_candidates = filter(
-            f -> startswith(f, taxon_stem) && occursin("cleaned", f) && endswith(f, ".csv"),
+            f -> taxon_stem(f) == filename && endswith(f, "_cleaned.csv"),
             readdir("data/occurrence_data/pt_occs_clean")
         )
 
         if isempty(no_coords_candidates)
-            println("  WARNING: No no_coords file found for $taxon_stem — skipping georef merge")
+            println("  WARNING: No no_coords file found for $filename — skipping georef merge")
         elseif isempty(clean_candidates)
-            println("  WARNING: No cleaned file found for $taxon_stem — skipping georef merge")
+            println("  WARNING: No cleaned file found for $filename — skipping georef merge")
         else
-            no_coords_path = joinpath("data/occurrence_data/pt_occs_to_georeference", first(no_coords_candidates))
+            no_coords_path = joinpath("data/occurrence_data/pt_occs_to_georeference", last(sort(no_coords_candidates)))
             no_coords_df = DataFrame(CSV.File(no_coords_path))
 
-            clean_path = joinpath("data/occurrence_data/pt_occs_clean", first(clean_candidates))
+            clean_path = joinpath("data/occurrence_data/pt_occs_clean", last(sort(clean_candidates)))
             clean_df = DataFrame(CSV.File(clean_path))
 
             # Filter no_coords to only viable georef IDs
@@ -113,8 +116,9 @@ for (idx, taxa) in enumerate(taxa_list)
                 georef_rows[!, :longitude] = map(row -> georef_lookup[string(row.ID)].lon, eachrow(georef_rows))
 
                 # Add georef notes column to both frames so vcat works
+                notes_col = findfirst(c -> uppercase(string(c)) == "NOTES", names(georef_df))
                 notes_lookup = Dict(
-                    string(row.ID) => get(row, :Notes, missing)
+                    string(row.ID) => (isnothing(notes_col) ? missing : row[notes_col])
                     for row in eachrow(georef_df)
                 )
                 georef_rows[!, :georef_notes] = map(row -> get(notes_lookup, string(row.ID), missing), eachrow(georef_rows))
@@ -125,7 +129,7 @@ for (idx, taxa) in enumerate(taxa_list)
 
                 println("  Combined: $(nrow(clean_df)) clean + $(nrow(georef_rows)) georef = $(nrow(combined)) total")
 
-                out_path = joinpath("data/occurrence_data/pt_occs_clean", taxon_stem * "_georef_merged.csv")
+                out_path = joinpath("data/occurrence_data/pt_occs_clean", filename * "_georef_merged.csv")
                 CSV.write(out_path, combined; transform=(col, val) -> something(val, missing))
                 println("  Written: $out_path")
             end
@@ -208,7 +212,7 @@ fixit: move this later, change `load_pt_occs_df` fxn
 
 ```{julia}
 # load mega df (georef_merged preferred over cleaned per taxon)
-all_occs = load_pt_occs_df()
+all_occs = load_pt_occs_df("data/occurrence_data/pt_occs_clean")
 # total points per taxon
 n_by_taxon = combine(groupby(all_occs, :taxon), nrow => :n_total)
 sort!(n_by_taxon, :n_total)
@@ -320,7 +324,9 @@ for t in taxa
     fpath = resolve_clean_file(t, clean_dir)
     isempty(fpath) && continue
 
-    df = DataFrame(CSV.File(fpath; missingstring=["", "NA"]))
+    # read from the filtered file if earlier filters (ex. scientificName) already wrote one
+    filtered_path = joinpath(filtered_dir, basename(fpath))
+    df = DataFrame(CSV.File(isfile(filtered_path) ? filtered_path : fpath; missingstring=["", "NA"]))
     if nrow(df) == 0
         continue
     end
@@ -599,7 +605,7 @@ filter_coords("Calceolaria parvifolia subsp. parvifolia", lat_max = -14, save=tr
 
 ```{julia}
 non_res_csv  = "data/occurrence_data/supp_data/non_research_inat_formatted.csv"
-date_suffix  = "2026_04_23"
+date_suffix  = "2026_10_07"
 
 # Load non-research-grade iNat additions (to count per taxon)
 non_res_df = isfile(non_res_csv) ?
@@ -653,7 +659,7 @@ for stem in stems
 end
 
 summary_df = DataFrame(summary_rows)
-CSV.write("data/occurrence_data/summarytables_plots/occ_cleaning_summary.csv", summary_df)
+CSV.write("data/occurrence_data/summarytables_plots/occ_cleaning_summary-10_07.csv", summary_df)
 println("Summary written — $(nrow(summary_df)) taxa")
 ```
 
@@ -661,7 +667,7 @@ println("Summary written — $(nrow(summary_df)) taxa")
 
 ```{julia}
 # Open a single PDF device to save all the side-by-side plots
-R"pdf('data/occurrence_data/summarytables_plots/filtered_occs_comparison.pdf', width=10, height=5)"
+R"pdf('data/occurrence_data/summarytables_plots/filtered_occs_compariso-10-07.pdf', width=10, height=5)"
 
 for fname in changed_taxa
     clean_path = joinpath(clean_dir, fname)
@@ -722,11 +728,22 @@ for fname in changed_taxa
 end
 
 R"dev.off()"
-println("Plots saved to data/occurrence_data/summarytables_plots/filtered_occs_comparison.pdf")
+println("Plots saved to data/occurrence_data/summarytables_plots/filtered_occs_comparison-10-07.pdf")
 ```
 
 ```{julia}
-plot_all_occurrence_maps(only_clean=true, pdf_file="data/occurrence_data/summarytables_plots/occurrence_maps.pdf", min_points = 5)
+plot_all_occurrence_maps(
+    traits_path="data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv",
+    raw_dir="data/occurrence_data/pt_occs_raw",
+    clean_dir="data/occurrence_data/pt_occs_clean",
+    georef_dir="data/occurrence_data/pt_occs_georeferenced",
+    filtered_dir="data/occurrence_data/pt_occs_filtered",
+    shapefile_path="data/occurrence_data/supp_data/bot_country_shapefiles/level3.shp",
+    pdf_file="data/occurrence_data/summarytables_plots/occurrence_maps-10-07.pdf",
+    species_ranges_path="data/taxonomy_trait_data/species_level_ranges.csv",
+    only_clean=true,
+    min_points=5
+)
 ```
 
 ## fixits
