@@ -1,0 +1,1034 @@
+name,author,rank,family,genus_queried,accepted,accepted_name,accepted_author,ipni_id,native_range,native_range_codes
+Calceolaria,L.,Genus,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:331444-2,Argentina Northeast; Argentina Northwest; Argentina South; Bolivia; Chile Central; Chile North; Chile South; Colombia; Costa Rica; Ecuador; El Salvador; Falkland Is.; Galápagos; Guatemala; Honduras; Mexico Central; Mexico Gulf; Mexico Northeast; Mexico Northwest; Mexico Southeast; Mexico Southwest; Panamá; Peru; Uruguay; Venezuela,AGE; AGW; AGS; BOL; CLC; CLN; CLS; CLM; COS; ECU; ELS; FAL; GAL; GUA; HON; MXC; MXG; MXE; MXN; MXT; MXS; PAN; PER; URU; VEN
+Calceolaria aberrans,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria inamoena subsp. inamoena,,urn:lsid:ipni.org:names:41187-2,,
+Calceolaria abscondita,Witasek,Species,Calceolariaceae,,false,Calceolaria collina subsp. subincisa,(Benth.) C.Ehrh.,urn:lsid:ipni.org:names:41188-2,,
+Calceolaria acapiflora subsp. dentifolia,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria scapiflora,(Ruiz & Pav.) Benth.,urn:lsid:ipni.org:names:2690892-4,,
+Calceolaria aconcaguina,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41189-2,Chile North,CLN
+Calceolaria acuminata,Pennell,Species,Calceolariaceae,,false,Calceolaria fusca,Pennell,urn:lsid:ipni.org:names:41190-2,,
+Calceolaria acutifolia,Witasek,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:41191-2,,
+Calceolaria adenanthera,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41192-2,Ecuador,ECU
+Calceolaria adenanthera subsp. adenanthera,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228262-1,Ecuador,ECU
+Calceolaria adenanthera subsp. bracteata,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:918298-1,Ecuador,ECU
+Calceolaria adenocalyx,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41193-2,Colombia,CLM
+Calceolaria aequilateralis,Edwin,Species,Calceolariaceae,,false,Calceolaria trilobata subsp. aequilateralis,(Edwin) Molau,urn:lsid:ipni.org:names:41196-2,,
+Calceolaria aiseniana,C.Ehrh.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:313812-2,Chile South,CLS
+Calceolaria ajugoides,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273682-2,Peru,PER
+Calceolaria alata,(Pennell) Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41198-2,Colombia; Ecuador,CLM; ECU
+Calceolaria alata subsp. antioquiensis,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria alata,(Pennell) Pennell,urn:lsid:ipni.org:names:295847-2,,
+Calceolaria alata subsp. occidentalis,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria alata,(Pennell) Pennell,urn:lsid:ipni.org:names:41199-2,,
+Calceolaria alba,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41200-2,Chile Central; Peru,CLC; PER
+Calceolaria albotomentosa,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41201-2,Ecuador,ECU
+Calceolaria albula,Colenso,Species,Calceolariaceae,,false,Jovellana sinclairii,(Hook.) Kraenzl.,urn:lsid:ipni.org:names:800147-1,,
+Calceolaria algarrobensis,Phil.,Species,Calceolariaceae,,false,Calceolaria polifolia,Hook.,urn:lsid:ipni.org:names:41202-2,,
+Calceolaria alicahuensis,Muñoz-Schick,Species,Calceolariaceae,,false,Calceolaria glandulosa subsp. alicahuensis,(Muñoz-Schick) C.Ehrh.,urn:lsid:ipni.org:names:303042-2,,
+Calceolaria alternifolia,Cav.,Species,Calceolariaceae,,false,Calceolaria linearis,Ruiz & Pav.,urn:lsid:ipni.org:names:800149-1,,
+Calceolaria altissima,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria inflexa,Ruiz & Pav.,urn:lsid:ipni.org:names:273683-2,,
+Calceolaria ambigua,Phil.,Species,Calceolariaceae,,false,Calceolaria dentata subsp. dentata,,urn:lsid:ipni.org:names:800151-1,,
+Calceolaria amicora,"S.Leiva, E.Rodr. & Rimarachin",Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77215179-1,Peru,PER
+Calceolaria amoena,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273684-2,Bolivia,BOL
+Calceolaria amplexicaulis,Kunth,Species,Calceolariaceae,,false,Calceolaria crenata,Lam.,urn:lsid:ipni.org:names:800152-1,,
+Calceolaria anagalloides,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria dichotoma subsp. dichotoma,,urn:lsid:ipni.org:names:41206-2,,
+Calceolaria andicola,Gillies ex Hook.,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:800155-1,,
+Calceolaria andicola,Witasek,Species,Calceolariaceae,,false,Calceolaria meyeniana subsp. meyeniana,,urn:lsid:ipni.org:names:41207-2,,
+Calceolaria andina,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41208-2,Chile Central,CLC
+Calceolaria andina var. andicola,Reiche,Variety,Calceolariaceae,,false,Calceolaria andina,Benth.,urn:lsid:ipni.org:names:41209-2,,
+Calceolaria andina var. nana,Phil. ex Kraenzl.,Variety,Calceolariaceae,,false,Calceolaria andina,Benth.,urn:lsid:ipni.org:names:2690920-4,,
+Calceolaria andina var. verbascifolia,Clos,Variety,Calceolariaceae,,false,Calceolaria andina,Benth.,urn:lsid:ipni.org:names:41210-2,,
+Calceolaria angulata,Pennell,Species,Calceolariaceae,,false,Calceolaria lojensis,Pennell,urn:lsid:ipni.org:names:41211-2,,
+Calceolaria angustiflora,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273685-2,Peru,PER
+Calceolaria angustiflora,Hook.,Species,Calceolariaceae,,false,Calceolaria angustiflora,Ruiz & Pav.,urn:lsid:ipni.org:names:800159-1,,
+Calceolaria angustifolia,(Lindl.) Sweet,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800160-1,Argentina South; Chile Central,AGS; CLC
+Calceolaria angustifolia var. globosa,J.Dix,Variety,Calceolariaceae,,false,Calceolaria angustifolia,(Lindl.) Sweet,urn:lsid:ipni.org:names:3267916-4,,
+Calceolaria anisanthera,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41213-2,Ecuador; Peru,ECU; PER
+Calceolaria annua,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41214-2,Peru,PER
+Calceolaria anomala,Pers.,Species,Calceolariaceae,,false,Calceolaria crenatiflora,Cav.,urn:lsid:ipni.org:names:800163-1,,
+Calceolaria aperta,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41215-2,Peru,PER
+Calceolaria aperta subsp. aperta,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228426-1,Peru,PER
+Calceolaria aperta subsp. incana,(Molau) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273686-2,Peru,PER
+Calceolaria apurimacensis,López Guillén,Species,Calceolariaceae,,false,Calceolaria chaetostemon,Pennell,urn:lsid:ipni.org:names:41216-2,,
+Calceolaria aquatica,A.Braun & C.D.Bouché,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273687-2,Bolivia,BOL
+Calceolaria arachnoidea,Graham,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800167-1,Chile Central,CLC
+Calceolaria arachnoidea subsp. arachnoidea,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228082-1,Chile Central,CLC
+Calceolaria arachnoidea subsp. nubigena,(Poepp.) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1037845-2,Chile Central,CLC
+Calceolaria arachnoidea var. lanata,Walp.,Variety,Calceolariaceae,,false,Calceolaria arachnoidea subsp. nubigena,(Poepp.) C.Ehrh.,urn:lsid:ipni.org:names:41219-2,,
+Calceolaria arachnoidea var. refulgens,Sweet,Variety,Calceolariaceae,,false,Calceolaria arachnoidea subsp. arachnoidea,,urn:lsid:ipni.org:names:2690938-4,,
+Calceolaria arachnoidea var. viridis,Benth.,Variety,Calceolariaceae,,false,Calceolaria arachnoidea subsp. nubigena,(Poepp.) C.Ehrh.,urn:lsid:ipni.org:names:41221-2,,
+Calceolaria araucana,Phil.,Species,Calceolariaceae,,false,Calceolaria dentata subsp. araucana,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:323827-2,,
+Calceolaria arborescens,Edwin,Species,Calceolariaceae,,false,Calceolaria viscosa,Ruiz & Pav.,urn:lsid:ipni.org:names:41222-2,,
+Calceolaria arbuscula,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273688-2,Peru,PER
+Calceolaria argentea,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800171-1,Ecuador; Peru,ECU; PER
+Calceolaria ascendens,Lindl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41224-2,Chile Central,CLC
+Calceolaria ascendens subsp. ascendens,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228421-1,Chile Central,CLC
+Calceolaria ascendens subsp. exigua,(Witasek) Nic.García,Subspecies,Calceolariaceae,,false,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:60454452-2,,
+Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1124039-2,Chile Central,CLC
+Calceolaria ascendens subsp. pristiphylla,(Phil.) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1134162-2,Chile Central,CLC
+Calceolaria ascendens var. chiloensis,(Lindl.) Kraenzl.,Variety,Calceolariaceae,,false,Calceolaria dentata subsp. dentata,,urn:lsid:ipni.org:names:41225-2,,
+Calceolaria ascendens var. coquimbensis,Benth.,Variety,Calceolariaceae,,false,Calceolaria collina subsp. collina,,urn:lsid:ipni.org:names:41226-2,,
+Calceolaria ascendens var. glandulifera,(Witasek) Pennell,Variety,Calceolariaceae,,false,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41227-2,,
+Calceolaria ascendens var. pristiphylla,(Phil.) Kraenzl.,Variety,Calceolariaceae,,false,Calceolaria ascendens subsp. pristiphylla,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:41228-2,,
+Calceolaria ascendens var. subincisa,Clos,Variety,Calceolariaceae,,false,Calceolaria ascendens subsp. ascendens,,urn:lsid:ipni.org:names:41195-2,,
+Calceolaria asperula,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41229-2,Chile Central,CLC
+Calceolaria atahualpae,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273689-2,Bolivia; Peru,BOL; PER
+Calceolaria atahualpae subsp. atahualpae,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228435-1,Bolivia; Peru,BOL; PER
+Calceolaria atahualpae subsp. witasekiana,(Kraenzl.) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273690-2,Peru,PER
+Calceolaria atropurpurea,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77384054-1,,
+Calceolaria atrosanguinea,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77384365-1,,
+Calceolaria atrovirens,Witasek,Species,Calceolariaceae,,false,Calceolaria glandulosa subsp. glandulosa,,urn:lsid:ipni.org:names:41231-2,,
+Calceolaria aurantiaca,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77349264-1,,
+Calceolaria aurea,Colla,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800176-1,Peru,PER
+Calceolaria aurea,Pennell,Species,Calceolariaceae,,false,Calceolaria colquepatana,Pennell,urn:lsid:ipni.org:names:41232-2,,
+Calceolaria auriculata,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41233-2,Chile Central,CLC
+Calceolaria australis,(Molau) Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:913771-1,Ecuador,ECU
+Calceolaria ballotifolia,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273692-2,Peru,PER
+Calceolaria barbata,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273693-2,Peru,PER
+Calceolaria bartsiifolia,Wedd.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800180-1,Bolivia,BOL
+Calceolaria bellidifolia,Gillies ex Benth.,Species,Calceolariaceae,,false,Calceolaria brunellifolia,Phil.,urn:lsid:ipni.org:names:800182-1,,
+Calceolaria bellidifolia,Salisb.,Species,Calceolariaceae,,false,Calceolaria fothergillii,Aiton,urn:lsid:ipni.org:names:800181-1,,
+Calceolaria bellidifolia var. angustifolia,Speg.,Variety,Calceolariaceae,,false,Calceolaria brunellifolia,Phil.,urn:lsid:ipni.org:names:41237-2,,
+Calceolaria belophora,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41238-2,Ecuador,ECU
+Calceolaria bentae,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:935674-1,Ecuador,ECU
+Calceolaria benthamii,Phil.,Species,Calceolariaceae,,false,Calceolaria volckmannii,Phil.,urn:lsid:ipni.org:names:323834-2,,
+Calceolaria bergii,Hieron.,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:800185-1,,
+Calceolaria berteroi,Colla,Species,Calceolariaceae,,false,Calceolaria angustifolia,(Lindl.) Sweet,urn:lsid:ipni.org:names:800187-1,,
+Calceolaria bicolor,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273694-2,Peru,PER
+Calceolaria bicrenata,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273695-2,Peru,PER
+Calceolaria bifida,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:800190-1,,
+Calceolaria biflora,Lam.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41242-2,Argentina South; Chile South; Falkland Is.,AGS; CLS; FAL
+Calceolaria biflora,Ruiz & Pav.,Species,Calceolariaceae,,false,Calceolaria dichotoma subsp. dichotoma,,urn:lsid:ipni.org:names:800192-1,,
+Calceolaria biflora f. falklandica,(S.Moore) Bowden,Form,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:952457-1,,
+Calceolaria biflora var. filicaulis,(Clos) Hosseus,Variety,Calceolariaceae,,false,Calceolaria filicaulis,Clos,urn:lsid:ipni.org:names:41243-2,,
+Calceolaria biflora var. magellanica,Clos,Variety,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:2690984-4,,
+Calceolaria biflora var. obtusifolia,(Kunze ex Walp. & Schauer) Clos,Variety,Calceolariaceae,,false,Calceolaria filicaulis subsp. luxurians,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:2690985-4,,
+Calceolaria bigemina,Phil.,Species,Calceolariaceae,,false,Calceolaria volckmannii,Phil.,urn:lsid:ipni.org:names:41245-2,,
+Calceolaria bipartita,Phil.,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41246-2,,
+Calceolaria bipinnatifida,Phil.,Species,Calceolariaceae,,false,Calceolaria pinnata subsp. pinnata,,urn:lsid:ipni.org:names:273696-2,,
+Calceolaria bogotensis,(Pennell) Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41247-2,Colombia,CLM
+Calceolaria boliviana,(Britton ex Rusby) Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41248-2,Bolivia; Peru,BOL; PER
+Calceolaria boliviana var. speciosa,(Pennell) Edwin,Variety,Calceolariaceae,,false,Calceolaria speciosa,Pennell,urn:lsid:ipni.org:names:41249-2,,
+Calceolaria borchersii,Phil.,Species,Calceolariaceae,,false,Calceolaria verbascifolia,Bertero ex Phil.,urn:lsid:ipni.org:names:41250-2,,
+Calceolaria borsinii,Rossow,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:1012881-1,,
+Calceolaria brachiata,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41251-2,Ecuador,ECU
+Calceolaria brachiata,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria flexuosa subsp. flexuosa,,urn:lsid:ipni.org:names:800199-1,,
+Calceolaria brachyantha,Edwin,Species,Calceolariaceae,,false,Calceolaria cajabambae,Kraenzl.,urn:lsid:ipni.org:names:41252-2,,
+Calceolaria brevistyla,Clos,Species,Calceolariaceae,,false,Calceolaria undulata,Benth.,urn:lsid:ipni.org:names:320834-2,,
+Calceolaria bridgesii,Kunze,Species,Calceolariaceae,,false,Calceolaria alba,Ruiz & Pav.,urn:lsid:ipni.org:names:800203-1,,
+Calceolaria brunellifolia,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41253-2,Argentina Northwest; Argentina South; Chile Central,AGW; AGS; CLC
+Calceolaria buchtieniana,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273697-2,Bolivia; Peru,BOL; PER
+Calceolaria bullata,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273698-2,Peru,PER
+Calceolaria caerulescens,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1013734-1,,
+Calceolaria caespitosa,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273699-2,Peru,PER
+Calceolaria cajabambae,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273700-2,Peru,PER
+Calceolaria cajamarcensis,López Guillén,Species,Calceolariaceae,,false,Calceolaria melissifolia subsp. melissifolia,,urn:lsid:ipni.org:names:41256-2,,
+Calceolaria caleuana,Muñoz-Schick & A.Moreira,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77105355-1,Chile Central,CLC
+Calceolaria callunoides,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria weberbaueriana,Kraenzl.,urn:lsid:ipni.org:names:273701-2,,
+Calceolaria calycina,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800210-1,Ecuador; Peru,ECU; PER
+Calceolaria campanae,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41259-2,Chile Central,CLC
+Calceolaria campii,Pennell,Species,Calceolariaceae,,false,Calceolaria serrata,Lam.,urn:lsid:ipni.org:names:41260-2,,
+Calceolaria camptoclada,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria elatior,Griseb.,urn:lsid:ipni.org:names:273702-2,,
+Calceolaria cana,Cav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800214-1,Chile Central,CLC
+Calceolaria cana var. pannosa,(Phil.) Reiche,Variety,Calceolariaceae,,false,Calceolaria filicaulis subsp. luxurians,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41263-2,,
+Calceolaria canariensis,G.Sm. ex J.Dix,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77384377-1,,
+Calceolaria candicans,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria argentea,Kunth,urn:lsid:ipni.org:names:800215-1,,
+Calceolaria canescens,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria hyssopifolia,Kunth,urn:lsid:ipni.org:names:800216-1,,
+Calceolaria canescens,Willd. ex Schult.,Species,Calceolariaceae,,false,Calceolaria ericoides subsp. ericoides,,urn:lsid:ipni.org:names:800217-1,,
+Calceolaria cantensis,López Guillén,Species,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:41265-2,,
+Calceolaria catamarcae,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria polyclada,Kraenzl.,urn:lsid:ipni.org:names:273703-2,,
+Calceolaria cataractarum,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41267-2,Colombia; Ecuador,CLM; ECU
+Calceolaria cavanillesii,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:313806-2,Argentina South; Chile Central,AGS; CLC
+Calceolaria cavanillesii,Pers. ex Steud.,Species,Calceolariaceae,,false,Calceolaria fothergillii,Aiton,urn:lsid:ipni.org:names:800220-1,,
+Calceolaria celendinensis,López Guillén,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41268-2,,
+Calceolaria cerasifolia,Benth.,Species,Calceolariaceae,,false,Calceolaria nivalis subsp. cerasifolia,(Benth.) Molau,urn:lsid:ipni.org:names:41269-2,,
+Calceolaria chaetostemon,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41270-2,Peru,PER
+Calceolaria cheiranthoides,Reiche ex Witasek,Species,Calceolariaceae,,false,Calceolaria meyeniana subsp. cheiranthoides,(Reiche ex Witasek) C.Ehrh.,urn:lsid:ipni.org:names:323836-2,,
+Calceolaria cheiranthoides,Phil. ex Reiche,Species,Calceolariaceae,,false,Calceolaria dentata subsp. dentata,,urn:lsid:ipni.org:names:800225-1,,
+Calceolaria chelidonioides,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800227-1,Argentina Northwest; Bolivia; Chile North; Colombia; Ecuador; Peru,AGW; BOL; CLN; CLM; ECU; PER
+Calceolaria chelidonioides subsp. gibbiformis,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria conocarpa,Pennell,urn:lsid:ipni.org:names:2691036-4,,
+Calceolaria chelidonioides subsp. serratifolia,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:2691038-4,,
+Calceolaria chelidonioides subsp. truncata,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:2691039-4,,
+Calceolaria chelidonioides var. flaccida,Benth.,Variety,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41272-2,,
+Calceolaria chelidonioides var. parvifolia,Benth.,Variety,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41274-2,,
+Calceolaria chibulensis,"C.Romero, Bussmann & Puppo",Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77167359-1,Peru,PER
+Calceolaria chillanensis,Montero,Species,Calceolariaceae,,false,Calceolaria cana,Cav.,urn:lsid:ipni.org:names:77384400-1,,
+Calceolaria chiloensis,Lindl.,Species,Calceolariaceae,,false,Calceolaria dentata subsp. dentata,,urn:lsid:ipni.org:names:41277-2,,
+Calceolaria chimboracensis,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria lamiifolia,Kunth,urn:lsid:ipni.org:names:800229-1,,
+Calceolaria chrysocalyx,Pennell,Species,Calceolariaceae,,false,Calceolaria flexuosa subsp. chrysocalyx,(Pennell) Molau,urn:lsid:ipni.org:names:273704-2,,
+Calceolaria chrysosphaera,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41279-2,Peru,PER
+Calceolaria chubutensis,Skottsb.,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:41280-2,,
+Calceolaria cinerea,Pennell,Species,Calceolariaceae,,false,Calceolaria comosa subsp. comosa,,urn:lsid:ipni.org:names:41281-2,,
+Calceolaria colcamarensis,Edwin,Species,Calceolariaceae,,false,Calceolaria velutinoides,Edwin,urn:lsid:ipni.org:names:41282-2,,
+Calceolaria collanensis,Edwin,Species,Calceolariaceae,,false,Calceolaria cuneiformis subsp. cuneiformis,,urn:lsid:ipni.org:names:41283-2,,
+Calceolaria collina,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:323656-2,Chile Central; Chile North,CLC; CLN
+Calceolaria collina subsp. collina,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228698-1,Chile Central,CLC
+Calceolaria collina subsp. conferta,(Witasek) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1084914-2,Chile Central,CLC
+Calceolaria collina subsp. subincisa,(Benth.) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1105635-2,Chile Central; Chile North,CLC; CLN
+Calceolaria colombiana,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41284-2,Colombia; Ecuador,CLM; ECU
+Calceolaria colquepatana,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800238-1,Peru,PER
+Calceolaria commutata,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273705-2,Ecuador,ECU
+Calceolaria comosa,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41285-2,Ecuador; Peru,ECU; PER
+Calceolaria comosa subsp. comosa,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228651-1,Ecuador; Peru,ECU; PER
+Calceolaria comosa subsp. elegans,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273706-2,Peru,PER
+Calceolaria compacta,Phil.,Species,Calceolariaceae,,false,Calceolaria dentata subsp. dentata,,urn:lsid:ipni.org:names:41286-2,,
+Calceolaria comulcana,"C.Romero, Bussmann & Puppo",Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77167360-1,Peru,PER
+Calceolaria concava,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273707-2,Peru,PER
+Calceolaria concinna,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:800241-1,,
+Calceolaria conferta,Witasek,Species,Calceolariaceae,,false,Calceolaria collina subsp. conferta,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41287-2,,
+Calceolaria connata,Hook. ex Graham,Species,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:800243-1,,
+Calceolaria connatifolia,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41288-2,Peru,PER
+Calceolaria conocarpa,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41289-2,Bolivia; Peru,BOL; PER
+Calceolaria conocarpa subsp. irregularis,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:41290-2,,
+Calceolaria coquimbensis,(Benth.) Kraenzl.,Species,Calceolariaceae,,false,Calceolaria collina subsp. collina,,urn:lsid:ipni.org:names:800246-1,,
+Calceolaria corazonica,Gilli,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41292-2,,
+Calceolaria cordata,Phil.,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:41294-2,,
+Calceolaria cordifolia,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273708-2,Peru,PER
+Calceolaria cordiformis,Edwin ex Moldau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41295-2,Ecuador; Peru,ECU; PER
+Calceolaria corymbosa,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41296-2,Argentina Northwest; Argentina South; Chile Central; Chile South,AGW; AGS; CLC; CLS
+Calceolaria corymbosa subsp. corymbosa,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228024-1,Chile Central; Chile South,CLC; CLS
+Calceolaria corymbosa subsp. floccosa,(Witasek) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1124370-2,Argentina Northwest; Argentina South; Chile Central,AGW; AGS; CLC
+Calceolaria corymbosa subsp. mimuloides,(Clos) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1133191-2,Chile Central,CLC
+Calceolaria corymbosa subsp. montana,(Cav.) C.Ehrh.,Subspecies,Calceolariaceae,,false,Calceolaria mollissima,Walp.,urn:lsid:ipni.org:names:1031185-2,,
+Calceolaria corymbosa subsp. santiagina,C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:320827-2,Chile Central,CLC
+Calceolaria corymbosa subsp. tetraphylla,(Phil.) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1117913-2,Chile Central,CLC
+Calceolaria corymbosa var. perennis,Edwin,Variety,Calceolariaceae,,false,Calceolaria rugulosa,Edwin,urn:lsid:ipni.org:names:41297-2,,
+Calceolaria costaricensis,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria irazuensis,Donn.Sm.,urn:lsid:ipni.org:names:41298-2,,
+Calceolaria crassa,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273709-2,Bolivia,BOL
+Calceolaria crassifolia,Phil.,Species,Calceolariaceae,,false,Calceolaria valdiviana subsp. crassifolia,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:323825-2,,
+Calceolaria crenata,Lam.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800252-1,Colombia; Ecuador,CLM; ECU
+Calceolaria crenata,Lindl.,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. ascendens,,urn:lsid:ipni.org:names:800253-1,,
+Calceolaria crenata subsp. australis,Molau,Subspecies,Calceolariaceae,,false,Calceolaria australis,(Molau) Molau,urn:lsid:ipni.org:names:41300-2,,
+Calceolaria crenata var. floribunda,(Kunth) Benth.,Variety,Calceolariaceae,,false,Calceolaria crenata,Lam.,urn:lsid:ipni.org:names:41301-2,,
+Calceolaria crenatiflora,Cav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41302-2,Argentina South; Chile Central; Chile South,AGS; CLC; CLS
+Calceolaria crenulata,Pennell,Species,Calceolariaceae,,false,Calceolaria boliviana,(Britton ex Rusby) Pennell,urn:lsid:ipni.org:names:41303-2,,
+Calceolaria crocea,Phil.,Species,Calceolariaceae,,false,Calceolaria meyeniana subsp. meyeniana,,urn:lsid:ipni.org:names:41304-2,,
+Calceolaria croceopunctata,Edwin,Species,Calceolariaceae,,false,Calceolaria ballotifolia,Kraenzl.,urn:lsid:ipni.org:names:41305-2,,
+Calceolaria cryptantha,Rusby,Species,Calceolariaceae,,false,Calceolaria soratensis,Kraenzl.,urn:lsid:ipni.org:names:41306-2,,
+Calceolaria cuatrecasasii,Pennell,Species,Calceolariaceae,,false,Calceolaria penlandii subsp. puraceensis,(Pennell) Molau,urn:lsid:ipni.org:names:41307-2,,
+Calceolaria cumbemayensis,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273711-2,Peru,PER
+Calceolaria cumingiana,Witasek,Species,Calceolariaceae,,false,Calceolaria dentata subsp. cumingiana,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41308-2,,
+Calceolaria cuneiformis,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273712-2,Peru,PER
+Calceolaria cuneiformis subsp. cuneiformis,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228187-1,Peru,PER
+Calceolaria cuneiformis subsp. xerophila,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:950674-1,Peru,PER
+Calceolaria cuneiformis var. baccharidifolia,Wedd.,Variety,Calceolariaceae,,false,Calceolaria sparsiflora,Kunze,urn:lsid:ipni.org:names:273713-2,,
+Calceolaria cuneiformis var. canescens,Walp.,Variety,Calceolariaceae,,false,Calceolaria cuneiformis subsp. cuneiformis,,urn:lsid:ipni.org:names:41311-2,,
+Calceolaria cunninghamii,Vatke,Species,Calceolariaceae,,false,Calceolaria crenatiflora,Cav.,urn:lsid:ipni.org:names:323659-2,,
+Calceolaria cuprea,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77384524-1,,
+Calceolaria cuspidata,Phil.,Species,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:41312-2,,
+Calceolaria cuzcoensis,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria virgata,Ruiz & Pav.,urn:lsid:ipni.org:names:41313-2,,
+Calceolaria cymbiflora,Sandwith,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:41314-2,,
+Calceolaria cypripediiflora,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273714-2,Peru,PER
+Calceolaria darwinii,Benth.,Species,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:41316-2,,
+Calceolaria decus-montium,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria argentea,Kunth,urn:lsid:ipni.org:names:41317-2,,
+Calceolaria deflexa,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273715-2,Peru,PER
+Calceolaria deflexa,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria nivalis subsp. nivalis,,urn:lsid:ipni.org:names:800271-1,,
+Calceolaria deflexa subsp. cuneata,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273716-2,Peru,PER
+Calceolaria deflexa subsp. deflexa,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228865-1,Peru,PER
+Calceolaria deflexa var. aurantiaca,Edwin,Variety,Calceolariaceae,,false,Calceolaria deflexa subsp. deflexa,,urn:lsid:ipni.org:names:41319-2,,
+Calceolaria delicatula,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria pinnata subsp. delicatula,(Kraenzl.) Molau,urn:lsid:ipni.org:names:41320-2,,
+Calceolaria densiflora,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41321-2,Peru,PER
+Calceolaria densifolia,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:323829-2,Chile Central,CLC
+Calceolaria densifolia subsp. densifolia,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228535-1,Chile Central,CLC
+Calceolaria densifolia subsp. laxa,C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:323830-2,Chile Central,CLC
+Calceolaria dentata,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41322-2,Argentina Northwest; Argentina South; Chile Central; Chile South,AGW; AGS; CLC; CLS
+Calceolaria dentata subsp. araucana,(Phil.) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1019193-1,Argentina South; Chile Central; Chile South,AGS; CLC; CLS
+Calceolaria dentata subsp. cumingiana,(Witasek) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1071170-2,Chile Central,CLC
+Calceolaria dentata subsp. dentata,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228389-1,Argentina Northwest; Argentina South; Chile Central; Chile South,AGW; AGS; CLC; CLS
+Calceolaria dentata var. chiloensis,(Lindl.) Benth.,Variety,Calceolariaceae,,false,Calceolaria dentata subsp. dentata,,urn:lsid:ipni.org:names:2691119-4,,
+Calceolaria dentata var. compacta,(Phil.) Reiche,Variety,Calceolariaceae,,false,Calceolaria dentata subsp. dentata,,urn:lsid:ipni.org:names:41323-2,,
+Calceolaria dentata var. cumingiana,(Witasek) Reiche,Variety,Calceolariaceae,,false,Calceolaria dentata subsp. cumingiana,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41324-2,,
+Calceolaria dentata var. subincisa,Benth.,Variety,Calceolariaceae,,false,Calceolaria collina subsp. subincisa,(Benth.) C.Ehrh.,urn:lsid:ipni.org:names:41325-2,,
+Calceolaria denticulata,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria stricta,Kunth,urn:lsid:ipni.org:names:800276-1,,
+Calceolaria dentifolia,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41326-2,Peru,PER
+Calceolaria dichotoma,Lam.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800278-1,Colombia; Ecuador; Galápagos; Mexico Southwest; Peru,CLM; ECU; GAL; MXS; PER
+Calceolaria dichotoma subsp. colimana,Padilla & Cuevas,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77106983-1,Mexico Southwest,MXS
+Calceolaria dichotoma subsp. dichotoma,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228213-1,Colombia; Ecuador; Galápagos; Peru,CLM; ECU; GAL; PER
+Calceolaria diffusa,Lindl.,Species,Calceolariaceae,,false,Calceolaria bicolor,Ruiz & Pav.,urn:lsid:ipni.org:names:273718-2,,
+Calceolaria dilatata,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800280-1,Ecuador,ECU
+Calceolaria discolor,Graham ex C.Morren,Species,Calceolariaceae,,false,Calceolaria crenatiflora,Cav.,urn:lsid:ipni.org:names:77384461-1,,
+Calceolaria discotheca,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41329-2,Peru,PER
+Calceolaria divaricata,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41328-2,Ecuador; Peru,ECU; PER
+Calceolaria diversifolia,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria myriophylla,Kraenzl.,urn:lsid:ipni.org:names:41330-2,,
+Calceolaria drepanantha,Pennell,Species,Calceolariaceae,,false,Calceolaria cypripediiflora,Kraenzl.,urn:lsid:ipni.org:names:41331-2,,
+Calceolaria dumetorum,Phil.,Species,Calceolariaceae,,false,Calceolaria glandulosa subsp. glandulosa,,urn:lsid:ipni.org:names:41332-2,,
+Calceolaria effusa,Phil.,Species,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:41333-2,,
+Calceolaria elatior,Griseb.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800287-1,Argentina Northwest; Bolivia,AGW; BOL
+Calceolaria elegans,(Sweet) Jacques,Species,Calceolariaceae,,false,Calceolaria purpurea,Graham,urn:lsid:ipni.org:names:77332112-1,,
+Calceolaria elliptica,Wedd.,Species,Calceolariaceae,,false,Calceolaria parvifolia subsp. parvifolia,,urn:lsid:ipni.org:names:273719-2,,
+Calceolaria endopogon,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria tetragona subsp. endopogon,(Kraenzl.) Molau,urn:lsid:ipni.org:names:273720-2,,
+Calceolaria endotrachys,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria engleriana subsp. engleriana,,urn:lsid:ipni.org:names:273721-2,,
+Calceolaria engleriana,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273722-2,Bolivia; Peru,BOL; PER
+Calceolaria engleriana subsp. acuminata,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria engleriana subsp. engleriana,,urn:lsid:ipni.org:names:41338-2,,
+Calceolaria engleriana subsp. engleriana,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228839-1,Bolivia; Peru,BOL; PER
+Calceolaria engleriana subsp. lutea,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273723-2,Peru,PER
+Calceolaria engleriana var. typica,Pennell,Variety,Calceolariaceae,,false,Calceolaria engleriana,Kraenzl.,urn:lsid:ipni.org:names:41339-2,,
+Calceolaria epilobioides,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria engleriana subsp. engleriana,,urn:lsid:ipni.org:names:273724-2,,
+Calceolaria epsomensis,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77384438-1,,
+Calceolaria ericoides,Juss. ex Vahl,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800293-1,Ecuador; Peru,ECU; PER
+Calceolaria ericoides subsp. ericoides,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228145-1,Ecuador,ECU
+Calceolaria ericoides subsp. peruviana,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273725-2,Peru,PER
+Calceolaria erioclada,Benth.,Species,Calceolariaceae,,false,Calceolaria gossypina,Benth.,urn:lsid:ipni.org:names:800294-1,,
+Calceolaria ernestii,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria parvifolia subsp. guentheri,(Kraenzl.) Molau,urn:lsid:ipni.org:names:273726-2,,
+Calceolaria espinosae,Pennell,Species,Calceolariaceae,,false,Calceolaria lojensis,Pennell,urn:lsid:ipni.org:names:41344-2,,
+Calceolaria espinosae,Muñoz-Schick & A.Moreira,Species,Calceolariaceae,,false,Calceolaria caleuana,Muñoz-Schick & A.Moreira,urn:lsid:ipni.org:names:77096043-1,,
+Calceolaria excelsa,Courtois,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800297-1,,
+Calceolaria excelsior,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria atahualpae subsp. witasekiana,(Kraenzl.) Molau,urn:lsid:ipni.org:names:273727-2,,
+Calceolaria exigua,Witasek,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41347-2,,
+Calceolaria extensa,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800301-1,Peru,PER
+Calceolaria fabrisii,Botta & Cabrera,Species,Calceolariaceae,,false,Calceolaria schickendantziana,Kraenzl.,urn:lsid:ipni.org:names:931357-1,,
+Calceolaria falklandica,(S.Moore) Kraenzl.,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:41349-2,,
+Calceolaria fallax,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria crenata,Lam.,urn:lsid:ipni.org:names:41350-2,,
+Calceolaria fasciculata,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria nivalis subsp. nivalis,,urn:lsid:ipni.org:names:800304-1,,
+Calceolaria ferreyrae,López Guillén,Species,Calceolariaceae,,false,Calceolaria argentea,Kunth,urn:lsid:ipni.org:names:41351-2,,
+Calceolaria ferruginea,Cav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800307-1,Ecuador,ECU
+Calceolaria ferruginea,Colla,Species,Calceolariaceae,,false,Calceolaria angustifolia,(Lindl.) Sweet,urn:lsid:ipni.org:names:800306-1,,
+Calceolaria ferruginea var. densifolia,Phil.,Variety,Calceolariaceae,,false,Calceolaria angustifolia,(Lindl.) Sweet,urn:lsid:ipni.org:names:41353-2,,
+Calceolaria ferruginosa,Kunze ex Walp. & Schauer,Species,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:800308-1,,
+Calceolaria fiebrigiana,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria plectranthifolia,Walp.,urn:lsid:ipni.org:names:273728-2,,
+Calceolaria filicaulis,Clos,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41355-2,Argentina Northwest; Argentina South; Chile Central; Chile South,AGW; AGS; CLC; CLS
+Calceolaria filicaulis subsp. filicaulis,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228343-1,Argentina South; Chile Central; Chile South,AGS; CLC; CLS
+Calceolaria filicaulis subsp. luxurians,(Witasek) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1011532-2,Argentina Northwest; Argentina South; Chile Central,AGW; AGS; CLC
+Calceolaria flabellifolia,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria filicaulis subsp. filicaulis,,urn:lsid:ipni.org:names:41356-2,,
+Calceolaria flacca,Molau,Species,Calceolariaceae,,false,Calceolaria extensa,Benth.,urn:lsid:ipni.org:names:41357-2,,
+Calceolaria flavida,Lavandero & Santilli,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77222669-1,Chile Central,CLC
+Calceolaria flavovirens,C.Ehrh.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:323831-2,Chile Central; Chile North,CLC; CLN
+Calceolaria flexuosa,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273729-2,Peru,PER
+Calceolaria flexuosa subsp. chrysocalyx,(Pennell) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273730-2,Peru,PER
+Calceolaria flexuosa subsp. flexuosa,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228275-1,Peru,PER
+Calceolaria floccosa,Witasek,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. floccosa,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41359-2,,
+Calceolaria floribunda,Lindl.,Species,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:800316-1,,
+Calceolaria floribunda,Kunth,Species,Calceolariaceae,,false,Calceolaria crenata,Lam.,urn:lsid:ipni.org:names:800315-1,,
+Calceolaria floribunda,Hook.,Species,Calceolariaceae,,false,Calceolaria crenata,Lam.,urn:lsid:ipni.org:names:800317-1,,
+Calceolaria flosparva,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41361-2,Peru,PER
+Calceolaria foliosa,Griseb.,Species,Calceolariaceae,,false,Calceolaria plectranthifolia,Walp.,urn:lsid:ipni.org:names:800321-1,,
+Calceolaria foliosa,Phil.,Species,Calceolariaceae,,false,Calceolaria undulata,Benth.,urn:lsid:ipni.org:names:313807-2,,
+Calceolaria foliosa,Meyen ex Walp. & Schauer,Species,Calceolariaceae,,false,Calceolaria cuneiformis subsp. cuneiformis,,urn:lsid:ipni.org:names:800320-1,,
+Calceolaria forgetii,Skan,Species,Calceolariaceae,,false,Calceolaria virgata,Ruiz & Pav.,urn:lsid:ipni.org:names:41363-2,,
+Calceolaria fothergillii,Aiton,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:866453-1,Falkland Is.,FAL
+Calceolaria frondosa,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273731-2,Ecuador,ECU
+Calceolaria fruticosa,(Pennell) Standl.,Species,Calceolariaceae,,false,Calceolaria microbefaria subsp. fruticosa,(Pennell) Molau,urn:lsid:ipni.org:names:41365-2,,
+Calceolaria fruticosa subsp. attenuata,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria microbefaria subsp. microbefaria,,urn:lsid:ipni.org:names:41366-2,,
+Calceolaria fruticosa subsp. pamplonensis,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria microbefaria subsp. microbefaria,,urn:lsid:ipni.org:names:41367-2,,
+Calceolaria fruticosa subsp. reticulata,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria microbefaria subsp. microbefaria,,urn:lsid:ipni.org:names:41368-2,,
+Calceolaria fuchsiifolia,Hemsl.,Species,Calceolariaceae,,false,Calceolaria nivalis subsp. nivalis,,urn:lsid:ipni.org:names:77384580-1,,
+Calceolaria fulva,Witasek,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41369-2,Chile Central,CLC
+Calceolaria fulva f. lanata,Witasek,Form,Calceolariaceae,,false,Calceolaria fulva,Witasek,urn:lsid:ipni.org:names:41370-2,,
+Calceolaria fulva f. viscosa,Witasek,Form,Calceolariaceae,,false,Calceolaria fulva,Witasek,urn:lsid:ipni.org:names:41371-2,,
+Calceolaria furcata,Pennell,Species,Calceolariaceae,,false,Calceolaria cypripediiflora,Kraenzl.,urn:lsid:ipni.org:names:41372-2,,
+Calceolaria fusca,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41373-2,Colombia; Ecuador; Peru,CLM; ECU; PER
+Calceolaria gaultherioides,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41374-2,Peru,PER
+Calceolaria gemelliflora,Cav.,Species,Calceolariaceae,,false,Calceolaria angustiflora,Ruiz & Pav.,urn:lsid:ipni.org:names:273732-2,,
+Calceolaria georgiana,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41375-2,Chile Central,CLC
+Calceolaria germainii,Witasek,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800335-1,Argentina Northwest; Argentina South; Chile Central,AGW; AGS; CLC
+Calceolaria glabrata,Phil.,Species,Calceolariaceae,,false,Calceolaria meyeniana subsp. glabrata,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:323839-2,,
+Calceolaria glabrata var. meyeniana,(Phil.) Reiche,Variety,Calceolariaceae,,false,Calceolaria meyeniana,Phil.,urn:lsid:ipni.org:names:41377-2,,
+Calceolaria glacialis,Wedd.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273733-2,Argentina Northwest; Bolivia,AGW; BOL
+Calceolaria glandulifera,Witasek,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41378-2,,
+Calceolaria glandulosa,Benth.,Species,Calceolariaceae,,false,Calceolaria nitida,Colla,urn:lsid:ipni.org:names:2691207-4,,
+Calceolaria glandulosa,Poepp. ex Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41379-2,Chile Central; Chile North,CLC; CLN
+Calceolaria glandulosa subsp. alicahuensis,(Muñoz-Schick) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1150713-2,Chile Central,CLC
+Calceolaria glandulosa subsp. glandulosa,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228763-1,Chile Central; Chile North,CLC; CLN
+Calceolaria glandulosa var. argentina,Hicken,Variety,Calceolariaceae,,false,Calceolaria glandulosa subsp. glandulosa,,urn:lsid:ipni.org:names:41380-2,,
+Calceolaria glandulosa var. californica,Regel,Variety,Calceolariaceae,,false,Calceolaria glandulosa subsp. glandulosa,,urn:lsid:ipni.org:names:2929896-4,,
+Calceolaria glandulosa var. thyrsiformis,Clos,Variety,Calceolariaceae,,false,Calceolaria glandulosa subsp. glandulosa,,urn:lsid:ipni.org:names:41381-2,,
+Calceolaria glauca,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273734-2,Peru,PER
+Calceolaria glechomifolia,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria rotundifolia,Kunth,urn:lsid:ipni.org:names:41383-2,,
+Calceolaria glutinosa,Heer & Regel,Species,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:800343-1,,
+Calceolaria glutinosa,F.Meigen,Species,Calceolariaceae,,false,Calceolaria glandulosa subsp. glandulosa,,urn:lsid:ipni.org:names:77384595-1,,
+Calceolaria gmelinii,Phil.,Species,Calceolariaceae,,false,Calceolaria viscosissima,(Hook.) Lindl.,urn:lsid:ipni.org:names:289607-2,,
+Calceolaria gnaphaliifolia,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria campanae,Phil.,urn:lsid:ipni.org:names:41385-2,,
+Calceolaria gnidiifolia,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria lavandulifolia,Kunth,urn:lsid:ipni.org:names:800347-1,,
+Calceolaria gossypina,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800348-1,Ecuador,ECU
+Calceolaria gossypina subsp. jarosloviana,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria buchtieniana,Kraenzl.,urn:lsid:ipni.org:names:41387-2,,
+Calceolaria gracilis,Kunth,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:800350-1,,
+Calceolaria gracilis,Jacques,Species,Calceolariaceae,,false,Calceolaria dichotoma subsp. dichotoma,,urn:lsid:ipni.org:names:77332115-1,,
+Calceolaria gracilis var. stenoptera,Diels,Variety,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:41389-2,,
+Calceolaria graminifolia,Kunth,Species,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:800351-1,,
+Calceolaria grandiflora,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41391-2,Ecuador,ECU
+Calceolaria grandipinnata,Edwin,Species,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:41392-2,,
+Calceolaria grisebachii,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria polyclada,Kraenzl.,urn:lsid:ipni.org:names:273736-2,,
+Calceolaria guentheri,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria parvifolia subsp. guentheri,(Kraenzl.) Molau,urn:lsid:ipni.org:names:273737-2,,
+Calceolaria halliana,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria trilobata subsp. trilobata,,urn:lsid:ipni.org:names:41395-2,,
+Calceolaria harlingii,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:935672-1,Ecuador,ECU
+Calceolaria hartwegii,Benth.,Species,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:800358-1,,
+Calceolaria hastata,Pennell,Species,Calceolariaceae,,false,Calceolaria trilobata subsp. trilobata,,urn:lsid:ipni.org:names:41397-2,,
+Calceolaria hedera,Edwin,Species,Calceolariaceae,,false,Calceolaria trilobata subsp. trilobata,,urn:lsid:ipni.org:names:41398-2,,
+Calceolaria helianthemoides,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41399-2,Ecuador,ECU
+Calceolaria henrici,Hook.f.,Species,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:800362-1,,
+Calceolaria herbertiana,Lindl. ex C.Morren,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:77383935-1,,
+Calceolaria herbertiana var. parviflora,Lindl.,Variety,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:41400-2,,
+Calceolaria herrerae,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria sparsiflora,Kunze,urn:lsid:ipni.org:names:41401-2,,
+Calceolaria herrerae var. ramosissima,Kraenzl.,Variety,Calceolariaceae,,false,Calceolaria sparsiflora,Kunze,urn:lsid:ipni.org:names:273738-2,,
+Calceolaria herrerae var. typica,Pennell,Variety,Calceolariaceae,,false,Calceolaria sparsiflora,Kunze,urn:lsid:ipni.org:names:41403-2,,
+Calceolaria herzogiana,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria trilobata subsp. herzogiana,(Kraenzl.) Molau,urn:lsid:ipni.org:names:273739-2,,
+Calceolaria heterophylla,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273740-2,Peru,PER
+Calceolaria heterophylla,Willd.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:800369-1,,
+Calceolaria heterophylloides,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria punicea,Ruiz & Pav.,urn:lsid:ipni.org:names:273741-2,,
+Calceolaria hians,Penny ex G.Don,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:800371-1,,
+Calceolaria hieronymi,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria plectranthifolia,Walp.,urn:lsid:ipni.org:names:289606-2,,
+Calceolaria hirsuta,Molau,Species,Calceolariaceae,,false,Calceolaria puppoae,Molinari,urn:lsid:ipni.org:names:273742-2,,
+Calceolaria hirsutula,Pennell,Species,Calceolariaceae,,false,Calceolaria chrysosphaera,Pennell,urn:lsid:ipni.org:names:41407-2,,
+Calceolaria hirta,Pennell,Species,Calceolariaceae,,false,Calceolaria pavonii,Benth.,urn:lsid:ipni.org:names:41408-2,,
+Calceolaria hirtiflora,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41409-2,Colombia,CLM
+Calceolaria hispida,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800376-1,Peru,PER
+Calceolaria hispida subsp. acaulis,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273743-2,Peru,PER
+Calceolaria hispida subsp. hispida,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228177-1,Peru,PER
+Calceolaria hollermayeri,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria crenatiflora,Cav.,urn:lsid:ipni.org:names:41411-2,,
+Calceolaria homoioclada,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria perfoliata,L.f.,urn:lsid:ipni.org:names:41412-2,,
+Calceolaria hopeana,Morrison ex G.Don,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:800379-1,,
+Calceolaria hoppeana,Morrison ex Loudon,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:800380-1,,
+Calceolaria huamachucensis,López Guillén,Species,Calceolariaceae,,false,Calceolaria cajabambae,Kraenzl.,urn:lsid:ipni.org:names:41413-2,,
+Calceolaria huigrana,Pennell,Species,Calceolariaceae,,false,Calceolaria dilatata,Benth.,urn:lsid:ipni.org:names:41414-2,,
+Calceolaria humilis,Edwin,Species,Calceolariaceae,,false,Calceolaria virgata,Ruiz & Pav.,urn:lsid:ipni.org:names:41415-2,,
+Calceolaria hutchisonii,Edwin,Species,Calceolariaceae,,false,Calceolaria rotundifolia,Kunth,urn:lsid:ipni.org:names:41416-2,,
+Calceolaria hypericina,Poepp. ex Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41417-2,Chile North,CLN
+Calceolaria hypoleuca,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria soratensis,Kraenzl.,urn:lsid:ipni.org:names:41419-2,,
+Calceolaria hypoleuca,Meyen,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800387-1,Chile North,CLN
+Calceolaria hypoleuca,Benth.,Species,Calceolariaceae,,false,Calceolaria lavandulifolia,Kunth,urn:lsid:ipni.org:names:800388-1,,
+Calceolaria hyssopifolia,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800390-1,Ecuador,ECU
+Calceolaria inamoena,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41421-2,Chile North; Peru,CLN; PER
+Calceolaria inamoena subsp. inamoena,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228207-1,Chile North; Peru,CLN; PER
+Calceolaria inamoena subsp. millefoliata,(Kraenzl.) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:954797-1,Peru,PER
+Calceolaria inaudita,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273747-2,Peru,PER
+Calceolaria incachacensis,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273748-2,Bolivia,BOL
+Calceolaria incana,Molau,Species,Calceolariaceae,,false,Calceolaria aperta subsp. incana,(Molau) Molau,urn:lsid:ipni.org:names:273749-2,,
+Calceolaria incarum,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41424-2,Peru,PER
+Calceolaria incarum subsp. incarum,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228859-1,Peru,PER
+Calceolaria incarum subsp. sanchezii,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273751-2,Peru,PER
+Calceolaria inflexa,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273752-2,Peru,PER
+Calceolaria inflexa f. altissima,(Kraenzl.) Edwin,Form,Calceolariaceae,,false,Calceolaria inflexa,Ruiz & Pav.,urn:lsid:ipni.org:names:41426-2,,
+Calceolaria integrifolia,L.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41427-2,Chile Central; Chile South,CLC; CLS
+Calceolaria integrifolia,L.f.,Species,Calceolariaceae,,false,Calceolaria dichotoma subsp. dichotoma,,urn:lsid:ipni.org:names:2691278-4,,
+Calceolaria integrifolia f. robusta,(A.Dietr.) Voss,Form,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:41429-2,,
+Calceolaria integrifolia subvar. rugosa,(Ruiz & Pav.) Clos,Subvariety,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:295103-2,,
+Calceolaria integrifolia var. angustifolia,Lindl.,Variety,Calceolariaceae,,false,Calceolaria angustifolia,(Lindl.) Sweet,urn:lsid:ipni.org:names:41428-2,,
+Calceolaria integrifolia var. viscosissima,Hook.,Variety,Calceolariaceae,,false,Calceolaria viscosissima,(Hook.) Lindl.,urn:lsid:ipni.org:names:2691282-4,,
+Calceolaria involuta,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273753-2,Ecuador,ECU
+Calceolaria irazuensis,Donn.Sm.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41431-2,Costa Rica; Panamá,COS; PAN
+Calceolaria jujuyensis,Botta,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41432-2,Argentina Northwest; Bolivia,AGW; BOL
+Calceolaria juncalensis,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41433-2,Chile Central,CLC
+Calceolaria kingii,Phil.,Species,Calceolariaceae,,false,Calceolaria glandulosa subsp. glandulosa,,urn:lsid:ipni.org:names:41434-2,,
+Calceolaria knypersliensis,Steud.,Species,Calceolariaceae,,false,Calceolaria crenatiflora,Cav.,urn:lsid:ipni.org:names:800403-1,,
+Calceolaria kraenzliniae,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273754-2,Peru,PER
+Calceolaria laciniata,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41436-2,,
+Calceolaria laetevirens,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria dentata subsp. araucana,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:41437-2,,
+Calceolaria laevis,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273755-2,Peru,PER
+Calceolaria lagunae-blancae,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800407-1,Argentina South,AGS
+Calceolaria lamiifolia,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41439-2,Colombia; Ecuador,CLM; ECU
+Calceolaria lanata,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800409-1,Ecuador,ECU
+Calceolaria lanceolata,Cav.,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:800410-1,,
+Calceolaria lanceolata f. acutifolia,(Witasek) Bowden,Form,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:952458-1,,
+Calceolaria lanceolata f. polyrrhiza,(Cav.) Bowden,Form,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:952459-1,,
+Calceolaria lanceolata var. acutifolia,(Witasek) Reiche,Variety,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:41442-2,,
+Calceolaria lanceolata var. glabrata,Speg.,Variety,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:41443-2,,
+Calceolaria lanceolata var. pusilla,(Witasek) Reiche,Variety,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:41444-2,,
+Calceolaria lancifolia,Link,Species,Calceolariaceae,,false,Calceolaria bicolor,Ruiz & Pav.,urn:lsid:ipni.org:names:800411-1,,
+Calceolaria landbeckii,Phil.,Species,Calceolariaceae,,false,Calceolaria meyeniana subsp. meyeniana,,urn:lsid:ipni.org:names:313808-2,,
+Calceolaria lanigera,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:323826-2,Chile Central,CLC
+Calceolaria lanuginosa,Pennell,Species,Calceolariaceae,,false,Calceolaria lanata,Kunth,urn:lsid:ipni.org:names:41445-2,,
+Calceolaria larecajensis,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:289604-2,,
+Calceolaria lasiocalyx,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41446-2,Peru,PER
+Calceolaria latifolia,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41447-2,Chile Central,CLC
+Calceolaria latifolia var. longipetiolata,(Phil.) Reiche,Variety,Calceolariaceae,,false,Calceolaria latifolia,Benth.,urn:lsid:ipni.org:names:41448-2,,
+Calceolaria lavandulifolia,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41449-2,Ecuador,ECU
+Calceolaria laxa,Benth.,Species,Calceolariaceae,,false,Calceolaria inflexa,Ruiz & Pav.,urn:lsid:ipni.org:names:800419-1,,
+Calceolaria lechioides,Rusby,Species,Calceolariaceae,,false,Calceolaria parvifolia subsp. parvifolia,,urn:lsid:ipni.org:names:41451-2,,
+Calceolaria ledifolia,Pennell,Species,Calceolariaceae,,false,Calceolaria ferruginea,Cav.,urn:lsid:ipni.org:names:41452-2,,
+Calceolaria lehmanniana,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41453-2,Colombia; Ecuador,CLM; ECU
+Calceolaria leiophylla,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria elatior,Griseb.,urn:lsid:ipni.org:names:273756-2,,
+Calceolaria leonidas,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77384122-1,,
+Calceolaria lepida,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41455-2,Chile Central,CLC
+Calceolaria lepidota,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41456-2,Argentina Northwest; Chile North,AGW; CLN
+Calceolaria leptantha,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41457-2,Peru,PER
+Calceolaria leucantha,Edwin,Species,Calceolariaceae,,false,Calceolaria ballotifolia,Kraenzl.,urn:lsid:ipni.org:names:273757-2,,
+Calceolaria leucanthera,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41458-2,Colombia; Venezuela,CLM; VEN
+Calceolaria lilloi,Descole & Borsini,Species,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:41459-2,,
+Calceolaria linearioides,Edwin,Species,Calceolariaceae,,false,Calceolaria cajabambae,Kraenzl.,urn:lsid:ipni.org:names:41460-2,,
+Calceolaria linearis,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800431-1,Peru,PER
+Calceolaria linifolia,Pennell,Species,Calceolariaceae,,false,Calceolaria buchtieniana,Kraenzl.,urn:lsid:ipni.org:names:800433-1,,
+Calceolaria linifolia,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria hyssopifolia,Kunth,urn:lsid:ipni.org:names:800432-1,,
+Calceolaria llaimae,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria valdiviana subsp. valdiviana,,urn:lsid:ipni.org:names:41462-2,,
+Calceolaria llamaensis,(Edwin) Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273758-2,Peru,PER
+Calceolaria lobata,Cav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273759-2,Bolivia; Peru,BOL; PER
+Calceolaria lojensis,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41464-2,Ecuador; Peru,ECU; PER
+Calceolaria longepetiolata,Phil.,Species,Calceolariaceae,,false,Calceolaria latifolia,Benth.,urn:lsid:ipni.org:names:41465-2,,
+Calceolaria longiinternodia,Edwin,Species,Calceolariaceae,,false,Calceolaria bicolor,Ruiz & Pav.,urn:lsid:ipni.org:names:41466-2,,
+Calceolaria lopezii,Edwin,Species,Calceolariaceae,,false,Calceolaria utricularioides,Hook. ex Benth.,urn:lsid:ipni.org:names:41467-2,,
+Calceolaria lorentzii,Griseb.,Species,Calceolariaceae,,false,Calceolaria umbellata,Wedd.,urn:lsid:ipni.org:names:800440-1,,
+Calceolaria lossenii,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria teucrioides,Griseb.,urn:lsid:ipni.org:names:273761-2,,
+Calceolaria lucida,Pennell,Species,Calceolariaceae,,false,Calceolaria semiconnata,Pennell,urn:lsid:ipni.org:names:41469-2,,
+Calceolaria ludens,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273762-2,Peru,PER
+Calceolaria luteocalyx,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41471-2,Peru,PER
+Calceolaria luxurians,Witasek,Species,Calceolariaceae,,false,Calceolaria filicaulis subsp. luxurians,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41472-2,,
+Calceolaria lysimachioides,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria dichotoma subsp. dichotoma,,urn:lsid:ipni.org:names:41473-2,,
+Calceolaria macrocalyx,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria bicolor,Ruiz & Pav.,urn:lsid:ipni.org:names:273763-2,,
+Calceolaria macrocarpa,Pennell,Species,Calceolariaceae,,false,Calceolaria sparsiflora,Kunze,urn:lsid:ipni.org:names:41475-2,,
+Calceolaria macropoda,Pennell,Species,Calceolariaceae,,false,Calceolaria nevadensis subsp. nevadensis,,urn:lsid:ipni.org:names:41476-2,,
+Calceolaria maculata,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41477-2,Peru,PER
+Calceolaria malacophylla,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:2691354-4,,
+Calceolaria malacophylla,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria bicolor,Ruiz & Pav.,urn:lsid:ipni.org:names:2691355-4,,
+Calceolaria mandoniana,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41480-2,,
+Calceolaria martinezii,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273765-2,Ecuador,ECU
+Calceolaria matthewsii,Benth.,Species,Calceolariaceae,,false,Calceolaria scapiflora,(Ruiz & Pav.) Benth.,urn:lsid:ipni.org:names:273766-2,,
+Calceolaria meistantha,Pennell,Species,Calceolariaceae,,false,Calceolaria dichotoma subsp. dichotoma,,urn:lsid:ipni.org:names:41483-2,,
+Calceolaria melissifolia,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800458-1,Peru,PER
+Calceolaria melissifolia subsp. melissifolia,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228587-1,Peru,PER
+Calceolaria melissifolia subsp. pseudoscabra,(Edwin) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273767-2,Peru,PER
+Calceolaria mendocina,Phil.,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:323655-2,,
+Calceolaria meridensis,Pennell,Species,Calceolariaceae,,false,Calceolaria nevadensis subsp. meridensis,(Pennell) Molau,urn:lsid:ipni.org:names:41486-2,,
+Calceolaria mexicana,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41487-2,Bolivia; Colombia; Costa Rica; Ecuador; El Salvador; Guatemala; Honduras; Mexico Central; Mexico Gulf; Mexico Northeast; Mexico Northwest; Mexico Southeast; Mexico Southwest; Panamá; Peru; Venezuela,BOL; CLM; COS; ECU; ELS; GUA; HON; MXC; MXG; MXE; MXN; MXT; MXS; PAN; PER; VEN
+Calceolaria mexicana subsp. mexicana,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228368-1,Bolivia; Colombia; Costa Rica; Ecuador; El Salvador; Guatemala; Honduras; Mexico Central; Mexico Gulf; Mexico Northeast; Mexico Northwest; Mexico Southeast; Mexico Southwest; Panamá; Peru; Venezuela,BOL; CLM; COS; ECU; ELS; GUA; HON; MXC; MXG; MXE; MXN; MXT; MXS; PAN; PER; VEN
+Calceolaria mexicana subsp. perijensis,(Pennell) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41488-2,Colombia,CLM
+Calceolaria mexicana subsp. prostrata,(Kraenzl.) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:919731-1,Venezuela,VEN
+Calceolaria mexicana var. pichinchensis,Benth.,Variety,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41489-2,,
+Calceolaria meyeniana,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41491-2,Chile Central,CLC
+Calceolaria meyeniana subsp. cheiranthoides,(Reiche ex Witasek) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1136575-2,Chile Central,CLC
+Calceolaria meyeniana subsp. glabrata,(Phil.) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1043505-2,Chile Central,CLC
+Calceolaria meyeniana subsp. meyeniana,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228182-1,Chile Central,CLC
+Calceolaria meyeniana subsp. nahuelbutae,(Phil.) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1019197-1,Chile Central,CLC
+Calceolaria micans,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273768-2,Peru,PER
+Calceolaria micrantha,Pennell,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41492-2,,
+Calceolaria microbefaria,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41493-2,Colombia; Costa Rica; Ecuador; Venezuela,CLM; COS; ECU; VEN
+Calceolaria microbefaria subsp. fruticosa,(Pennell) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41494-2,Colombia; Ecuador,CLM; ECU
+Calceolaria microbefaria subsp. microbefaria,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228875-1,Colombia; Costa Rica; Ecuador; Venezuela,CLM; COS; ECU; VEN
+Calceolaria microbefaria subsp. tatamana,(Pennell) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41495-2,Colombia,CLM
+Calceolaria millefoliata,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria inamoena subsp. millefoliata,(Kraenzl.) Molau,urn:lsid:ipni.org:names:273769-2,,
+Calceolaria mimuloides,Clos,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. mimuloides,(Clos) C.Ehrh.,urn:lsid:ipni.org:names:320828-2,,
+Calceolaria minima,Witasek,Species,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:41497-2,,
+Calceolaria mirabilis,Knowles & Westc.,Species,Calceolariaceae,,false,Calceolaria crenatiflora,Cav.,urn:lsid:ipni.org:names:800468-1,,
+Calceolaria miserrima,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:320824-2,,
+Calceolaria molaui,Puppo,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77113770-1,Ecuador,ECU
+Calceolaria mollis,Pennell,Species,Calceolariaceae,,false,Calceolaria comosa subsp. comosa,,urn:lsid:ipni.org:names:41499-2,,
+Calceolaria mollissima,Walp.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800471-1,Argentina Northeast; Argentina Northwest; Chile Central,AGE; AGW; CLC
+Calceolaria monantha,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273770-2,Bolivia,BOL
+Calceolaria monanthos,Poir.,Species,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:800473-1,,
+Calceolaria montana,Cav.,Species,Calceolariaceae,,false,Calceolaria mollissima,Walp.,urn:lsid:ipni.org:names:41502-2,,
+Calceolaria morisii,Walp.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41503-2,Chile Central,CLC
+Calceolaria morrisonii,G.Don,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:800476-1,,
+Calceolaria moyobambae,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273771-2,Peru,PER
+Calceolaria multiflora,Cav.,Species,Calceolariaceae,,false,Calceolaria angustiflora,Ruiz & Pav.,urn:lsid:ipni.org:names:273772-2,,
+Calceolaria myriophylla,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273773-2,Peru,PER
+Calceolaria myrtilloides,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria viscosa,Ruiz & Pav.,urn:lsid:ipni.org:names:273774-2,,
+Calceolaria nahuelbutae,Phil.,Species,Calceolariaceae,,false,Calceolaria meyeniana subsp. nahuelbutae,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:323837-2,,
+Calceolaria nana,Sm.,Species,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:41507-2,,
+Calceolaria neeana,Spreng.,Species,Calceolariaceae,,false,Calceolaria fothergillii,Aiton,urn:lsid:ipni.org:names:800483-1,,
+Calceolaria neglecta,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273775-2,Peru,PER
+Calceolaria nevadensis,(Pennell) Standl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41508-2,Colombia; Venezuela,CLM; VEN
+Calceolaria nevadensis subsp. meridensis,(Pennell) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41509-2,Venezuela,VEN
+Calceolaria nevadensis subsp. nevadensis,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228546-1,Colombia; Venezuela,CLM; VEN
+Calceolaria nitida,Colla,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800485-1,Chile Central,CLC
+Calceolaria nivalis,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41511-2,Ecuador; Peru,ECU; PER
+Calceolaria nivalis,Steud. & Hochst. ex Benth.,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. ascendens,,urn:lsid:ipni.org:names:800487-1,,
+Calceolaria nivalis subsp. cerasifolia,(Benth.) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41512-2,Peru,PER
+Calceolaria nivalis subsp. lanatifolia,Puppo,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77317189-1,Peru,PER
+Calceolaria nivalis subsp. nivalis,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228355-1,Ecuador; Peru,ECU; PER
+Calceolaria nubigena,Poepp.,Species,Calceolariaceae,,false,Calceolaria arachnoidea subsp. nubigena,(Poepp.) C.Ehrh.,urn:lsid:ipni.org:names:320831-2,,
+Calceolaria nudicaulis,Meyen ex Walp. & Schauer,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:800490-1,,
+Calceolaria nudicaulis,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41513-2,Chile Central,CLC
+Calceolaria obliqua,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:935671-1,Peru,PER
+Calceolaria oblonga,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273776-2,Peru,PER
+Calceolaria obovata,Stokes,Species,Calceolariaceae,,false,Calceolaria fothergillii,Aiton,urn:lsid:ipni.org:names:800493-1,,
+Calceolaria obscura,Pennell,Species,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:41515-2,,
+Calceolaria obtusa,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41516-2,Ecuador,ECU
+Calceolaria obtusifolia,Kunze ex Walp. & Schauer,Species,Calceolariaceae,,false,Calceolaria filicaulis subsp. luxurians,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:800495-1,,
+Calceolaria obtusifolia,(Clos) Witasek,Species,Calceolariaceae,,false,Calceolaria valdiviana subsp. valdiviana,,urn:lsid:ipni.org:names:77384541-1,,
+Calceolaria odontophylla,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41518-2,Ecuador,ECU
+Calceolaria oligantha,Phil.,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. mimuloides,(Clos) C.Ehrh.,urn:lsid:ipni.org:names:323654-2,,
+Calceolaria olivacea,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:935668-1,Peru,PER
+Calceolaria olssonii,Pennell,Species,Calceolariaceae,,false,Calceolaria penlandii subsp. puraceensis,(Pennell) Molau,urn:lsid:ipni.org:names:41519-2,,
+Calceolaria oreas,Phil.,Species,Calceolariaceae,,false,Calceolaria verbascifolia,Bertero ex Phil.,urn:lsid:ipni.org:names:41520-2,,
+Calceolaria oreophila,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41521-2,Peru,PER
+Calceolaria ovata,Sm.,Species,Calceolariaceae,,false,Calceolaria dichotoma subsp. dichotoma,,urn:lsid:ipni.org:names:800501-1,,
+Calceolaria oxapampensis,Puppo,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77094473-1,Peru,PER
+Calceolaria oxyphylla,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41523-2,Ecuador,ECU
+Calceolaria pachycyta,Pennell,Species,Calceolariaceae,,false,Calceolaria microbefaria subsp. fruticosa,(Pennell) Molau,urn:lsid:ipni.org:names:41524-2,,
+Calceolaria padifolia,Kunth,Species,Calceolariaceae,,false,Calceolaria nivalis subsp. nivalis,,urn:lsid:ipni.org:names:800504-1,,
+Calceolaria palenae,Phil.,Species,Calceolariaceae,,false,Calceolaria filicaulis subsp. filicaulis,,urn:lsid:ipni.org:names:41526-2,,
+Calceolaria pallascensis,Edwin,Species,Calceolariaceae,,false,Calceolaria weberbaueriana,Kraenzl.,urn:lsid:ipni.org:names:41527-2,,
+Calceolaria pallida,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41528-2,Chile Central,CLC
+Calceolaria palpe,Steud. & Hochst. ex Benth.,Species,Calceolariaceae,,false,Calceolaria alba,Ruiz & Pav.,urn:lsid:ipni.org:names:800508-1,,
+Calceolaria palpe var. alliacea,Phil.,Variety,Calceolariaceae,,false,Calceolaria alba,Ruiz & Pav.,urn:lsid:ipni.org:names:2691434-4,,
+Calceolaria palustris,Sodiro ex Kraenzl.,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41529-2,,
+Calceolaria palustris subsp. hitchcockii,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41530-2,,
+Calceolaria palustris subsp. megacarpa,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41531-2,,
+Calceolaria palustris subsp. micrantha,(Pennell) Pennell,Subspecies,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41532-2,,
+Calceolaria palustris subsp. pennatipartita,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41533-2,,
+Calceolaria palustris subsp. radiculoides,(Pennell) Pennell,Subspecies,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41534-2,,
+Calceolaria palustris subsp. santanderensis,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41535-2,,
+Calceolaria paniculata,G.Don,Species,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:800512-1,,
+Calceolaria paniculata,Willd. ex Link,Species,Calceolariaceae,,false,Calceolaria crenata,Lam.,urn:lsid:ipni.org:names:800511-1,,
+Calceolaria pannosa,Phil.,Species,Calceolariaceae,,false,Calceolaria filicaulis subsp. luxurians,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:800513-1,,
+Calceolaria paposana,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273777-2,Chile North,CLN
+Calceolaria paralensis,Spreng.,Species,Calceolariaceae,,false,Calceolaria paralia,Cav.,urn:lsid:ipni.org:names:800515-1,,
+Calceolaria paralia,Cav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41537-2,Chile Central,CLC
+Calceolaria paralia,Hook.,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:800517-1,,
+Calceolaria parotricha,Pennell,Species,Calceolariaceae,,false,Calceolaria fusca,Pennell,urn:lsid:ipni.org:names:41538-2,,
+Calceolaria parviflora,Gillies ex Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800520-1,Argentina Northeast; Argentina Northwest; Chile North; Uruguay,AGE; AGW; CLN; URU
+Calceolaria parvifolia,Wedd.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273779-2,Argentina Northwest; Bolivia; Peru,AGW; BOL; PER
+Calceolaria parvifolia,Phil.,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:41540-2,,
+Calceolaria parvifolia subsp. guentheri,(Kraenzl.) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273778-2,Bolivia,BOL
+Calceolaria parvifolia subsp. parvifolia,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228087-1,Argentina Northwest; Bolivia; Peru,AGW; BOL; PER
+Calceolaria patagonica,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:41541-2,,
+Calceolaria patens,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria martinezii,Kraenzl.,urn:lsid:ipni.org:names:41542-2,,
+Calceolaria paucifolia,Edwin & Wooden,Species,Calceolariaceae,,false,Calceolaria plectranthifolia,Walp.,urn:lsid:ipni.org:names:41543-2,,
+Calceolaria pavonii,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41544-2,Ecuador; Peru,ECU; PER
+Calceolaria pearceana,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria atahualpae subsp. atahualpae,,urn:lsid:ipni.org:names:41545-2,,
+Calceolaria pedunculata,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41546-2,Ecuador,ECU
+Calceolaria pedunculata subsp. pedunculata,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228805-1,Ecuador,ECU
+Calceolaria pedunculata subsp. sumacensis,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41547-2,Ecuador,ECU
+Calceolaria pendula,Sweet,Species,Calceolariaceae,,false,Calceolaria crenatiflora,Cav.,urn:lsid:ipni.org:names:800529-1,,
+Calceolaria penlandii,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41548-2,Colombia; Ecuador,CLM; ECU
+Calceolaria penlandii subsp. penlandii,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228419-1,Colombia; Ecuador,CLM; ECU
+Calceolaria penlandii subsp. puraceensis,(Pennell) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41549-2,Colombia,CLM
+Calceolaria pennellii,Descole & Borsini,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41550-2,Argentina South; Chile South,AGS; CLS
+Calceolaria peralata,Pennell,Species,Calceolariaceae,,false,Calceolaria dilatata,Benth.,urn:lsid:ipni.org:names:41551-2,,
+Calceolaria percaespitosa,Wooden,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800533-1,Peru,PER
+Calceolaria perfoliata,L.f.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800535-1,Colombia; Costa Rica; Ecuador; Panamá; Peru; Venezuela,CLM; COS; ECU; PAN; PER; VEN
+Calceolaria perfoliata,Ruiz & Pav.,Species,Calceolariaceae,,false,Calceolaria pavonii,Benth.,urn:lsid:ipni.org:names:800534-1,,
+Calceolaria perfoliata var. purpurascens,Sodiro,Variety,Calceolariaceae,,false,Calceolaria purpurascens,(Sodiro) Molau,urn:lsid:ipni.org:names:41553-2,,
+Calceolaria perijensis,Pennell,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. perijensis,(Pennell) Molau,urn:lsid:ipni.org:names:41555-2,,
+Calceolaria perrevoluta,Pennell,Species,Calceolariaceae,,false,Calceolaria hyssopifolia,Kunth,urn:lsid:ipni.org:names:41556-2,,
+Calceolaria petioalaris,Cav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800538-1,Chile Central,CLC
+Calceolaria petioalaris var. cuspidata,(Phil.) Reiche,Variety,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:41558-2,,
+Calceolaria petioalaris var. latifolia,Clos,Variety,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:41559-2,,
+Calceolaria petioalaris var. oblongifolia,Clos,Variety,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:41560-2,,
+Calceolaria petiolaris,Vahl,Species,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:800539-1,,
+Calceolaria pflanzii,G.Perkins,Species,Calceolariaceae,,false,Calceolaria bartsiifolia,Wedd.,urn:lsid:ipni.org:names:41561-2,,
+Calceolaria phaceliifolia,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41562-2,Peru,PER
+Calceolaria phaeotricha,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41563-2,Ecuador,ECU
+Calceolaria philippii,Eyzag.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77144877-1,Chile Central,CLC
+Calceolaria picta,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:323658-2,Chile Central,CLC
+Calceolaria pilosa,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273780-2,Peru,PER
+Calceolaria pinifolia,Cav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41564-2,Argentina Northwest; Chile Central; Chile North,AGW; CLC; CLN
+Calceolaria pinnata,Ruiz & Pav.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41566-2,,
+Calceolaria pinnata,L.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800545-1,Chile North; Ecuador; Peru,CLN; ECU; PER
+Calceolaria pinnata subsp. delicatula,(Kraenzl.) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:954802-1,Ecuador; Peru,ECU; PER
+Calceolaria pinnata subsp. pinnata,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228438-1,Chile North; Peru,CLN; PER
+Calceolaria pisacomensis,Meyen ex Walp.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273783-2,Peru,PER
+Calceolaria plantaginea,Sm.,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:800548-1,,
+Calceolaria plantaginea var. magellanica,Clos,Variety,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:41569-2,,
+Calceolaria plantaginea var. obtusifolia,Clos,Variety,Calceolariaceae,,false,Calceolaria valdiviana subsp. valdiviana,,urn:lsid:ipni.org:names:41570-2,,
+Calceolaria platyzyga,Diels,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41571-2,Ecuador,ECU
+Calceolaria plectranthifolia,Walp.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273784-2,Argentina Northwest; Bolivia; Peru,AGW; BOL; PER
+Calceolaria poeppigiana,Phil.,Species,Calceolariaceae,,false,Calceolaria volckmannii,Phil.,urn:lsid:ipni.org:names:41573-2,,
+Calceolaria poikilantha,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria buchtieniana,Kraenzl.,urn:lsid:ipni.org:names:273785-2,,
+Calceolaria poikilanthes,Sandwith,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41575-2,Argentina South; Chile Central,AGS; CLC
+Calceolaria polifolia,Hook.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41576-2,Chile Central,CLC
+Calceolaria polyclada,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273786-2,Argentina Northwest; Bolivia,AGW; BOL
+Calceolaria polyphylla,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria morisii,Walp.,urn:lsid:ipni.org:names:41578-2,,
+Calceolaria polyrhiza,Cav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41579-2,Argentina Northwest; Argentina South; Chile Central; Chile South,AGW; AGS; CLC; CLS
+Calceolaria pratensis,Phil.,Species,Calceolariaceae,,false,Calceolaria nudicaulis,Benth.,urn:lsid:ipni.org:names:800559-1,,
+Calceolaria pratensis var. williamsii,(Phil.) Kraenzl.,Variety,Calceolariaceae,,false,Calceolaria williamsii,Phil.,urn:lsid:ipni.org:names:41580-2,,
+Calceolaria pressii,Jacques,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77332111-1,,
+Calceolaria pressii purpurea,Reider,Species,Calceolariaceae,,false,Calceolaria pressii,Jacques,urn:lsid:ipni.org:names:3310125-4,,
+Calceolaria prichardii,(Rendle) Kraenzl.,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:41581-2,,
+Calceolaria pristiphylla,Phil.,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. pristiphylla,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:41582-2,,
+Calceolaria procera,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41584-2,Peru,PER
+Calceolaria prostrata,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. prostrata,(Kraenzl.) Molau,urn:lsid:ipni.org:names:41585-2,,
+Calceolaria psammophila,Skottsb.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41586-2,Argentina South,AGS
+Calceolaria pseudoglandulosa,Clos,Species,Calceolariaceae,,false,Calceolaria nitida,Colla,urn:lsid:ipni.org:names:323828-2,,
+Calceolaria pseudoscabra,Edwin,Species,Calceolariaceae,,false,Calceolaria melissifolia subsp. pseudoscabra,(Edwin) Molau,urn:lsid:ipni.org:names:273787-2,,
+Calceolaria pubescens,Phil.,Species,Calceolariaceae,,false,Calceolaria viscosissima,(Hook.) Lindl.,urn:lsid:ipni.org:names:41588-2,,
+Calceolaria pulchella,Salisb.,Species,Calceolariaceae,,false,Calceolaria pinnata subsp. pinnata,,urn:lsid:ipni.org:names:800569-1,,
+Calceolaria pulchella,Phil.,Species,Calceolariaceae,,false,Calceolaria inamoena subsp. inamoena,,urn:lsid:ipni.org:names:273788-2,,
+Calceolaria pulverulenta,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273789-2,Peru,PER
+Calceolaria pumila,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41591-2,Peru,PER
+Calceolaria punctata,(Ruiz & Pav.) Vahl,Species,Calceolariaceae,,false,Jovellana punctata,Ruiz & Pav.,urn:lsid:ipni.org:names:800573-1,,
+Calceolaria punctata fusca,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:3310126-4,,
+Calceolaria punctata var. puncticulata,(Phil.) Reiche,Variety,Calceolariaceae,,false,Jovellana punctata,Ruiz & Pav.,urn:lsid:ipni.org:names:41592-2,,
+Calceolaria puncticulata,Phil.,Species,Calceolariaceae,,false,Jovellana punctata,Ruiz & Pav.,urn:lsid:ipni.org:names:800574-1,,
+Calceolaria punicea,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273790-2,Peru,PER
+Calceolaria puppoae,Molinari,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77163587-1,Peru,PER
+Calceolaria puraceensis,Pennell,Species,Calceolariaceae,,false,Calceolaria penlandii subsp. puraceensis,(Pennell) Molau,urn:lsid:ipni.org:names:41595-2,,
+Calceolaria purpurascens,(Sodiro) Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41596-2,Ecuador,ECU
+Calceolaria purpurea,Graham,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800577-1,Chile Central,CLC
+Calceolaria purpurea var. elegans,Sweet,Variety,Calceolariaceae,,false,Calceolaria purpurea,Graham,urn:lsid:ipni.org:names:41598-2,,
+Calceolaria puru-puru,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41599-2,,
+Calceolaria pusilla,Witasek,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:320823-2,,
+Calceolaria quadriradiata,Phil.,Species,Calceolariaceae,,false,Calceolaria collina subsp. subincisa,(Benth.) C.Ehrh.,urn:lsid:ipni.org:names:323657-2,,
+Calceolaria quindioensis,Pennell,Species,Calceolariaceae,,false,Calceolaria lamiifolia,Kunth,urn:lsid:ipni.org:names:41602-2,,
+Calceolaria quitoensis,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41603-2,Ecuador,ECU
+Calceolaria racemosa,Cav.,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:800584-1,,
+Calceolaria radiculoides,(Pennell) Kraenzl.,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41605-2,,
+Calceolaria ramosa,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273791-2,Peru,PER
+Calceolaria ramosissima,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria ludens,Kraenzl.,urn:lsid:ipni.org:names:2691539-4,,
+Calceolaria ramosissima,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria virgata,Ruiz & Pav.,urn:lsid:ipni.org:names:41607-2,,
+Calceolaria ranunculoides,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41608-2,,
+Calceolaria rariflora,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273792-2,Peru,PER
+Calceolaria recta,Witasek,Species,Calceolariaceae,,false,Calceolaria cavanillesii,Phil.,urn:lsid:ipni.org:names:41609-2,,
+Calceolaria refugens,Sweet,Species,Calceolariaceae,,false,Calceolaria arachnoidea subsp. arachnoidea,,urn:lsid:ipni.org:names:800590-1,,
+Calceolaria reichlinii,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41610-2,Peru,PER
+Calceolaria repens,Hook.f.,Species,Calceolariaceae,,false,Jovellana repens,(Hook.f.) Kraenzl.,urn:lsid:ipni.org:names:800593-1,,
+Calceolaria revoluta,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41611-2,Peru,PER
+Calceolaria rhacodes,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41612-2,Peru,PER
+Calceolaria rhizomatosa,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria engleriana subsp. engleriana,,urn:lsid:ipni.org:names:273793-2,,
+Calceolaria rhododendroides,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273794-2,Peru,PER
+Calceolaria rhombifolia,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:327171-2,Peru,PER
+Calceolaria ribesiifolia,Rusby,Species,Calceolariaceae,,false,Calceolaria lobata,Cav.,urn:lsid:ipni.org:names:41615-2,,
+Calceolaria riccioi,López Guillén,Species,Calceolariaceae,,false,Calceolaria tetragona subsp. endopogon,(Kraenzl.) Molau,urn:lsid:ipni.org:names:41616-2,,
+Calceolaria rinconada,C.Ehrh.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:313811-2,Chile North,CLN
+Calceolaria rivularis,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273795-2,Argentina Northwest; Bolivia; Peru,AGW; BOL; PER
+Calceolaria robusta,A.Dietr.,Species,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:800601-1,,
+Calceolaria rosmarinifolia,Lam.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800602-1,Ecuador,ECU
+Calceolaria rosmarinifolia var. bonplandii,Diels,Variety,Calceolariaceae,,false,Calceolaria spruceana,Kraenzl.,urn:lsid:ipni.org:names:41620-2,,
+Calceolaria rosmarinifolia var. graminifolia,(Kunth) Wedd.,Variety,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:41621-2,,
+Calceolaria rosmarinifolia var. lavandulifolia,(Kunth) Wedd.,Variety,Calceolariaceae,,false,Calceolaria lavandulifolia,Kunth,urn:lsid:ipni.org:names:41622-2,,
+Calceolaria rotundata,Pennell,Species,Calceolariaceae,,false,Calceolaria lojensis,Pennell,urn:lsid:ipni.org:names:41623-2,,
+Calceolaria rotundifolia,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41624-2,Ecuador; Peru,ECU; PER
+Calceolaria rubiginosa,C.Ehrh.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77107902-1,Chile Central,CLC
+Calceolaria rufescens,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:935673-1,Peru,PER
+Calceolaria rugosa,Hook.,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. ascendens,,urn:lsid:ipni.org:names:800605-1,,
+Calceolaria rugosa,Ruiz & Pav.,Species,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:41625-2,,
+Calceolaria rugosa var. angustifolia,(Lindl.) Walp.,Variety,Calceolariaceae,,false,Calceolaria angustifolia,(Lindl.) Sweet,urn:lsid:ipni.org:names:41626-2,,
+Calceolaria rugosa var. glandulifera,(Witasek) L.E.Navas,Variety,Calceolariaceae,,false,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.,urn:lsid:ipni.org:names:919331-1,,
+Calceolaria rugosa var. incisa,Walp. & Schauer,Variety,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:41627-2,,
+Calceolaria rugulosa,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41628-2,Peru,PER
+Calceolaria ruiz-lealii,Descole & Borsini,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41629-2,Argentina Northwest,AGW
+Calceolaria ruiz-pavonii,Descole & Borsini,Species,Calceolariaceae,,false,Calceolaria teucrioides,Griseb.,urn:lsid:ipni.org:names:41630-2,,
+Calceolaria rupestris,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273796-2,Peru,PER
+Calceolaria rupicola,F.Meigen,Species,Calceolariaceae,,false,Calceolaria stellariifolia,Phil.,urn:lsid:ipni.org:names:41631-2,,
+Calceolaria sagasteguiana,Rosencr.,Species,Calceolariaceae,,false,Calceolaria trilobata subsp. aequilateralis,(Edwin) Molau,urn:lsid:ipni.org:names:800611-1,,
+Calceolaria sagittata,Pennell,Species,Calceolariaceae,,false,Calceolaria perfoliata,L.f.,urn:lsid:ipni.org:names:41632-2,,
+Calceolaria salicariifolia,Phil.,Species,Calceolariaceae,,false,Calceolaria angustifolia,(Lindl.) Sweet,urn:lsid:ipni.org:names:41633-2,,
+Calceolaria salicifolia,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273797-2,Peru,PER
+Calceolaria salicifolia subsp. nigricans,Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273798-2,Peru,PER
+Calceolaria salicifolia subsp. salicifolia,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228682-1,Peru,PER
+Calceolaria salpoana,"S.Leiva, E.Rodr. & V.Rimarachín",Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77177927-1,Peru,PER
+Calceolaria salviifolia,Pers.,Species,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:800616-1,,
+Calceolaria salviifolia,Colla,Species,Calceolariaceae,,false,Calceolaria morisii,Walp.,urn:lsid:ipni.org:names:800617-1,,
+Calceolaria sanguinea,Jacques,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77332113-1,,
+Calceolaria santolinoides,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273799-2,Argentina Northwest; Bolivia,AGW; BOL
+Calceolaria sarmentosa,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41636-2,,
+Calceolaria saxatilis,Kunth,Species,Calceolariaceae,,false,Calceolaria lamiifolia,Kunth,urn:lsid:ipni.org:names:41637-2,,
+Calceolaria scabiosifolia,Nees ex G.Don,Species,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:800623-1,,
+Calceolaria scabiosifolia,Roem. & Schult.,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:800621-1,,
+Calceolaria scabiosifolia var. cicutifolia,Kraenzl.,Variety,Calceolariaceae,,false,Calceolaria tenuis,Benth.,urn:lsid:ipni.org:names:41639-2,,
+Calceolaria scabra,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800624-1,Peru,PER
+Calceolaria scandens,Pennell,Species,Calceolariaceae,,false,Calceolaria leptantha,Pennell,urn:lsid:ipni.org:names:41641-2,,
+Calceolaria scapiflora,(Ruiz & Pav.) Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800626-1,Peru,PER
+Calceolaria scapiflora subsp. dentifolia,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria scapiflora,(Ruiz & Pav.) Benth.,urn:lsid:ipni.org:names:41642-2,,
+Calceolaria scapiflora var. typica,Pennell,Variety,Calceolariaceae,,false,Calceolaria scapiflora,(Ruiz & Pav.) Benth.,urn:lsid:ipni.org:names:41643-2,,
+Calceolaria schickendantziana,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273800-2,Argentina Northwest; Bolivia,AGW; BOL
+Calceolaria sciadephora,Donn.Sm.,Species,Calceolariaceae,,false,Calceolaria perfoliata,L.f.,urn:lsid:ipni.org:names:41645-2,,
+Calceolaria sclerophylla,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273801-2,Peru,PER
+Calceolaria secunda,Witasek,Species,Calceolariaceae,,false,Calceolaria andina,Benth.,urn:lsid:ipni.org:names:41646-2,,
+Calceolaria segethii,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:313809-2,Chile Central,CLC
+Calceolaria semiconnata,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41647-2,Ecuador,ECU
+Calceolaria sericea,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41648-2,Ecuador,ECU
+Calceolaria serrata,Lam.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800633-1,Ecuador,ECU
+Calceolaria sessilis,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800634-1,Chile Central,CLC
+Calceolaria sibthorpioides,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273802-2,Peru,PER
+Calceolaria silenoides,Poepp. ex Kranzlin,Species,Calceolariaceae,,false,Calceolaria glandulosa subsp. glandulosa,,urn:lsid:ipni.org:names:800636-1,,
+Calceolaria simulans,Edwin,Species,Calceolariaceae,,false,Calceolaria tenuis,Benth.,urn:lsid:ipni.org:names:41653-2,,
+Calceolaria sinclairii,Hook.,Species,Calceolariaceae,,false,Jovellana sinclairii,(Hook.) Kraenzl.,urn:lsid:ipni.org:names:800639-1,,
+Calceolaria skottsbergii,Gand.,Species,Calceolariaceae,,false,Calceolaria tenella,Poepp.,urn:lsid:ipni.org:names:41655-2,,
+Calceolaria solaniifolia,Edwin,Species,Calceolariaceae,,false,Calceolaria moyobambae,Kraenzl.,urn:lsid:ipni.org:names:41656-2,,
+Calceolaria soliman,Jacques,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77332114-1,,
+Calceolaria sonchensis,Pennell ex Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41657-2,Peru,PER
+Calceolaria soratensis,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273803-2,Bolivia,BOL
+Calceolaria sotarensis,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41659-2,Colombia,CLM
+Calceolaria soukupii,López Guillén,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41660-2,,
+Calceolaria sparsiflora,Kunze,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273804-2,Bolivia; Peru,BOL; PER
+Calceolaria spatellifolia,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria polifolia,Hook.,urn:lsid:ipni.org:names:41661-2,,
+Calceolaria spathulata,Witasek,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41662-2,Chile Central,CLC
+Calceolaria speciosa,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41663-2,Peru,PER
+Calceolaria spectabilis,Kunze ex Walp. & Schauer,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. ascendens,,urn:lsid:ipni.org:names:800650-1,,
+Calceolaria sphaerantha,Pennell,Species,Calceolariaceae,,false,Calceolaria hirtiflora,Pennell,urn:lsid:ipni.org:names:41664-2,,
+Calceolaria spruceana,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41665-2,Ecuador,ECU
+Calceolaria stachydifolia,Phil.,Species,Calceolariaceae,,false,Calceolaria latifolia,Benth.,urn:lsid:ipni.org:names:41666-2,,
+Calceolaria stellariifolia,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41667-2,Chile Central; Chile North,CLC; CLN
+Calceolaria stenanthera,Pennell,Species,Calceolariaceae,,false,Calceolaria pavonii,Benth.,urn:lsid:ipni.org:names:41668-2,,
+Calceolaria stenophylla,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:41669-2,,
+Calceolaria steyermarkii,Pennell,Species,Calceolariaceae,,false,Calceolaria fusca,Pennell,urn:lsid:ipni.org:names:41670-2,,
+Calceolaria storkii,Standl.,Species,Calceolariaceae,,false,Calceolaria microbefaria subsp. microbefaria,,urn:lsid:ipni.org:names:41671-2,,
+Calceolaria stricta,Kunth,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41672-2,Ecuador,ECU
+Calceolaria sturmii,Colenso,Species,Calceolariaceae,,false,Jovellana sinclairii,(Hook.) Kraenzl.,urn:lsid:ipni.org:names:800661-1,,
+Calceolaria suavis,J.Dix,Species,Calceolariaceae,,false,Calceolaria arachnoidea subsp. arachnoidea,,urn:lsid:ipni.org:names:77384342-1,,
+Calceolaria suberecta,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77340509-1,,
+Calceolaria subscaposa,Edwin,Species,Calceolariaceae,,false,Calceolaria annua,Edwin,urn:lsid:ipni.org:names:41673-2,,
+Calceolaria talcana,J.Grau & C.Ehrh.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:975547-1,Chile Central,CLC
+Calceolaria tatamana,Pennell,Species,Calceolariaceae,,false,Calceolaria microbefaria subsp. tatamana,(Pennell) Molau,urn:lsid:ipni.org:names:41674-2,,
+Calceolaria tenella,Poepp.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800665-1,Argentina South; Chile Central; Chile South,AGS; CLC; CLS
+Calceolaria tenera,Phil.,Species,Calceolariaceae,,false,Calceolaria valdiviana subsp. valdiviana,,urn:lsid:ipni.org:names:800666-1,,
+Calceolaria tenerifolia,Phil.,Species,Calceolariaceae,,false,Calceolaria valdiviana subsp. valdiviana,,urn:lsid:ipni.org:names:41676-2,,
+Calceolaria tenuifolia,Pennell,Species,Calceolariaceae,,false,Calceolaria buchtieniana,Kraenzl.,urn:lsid:ipni.org:names:41677-2,,
+Calceolaria tenuis,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41678-2,Bolivia; Ecuador; Peru,BOL; ECU; PER
+Calceolaria ternata,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41679-2,Ecuador; Peru,ECU; PER
+Calceolaria ternata,Jacques,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77332110-1,,
+Calceolaria terniflora,Cav.,Species,Calceolariaceae,,false,Calceolaria glauca,Ruiz & Pav.,urn:lsid:ipni.org:names:273805-2,,
+Calceolaria tetragona,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273806-2,Peru,PER
+Calceolaria tetragona subsp. endopogon,(Kraenzl.) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:954795-1,Peru,PER
+Calceolaria tetragona subsp. tetragona,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228017-1,Peru,PER
+Calceolaria tetraphylla,Phil.,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. tetraphylla,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:320829-2,,
+Calceolaria teucrioides,Griseb.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800674-1,Argentina Northeast; Argentina Northwest; Bolivia; Chile North,AGE; AGW; BOL; CLN
+Calceolaria teucrioides var. pumila,Griseb.,Variety,Calceolariaceae,,false,Calceolaria teucrioides,Griseb.,urn:lsid:ipni.org:names:41682-2,,
+Calceolaria thyrsiflora,Graham,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800675-1,Chile Central,CLC
+Calceolaria thyrsiflora var. alliacea,Phil.,Variety,Calceolariaceae,,false,Calceolaria thyrsiflora,Graham,urn:lsid:ipni.org:names:41684-2,,
+Calceolaria thyrsiflora var. dulcis,Phil.,Variety,Calceolariaceae,,false,Calceolaria thyrsiflora,Graham,urn:lsid:ipni.org:names:41685-2,,
+Calceolaria tinctoria,Gillies ex G.Don,Species,Calceolariaceae,,false,Calceolaria arachnoidea subsp. arachnoidea,,urn:lsid:ipni.org:names:800676-1,,
+Calceolaria tomentosa,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273810-2,Peru,PER
+Calceolaria tracheliifolia,M.Martens & Galeotti,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41687-2,,
+Calceolaria triandra,(Cav.) Vahl,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800679-1,Peru,PER
+Calceolaria trichanthera,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41688-2,Colombia,CLM
+Calceolaria tricolor,Reider,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:3310127-4,,
+Calceolaria tricolor var. alexandria,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310128-4,,
+Calceolaria tricolor var. elegans,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310129-4,,
+Calceolaria tricolor var. formosa,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310130-4,,
+Calceolaria tricolor var. gilanii,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310131-4,,
+Calceolaria tricolor var. lehmannii,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310132-4,,
+Calceolaria tricolor var. minor,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310133-4,,
+Calceolaria tricolor var. picta,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310134-4,,
+Calceolaria tricolor var. sulfurea,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310135-4,,
+Calceolaria tricolor var. superba,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310136-4,,
+Calceolaria tricolor var. youngii,Reider,Variety,Calceolariaceae,,false,Calceolaria tricolor,Reider,urn:lsid:ipni.org:names:3310137-4,,
+Calceolaria trifida,Ruiz & Pav.,Species,Calceolariaceae,,false,Calceolaria bicolor,Ruiz & Pav.,urn:lsid:ipni.org:names:273811-2,,
+Calceolaria triloba,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41690-2,Peru,PER
+Calceolaria trilobata,Hemsl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800682-1,Bolivia; Colombia; Ecuador; Guatemala; Mexico Southeast; Mexico Southwest; Peru; Venezuela,BOL; CLM; ECU; GUA; MXT; MXS; PER; VEN
+Calceolaria trilobata subsp. aequilateralis,(Edwin) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:954800-1,Peru,PER
+Calceolaria trilobata subsp. chimborazensis,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria trilobata subsp. trilobata,,urn:lsid:ipni.org:names:41692-2,,
+Calceolaria trilobata subsp. halliana,(Kraenzl.) Pennell,Subspecies,Calceolariaceae,,false,Calceolaria trilobata subsp. trilobata,,urn:lsid:ipni.org:names:41693-2,,
+Calceolaria trilobata subsp. herzogiana,(Kraenzl.) Molau,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273812-2,Bolivia; Peru,BOL; PER
+Calceolaria trilobata subsp. longisepala,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria trilobata subsp. trilobata,,urn:lsid:ipni.org:names:41694-2,,
+Calceolaria trilobata subsp. orientalis,Pennell,Subspecies,Calceolariaceae,,false,Calceolaria trilobata subsp. trilobata,,urn:lsid:ipni.org:names:41695-2,,
+Calceolaria trilobata subsp. trilobata,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228162-1,Colombia; Ecuador; Guatemala; Mexico Southeast; Mexico Southwest; Venezuela,CLM; ECU; GUA; MXT; MXS; VEN
+Calceolaria tripartita,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41696-2,Colombia; Costa Rica; Ecuador; Guatemala; Mexico Central; Mexico Gulf; Mexico Northeast; Mexico Southeast; Mexico Southwest; Panamá; Peru; Venezuela,CLM; COS; ECU; GUA; MXC; MXG; MXE; MXT; MXS; PAN; PER; VEN
+Calceolaria tripartita subsp. cajamarcensis,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41697-2,,
+Calceolaria tripartita subsp. candelabris,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41698-2,,
+Calceolaria tripartita subsp. chumpitazii,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41699-2,,
+Calceolaria tripartita subsp. crenatifolia,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41700-2,,
+Calceolaria tripartita subsp. diversifolia,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41701-2,,
+Calceolaria tripartita subsp. inaequalis,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41702-2,,
+Calceolaria tripartita subsp. longipedunculata,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41703-2,,
+Calceolaria tripartita subsp. mandoniana,(Kraenzl.) Pennell,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:2691677-4,,
+Calceolaria tripartita subsp. retroflexa,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41705-2,,
+Calceolaria tripartita subsp. yuparum,(Steyerm.) Steyerm.,Subspecies,Calceolariaceae,,false,Calceolaria mexicana subsp. prostrata,(Kraenzl.) Molau,urn:lsid:ipni.org:names:41707-2,,
+Calceolaria tripartita var. mandoniana,(Kraenzl.) Pennell,Variety,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:2691678-4,,
+Calceolaria tripartita var. typica,Pennell,Variety,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41706-2,,
+Calceolaria triphylla,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria virgata,Ruiz & Pav.,urn:lsid:ipni.org:names:41708-2,,
+Calceolaria trivialis,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria virgata,Ruiz & Pav.,urn:lsid:ipni.org:names:41709-2,,
+Calceolaria truxillensis,López Guillén,Species,Calceolariaceae,,false,Calceolaria cajabambae,Kraenzl.,urn:lsid:ipni.org:names:41710-2,,
+Calceolaria truxillensis subsp. pivotiformis,López Guillén,Subspecies,Calceolariaceae,,false,Calceolaria cajabambae,Kraenzl.,urn:lsid:ipni.org:names:41711-2,,
+Calceolaria tucumana,Descole,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41712-2,Argentina Northwest; Bolivia,AGW; BOL
+Calceolaria tungurahuae,Pennell,Species,Calceolariaceae,,false,Calceolaria gossypina,Benth.,urn:lsid:ipni.org:names:41713-2,,
+Calceolaria umbellata,Wedd.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273814-2,Argentina Northwest; Bolivia,AGW; BOL
+Calceolaria undulata,Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41714-2,Argentina South; Chile Central,AGS; CLC
+Calceolaria uniflora,Lam.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:320821-2,Argentina South; Chile South,AGS; CLS
+Calceolaria uniflora,Ruiz & Pav.,Species,Calceolariaceae,,false,Calceolaria virgata,Ruiz & Pav.,urn:lsid:ipni.org:names:41715-2,,
+Calceolaria uniflora var. darwinii,(Benth.) Witasek ex Reiche,Variety,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:41716-2,,
+Calceolaria uniflora var. minima,(Witasek) Reiche,Variety,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:41717-2,,
+Calceolaria uniflora var. silvestris,Skottsb.,Variety,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:41718-2,,
+Calceolaria urticifolia,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:20011922-1,Bolivia,BOL
+Calceolaria urticina,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:41719-2,,
+Calceolaria urubambae,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria engleriana subsp. engleriana,,urn:lsid:ipni.org:names:41720-2,,
+Calceolaria uspallatensis,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria ascendens subsp. ascendens,,urn:lsid:ipni.org:names:41721-2,,
+Calceolaria utricularioides,Hook. ex Benth.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41722-2,Ecuador; Peru,ECU; PER
+Calceolaria vaccinioides,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41723-2,Bolivia; Peru,BOL; PER
+Calceolaria valdiviana,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:313810-2,Argentina South; Chile Central; Chile South,AGS; CLC; CLS
+Calceolaria valdiviana subsp. crassifolia,(Phil.) C.Ehrh.,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1011386-2,Chile Central; Chile South,CLC; CLS
+Calceolaria valdiviana subsp. valdiviana,,Subspecies,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77228425-1,Argentina South; Chile Central; Chile South,AGS; CLC; CLS
+Calceolaria variegata,Jacques,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77332109-1,,
+Calceolaria variifolia,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41724-2,Ecuador; Peru,ECU; PER
+Calceolaria velardei,López Guillén,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:41725-2,,
+Calceolaria velutina,Pennell,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41726-2,Ecuador,ECU
+Calceolaria velutinoides,Edwin,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41727-2,Peru,PER
+Calceolaria verbascifolia,Bertero ex Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800703-1,Chile Central,CLC
+Calceolaria vernicosa,Phil.,Species,Calceolariaceae,,false,Calceolaria meyeniana subsp. nahuelbutae,(Phil.) C.Ehrh.,urn:lsid:ipni.org:names:323838-2,,
+Calceolaria verticillata,Ruiz & Pav.,Species,Calceolariaceae,,false,Calceolaria angustiflora,Ruiz & Pav.,urn:lsid:ipni.org:names:800706-1,,
+Calceolaria verticillata var. multiflora,Benth.,Variety,Calceolariaceae,,false,Calceolaria angustiflora,Ruiz & Pav.,urn:lsid:ipni.org:names:41729-2,,
+Calceolaria villosa,Phil.,Species,Calceolariaceae,,false,Calceolaria mollissima,Walp.,urn:lsid:ipni.org:names:41730-2,,
+Calceolaria viminalis,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria engleriana subsp. engleriana,,urn:lsid:ipni.org:names:41731-2,,
+Calceolaria vinosa,Jacques,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77332116-1,,
+Calceolaria violacea,Cav.,Species,Calceolariaceae,,false,Jovellana violacea,(Cav.) G.Don,urn:lsid:ipni.org:names:800709-1,,
+Calceolaria virgata,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41733-2,Bolivia; Ecuador; Peru,BOL; ECU; PER
+Calceolaria virgata f. llamaensis,Edwin,Form,Calceolariaceae,,false,Calceolaria llamaensis,(Edwin) Molau,urn:lsid:ipni.org:names:273816-2,,
+Calceolaria viscosa,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273817-2,Peru,PER
+Calceolaria viscosissima,(Hook.) Lindl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800712-1,Chile Central,CLC
+Calceolaria volckmannii,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41737-2,Argentina South; Chile Central,AGS; CLC
+Calceolaria vulpina,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273818-2,Peru,PER
+Calceolaria weberbaueriana,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:273819-2,Peru,PER
+Calceolaria werdermannii,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria valdiviana subsp. valdiviana,,urn:lsid:ipni.org:names:41740-2,,
+Calceolaria wheeleri,Sweet,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:800718-1,,
+Calceolaria williamsii,Phil.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41742-2,Chile Central,CLC
+Calceolaria witasekiana,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria atahualpae subsp. witasekiana,(Kraenzl.) Molau,urn:lsid:ipni.org:names:273820-2,,
+Calceolaria yolandae,López Guillén,Species,Calceolariaceae,,false,Calceolaria chaetostemon,Pennell,urn:lsid:ipni.org:names:41744-2,,
+Calceolaria yuparum,Steyerm.,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. prostrata,(Kraenzl.) Molau,urn:lsid:ipni.org:names:41745-2,,
+Calceolaria zamorana,Molau,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41746-2,Ecuador,ECU
+Calceolaria zapatilla,Kraenzl.,Species,Calceolariaceae,,false,Calceolaria boliviana,(Britton ex Rusby) Pennell,urn:lsid:ipni.org:names:41747-2,,
+Calceolaria × atkinsiana,Sweet,Species,Calceolariaceae,,false,Calceolaria × youngii,Lindl.,urn:lsid:ipni.org:names:800174-1,,
+Calceolaria × burbidgei,G.Nicholson,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77191233-1,,
+Calceolaria × fruticohybrida,Voss,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800324-1,,
+Calceolaria × gellaniana,Penny ex Loudon,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77394590-1,,
+Calceolaria × guttata,Willmore ex Knowles & Westc.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800356-1,,
+Calceolaria × herbeohybrida,Voss,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800364-1,,
+Calceolaria × kellyana,Rob.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:77394642-1,,
+Calceolaria × martineauae,Lowe ex Sweet,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800454-1,,
+Calceolaria × pardanthera,W.H.Baxter ex Loudon,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800518-1,,
+Calceolaria × polyantha,Penny ex Loudon,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800555-1,,
+Calceolaria × quinamadivensis,Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41601-2,,
+Calceolaria × standishii,Paxton,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800654-1,,
+Calceolaria × wettsteiniana,Witasek,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:41741-2,Chile Central,CLC
+Calceolaria × youngii,Lindl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:800722-1,,
+Calceolariaceae,Raf. ex Olmstead,Family,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:1019398-1,,
+Fagelia,Schwencke,Genus,Calceolariaceae,,false,Calceolaria,L.,urn:lsid:ipni.org:names:37648-1,,
+Fagelia alata,Pennell,Species,Calceolariaceae,,false,Calceolaria alata,(Pennell) Pennell,urn:lsid:ipni.org:names:103132-2,,
+Fagelia alba,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria alba,Ruiz & Pav.,urn:lsid:ipni.org:names:103133-2,,
+Fagelia alternifolia,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria linearis,Ruiz & Pav.,urn:lsid:ipni.org:names:103134-2,,
+Fagelia amplexicaulis,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria crenata,Lam.,urn:lsid:ipni.org:names:103135-2,,
+Fagelia andina,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria andina,Benth.,urn:lsid:ipni.org:names:103136-2,,
+Fagelia angustiflora,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria angustiflora,Ruiz & Pav.,urn:lsid:ipni.org:names:103137-2,,
+Fagelia aquatica,(A.Braun & C.D.Bouché) Kuntze,Species,Calceolariaceae,,false,Calceolaria aquatica,A.Braun & C.D.Bouché,urn:lsid:ipni.org:names:1167985-2,,
+Fagelia arachnodea,(Graham) Kuntze,Species,Calceolariaceae,,false,Calceolaria arachnoidea,Graham,urn:lsid:ipni.org:names:103139-2,,
+Fagelia argentea,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria argentea,Kunth,urn:lsid:ipni.org:names:103140-2,,
+Fagelia ascendens,(Lindl.) Kuntze,Species,Calceolariaceae,,false,Calceolaria ascendens,Lindl.,urn:lsid:ipni.org:names:103131-2,,
+Fagelia bangii,Rusby,Species,Calceolariaceae,,false,Calceolaria parvifolia subsp. parvifolia,,urn:lsid:ipni.org:names:103141-2,,
+Fagelia bartsiifolia,(Wedd.) Rusby,Species,Calceolariaceae,,false,Calceolaria bartsiifolia,Wedd.,urn:lsid:ipni.org:names:103142-2,,
+Fagelia bellidifolia,Kuntze,Species,Calceolariaceae,,false,Calceolaria brunellifolia,Phil.,urn:lsid:ipni.org:names:103143-2,,
+Fagelia berteroi,(Colla) Kuntze,Species,Calceolariaceae,,false,Calceolaria angustifolia,(Lindl.) Sweet,urn:lsid:ipni.org:names:103144-2,,
+Fagelia bicolor,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria bicolor,Ruiz & Pav.,urn:lsid:ipni.org:names:103145-2,,
+Fagelia bicrenata,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria bicrenata,Ruiz & Pav.,urn:lsid:ipni.org:names:103146-2,,
+Fagelia biflora,(Lam.) Kuntze,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:103147-2,,
+Fagelia biflora var. obtusifolia,Kuntze,Variety,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:1145581-2,,
+Fagelia biflora var. plantaginea,(Sm.) Kuntze,Variety,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:103148-2,,
+Fagelia biflora var. uniflora,Kuntze,Variety,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:103149-2,,
+Fagelia bogotensis,Pennell,Species,Calceolariaceae,,false,Calceolaria bogotensis,(Pennell) Pennell,urn:lsid:ipni.org:names:103150-2,,
+Fagelia boliviana,Britton ex Rusby,Species,Calceolariaceae,,false,Calceolaria boliviana,(Britton ex Rusby) Pennell,urn:lsid:ipni.org:names:103151-2,,
+Fagelia calycina,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria calycina,Benth.,urn:lsid:ipni.org:names:103152-2,,
+Fagelia cana,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria cana,Cav.,urn:lsid:ipni.org:names:103153-2,,
+Fagelia canescens,(Humb. ex Link) Kuntze,Species,Calceolariaceae,,false,Calceolaria hyssopifolia,Kunth,urn:lsid:ipni.org:names:103154-2,,
+Fagelia cerasifolia,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria nivalis subsp. cerasifolia,(Benth.) Molau,urn:lsid:ipni.org:names:103155-2,,
+Fagelia chelidoniodes,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:103156-2,,
+Fagelia corymbosa,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria corymbosa,Ruiz & Pav.,urn:lsid:ipni.org:names:103157-2,,
+Fagelia crenata,(Lam.) Kuntze,Species,Calceolariaceae,,false,Calceolaria crenata,Lam.,urn:lsid:ipni.org:names:103158-2,,
+Fagelia crenatiflora,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria crenatiflora,Cav.,urn:lsid:ipni.org:names:103159-2,,
+Fagelia crenatiloba,Pennell,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:103160-2,,
+Fagelia cuneiformis,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria cuneiformis,Ruiz & Pav.,urn:lsid:ipni.org:names:103161-2,,
+Fagelia darwinii,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:103162-2,,
+Fagelia deflexa,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria deflexa,Ruiz & Pav.,urn:lsid:ipni.org:names:103163-2,,
+Fagelia dentata,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria dentata,Ruiz & Pav.,urn:lsid:ipni.org:names:103164-2,,
+Fagelia dilatata,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria dilatata,Benth.,urn:lsid:ipni.org:names:103165-2,,
+Fagelia divaricata,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria divaricata,Kunth,urn:lsid:ipni.org:names:103166-2,,
+Fagelia diversifolia,Pennell,Species,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:103167-2,,
+Fagelia ericoides,(Juss. ex Vahl) Kuntze,Species,Calceolariaceae,,false,Calceolaria ericoides,Juss. ex Vahl,urn:lsid:ipni.org:names:103168-2,,
+Fagelia erioclada,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria gossypina,Benth.,urn:lsid:ipni.org:names:103169-2,,
+Fagelia excelsa,(Cout.) Kuntze,Species,Calceolariaceae,,false,Calceolaria excelsa,Courtois,urn:lsid:ipni.org:names:103170-2,,
+Fagelia extensa,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria extensa,Benth.,urn:lsid:ipni.org:names:103171-2,,
+Fagelia falklandica,S.Moore,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:103172-2,,
+Fagelia ferruginea,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria ferruginea,Cav.,urn:lsid:ipni.org:names:103173-2,,
+Fagelia flexuosa,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria flexuosa,Ruiz & Pav.,urn:lsid:ipni.org:names:103175-2,,
+Fagelia fothergillii,(Aiton) Kuntze,Species,Calceolariaceae,,false,Calceolaria fothergillii,Aiton,urn:lsid:ipni.org:names:103176-2,,
+Fagelia fruticosa,Pennell,Species,Calceolariaceae,,false,Calceolaria microbefaria subsp. fruticosa,(Pennell) Molau,urn:lsid:ipni.org:names:103177-2,,
+Fagelia glandulosa,(Poepp. ex Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria glandulosa,Poepp. ex Benth.,urn:lsid:ipni.org:names:103178-2,,
+Fagelia glauca,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria glauca,Ruiz & Pav.,urn:lsid:ipni.org:names:103179-2,,
+Fagelia gossypina,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria gossypina,Benth.,urn:lsid:ipni.org:names:103180-2,,
+Fagelia gracilis,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:103181-2,,
+Fagelia graminifolia,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:103182-2,,
+Fagelia grisebachii,(Kraenzl.) Kuntze,Species,Calceolariaceae,,false,Calceolaria polyclada,Kraenzl.,urn:lsid:ipni.org:names:297890-2,,
+Fagelia hartwegii,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:103183-2,,
+Fagelia helianthemoides,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria helianthemoides,Kunth,urn:lsid:ipni.org:names:1039328-2,,
+Fagelia heterophylla,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria heterophylla,Ruiz & Pav.,urn:lsid:ipni.org:names:103185-2,,
+Fagelia hispida,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria hispida,Benth.,urn:lsid:ipni.org:names:103186-2,,
+Fagelia hypericina,(Poepp. ex Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria hypericina,Poepp. ex Benth.,urn:lsid:ipni.org:names:103187-2,,
+Fagelia hypoleuca,(Meyen) Kuntze,Species,Calceolariaceae,,false,Calceolaria hypoleuca,Meyen,urn:lsid:ipni.org:names:103188-2,,
+Fagelia hyssopifolia,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria hyssopifolia,Kunth,urn:lsid:ipni.org:names:103189-2,,
+Fagelia inflexa,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria inflexa,Ruiz & Pav.,urn:lsid:ipni.org:names:103190-2,,
+Fagelia integrifolia,(L.) Kuntze,Species,Calceolariaceae,,false,Calceolaria integrifolia,L.,urn:lsid:ipni.org:names:103191-2,,
+Fagelia involuta,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria involuta,Ruiz & Pav.,urn:lsid:ipni.org:names:103192-2,,
+Fagelia javicans,J.F.Gmel.,Species,Calceolariaceae,,false,Calceolaria pinnata subsp. pinnata,,urn:lsid:ipni.org:names:803040-1,,
+Fagelia lamiifolia,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria lamiifolia,Kunth,urn:lsid:ipni.org:names:2807017-4,,
+Fagelia lanata,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria lanata,Kunth,urn:lsid:ipni.org:names:103194-2,,
+Fagelia lanceolata,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:103195-2,,
+Fagelia latifolia,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria latifolia,Benth.,urn:lsid:ipni.org:names:2807020-4,,
+Fagelia lavandulifolia,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria lavandulifolia,Kunth,urn:lsid:ipni.org:names:103197-2,,
+Fagelia laxa,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria inflexa,Ruiz & Pav.,urn:lsid:ipni.org:names:103198-2,,
+Fagelia lehmanniana,(Kraenzl.) Pennell,Species,Calceolariaceae,,false,Calceolaria lehmanniana,Kraenzl.,urn:lsid:ipni.org:names:103199-2,,
+Fagelia linearis,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria linearis,Ruiz & Pav.,urn:lsid:ipni.org:names:103200-2,,
+Fagelia lobata,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria lobata,Cav.,urn:lsid:ipni.org:names:103201-2,,
+Fagelia lobata var. glabriuscula,Kuntze,Variety,Calceolariaceae,,false,Calceolaria lobata,Cav.,urn:lsid:ipni.org:names:103202-2,,
+Fagelia lobata var. hirsuta,Kuntze,Variety,Calceolariaceae,,false,Calceolaria lobata,Cav.,urn:lsid:ipni.org:names:103203-2,,
+Fagelia matthewsii,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria scapiflora,(Ruiz & Pav.) Benth.,urn:lsid:ipni.org:names:1064990-2,,
+Fagelia melissifolia,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria melissifolia,Benth.,urn:lsid:ipni.org:names:103205-2,,
+Fagelia mexicana,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria mexicana,Benth.,urn:lsid:ipni.org:names:103206-2,,
+Fagelia micrantha,Pennell,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:103207-2,,
+Fagelia microbefaria,(Kraenzl.) Pennell,Species,Calceolariaceae,,false,Calceolaria microbefaria,Kraenzl.,urn:lsid:ipni.org:names:103208-2,,
+Fagelia mollissima,(Walp.) Kuntze,Species,Calceolariaceae,,false,Calceolaria mollissima,Walp.,urn:lsid:ipni.org:names:103209-2,,
+Fagelia montana,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria mollissima,Walp.,urn:lsid:ipni.org:names:103210-2,,
+Fagelia morisii,(Walp.) Kuntze,Species,Calceolariaceae,,false,Calceolaria morisii,Walp.,urn:lsid:ipni.org:names:103211-2,,
+Fagelia nana,(Sm.) Kuntze,Species,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:103212-2,,
+Fagelia nevadensis,Pennell,Species,Calceolariaceae,,false,Calceolaria nevadensis,(Pennell) Standl.,urn:lsid:ipni.org:names:103213-2,,
+Fagelia nitida,(Colla) Kuntze,Species,Calceolariaceae,,false,Calceolaria nitida,Colla,urn:lsid:ipni.org:names:103214-2,,
+Fagelia nivalis,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria nivalis,Kunth,urn:lsid:ipni.org:names:103215-2,,
+Fagelia nudicaulis,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria nudicaulis,Benth.,urn:lsid:ipni.org:names:103216-2,,
+Fagelia oblonga,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria oblonga,Ruiz & Pav.,urn:lsid:ipni.org:names:103217-2,,
+Fagelia ovata,(Sm.) Kuntze,Species,Calceolariaceae,,false,Calceolaria dichotoma subsp. dichotoma,,urn:lsid:ipni.org:names:103218-2,,
+Fagelia padifolia,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria nivalis subsp. nivalis,,urn:lsid:ipni.org:names:103219-2,,
+Fagelia paralia,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria paralia,Cav.,urn:lsid:ipni.org:names:103220-2,,
+Fagelia parviflora,(Gillies ex Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria parviflora,Gillies ex Benth.,urn:lsid:ipni.org:names:103221-2,,
+Fagelia pavonii,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria pavonii,Benth.,urn:lsid:ipni.org:names:1147556-2,,
+Fagelia perfoliata,(L.f.) Kuntze,Species,Calceolariaceae,,false,Calceolaria perfoliata,L.f.,urn:lsid:ipni.org:names:103223-2,,
+Fagelia petioalaris,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:103224-2,,
+Fagelia pinifolia,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria pinifolia,Cav.,urn:lsid:ipni.org:names:103225-2,,
+Fagelia pinnata,(L.) Kuntze,Species,Calceolariaceae,,false,Calceolaria pinnata,L.,urn:lsid:ipni.org:names:103226-2,,
+Fagelia pinnatisecta,Pennell,Species,Calceolariaceae,,false,Calceolaria chelidonioides,Kunth,urn:lsid:ipni.org:names:103227-2,,
+Fagelia pisacomensis,(Meyen ex Walp.) Kuntze,Species,Calceolariaceae,,false,Calceolaria pisacomensis,Meyen ex Walp.,urn:lsid:ipni.org:names:103228-2,,
+Fagelia plantaginea,(Sm.) S.Moore,Species,Calceolariaceae,,false,Calceolaria biflora,Lam.,urn:lsid:ipni.org:names:803075-1,,
+Fagelia plectranthifolia,(Walp.) Kuntze,Species,Calceolariaceae,,false,Calceolaria plectranthifolia,Walp.,urn:lsid:ipni.org:names:103229-2,,
+Fagelia polifolia,(Hook.) Kuntze,Species,Calceolariaceae,,false,Calceolaria polifolia,Hook.,urn:lsid:ipni.org:names:103230-2,,
+Fagelia polyrhiza,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:103231-2,,
+Fagelia prichardii,Rendle,Species,Calceolariaceae,,false,Calceolaria polyrhiza,Cav.,urn:lsid:ipni.org:names:103232-2,,
+Fagelia pulverulenta,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria pulverulenta,Ruiz & Pav.,urn:lsid:ipni.org:names:103233-2,,
+Fagelia punctata,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Jovellana punctata,Ruiz & Pav.,urn:lsid:ipni.org:names:103234-2,,
+Fagelia punicea,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria punicea,Ruiz & Pav.,urn:lsid:ipni.org:names:103235-2,,
+Fagelia purpurascens,(Sodiro) Pennell,Species,Calceolariaceae,,false,Calceolaria purpurascens,(Sodiro) Molau,urn:lsid:ipni.org:names:1032655-2,,
+Fagelia purpurea,(Graham) Kuntze,Species,Calceolariaceae,,false,Calceolaria purpurea,Graham,urn:lsid:ipni.org:names:103237-2,,
+Fagelia racemosa,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria corymbosa subsp. corymbosa,,urn:lsid:ipni.org:names:103238-2,,
+Fagelia radiculoides,Pennell,Species,Calceolariaceae,,false,Calceolaria mexicana subsp. mexicana,,urn:lsid:ipni.org:names:103239-2,,
+Fagelia rosmarinifolia,(Lam.) Kuntze,Species,Calceolariaceae,,false,Calceolaria rosmarinifolia,Lam.,urn:lsid:ipni.org:names:103240-2,,
+Fagelia rotundifolia,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria rotundifolia,Kunth,urn:lsid:ipni.org:names:103241-2,,
+Fagelia salicifolia,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria salicifolia,Ruiz & Pav.,urn:lsid:ipni.org:names:103242-2,,
+Fagelia saxatilis,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria lamiifolia,Kunth,urn:lsid:ipni.org:names:103243-2,,
+Fagelia scabiosifolia,(Roem. & Schult.) Kuntze,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:103244-2,,
+Fagelia scabra,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria scabra,Ruiz & Pav.,urn:lsid:ipni.org:names:103245-2,,
+Fagelia scabra var. bartsiifolia,(Wedd.) Kuntze,Variety,Calceolariaceae,,false,Calceolaria bartsiifolia,Wedd.,urn:lsid:ipni.org:names:103246-2,,
+Fagelia scalaris,Pennell,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:103247-2,,
+Fagelia scapiflora,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria scapiflora,(Ruiz & Pav.) Benth.,urn:lsid:ipni.org:names:103248-2,,
+Fagelia serrata,(Lam.) Kuntze,Species,Calceolariaceae,,false,Calceolaria serrata,Lam.,urn:lsid:ipni.org:names:103249-2,,
+Fagelia sessilis,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria sessilis,Ruiz & Pav.,urn:lsid:ipni.org:names:103250-2,,
+Fagelia sibthorpioides,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria sibthorpioides,Kunth,urn:lsid:ipni.org:names:1206822-2,,
+Fagelia sinclairii,(Hook.) Kuntze,Species,Calceolariaceae,,false,Jovellana sinclairii,(Hook.) Kraenzl.,urn:lsid:ipni.org:names:103252-2,,
+Fagelia stricta,(Kunth) Kuntze,Species,Calceolariaceae,,false,Calceolaria stricta,Kunth,urn:lsid:ipni.org:names:103253-2,,
+Fagelia tenella,(Poepp.) Kuntze,Species,Calceolariaceae,,false,Calceolaria tenella,Poepp.,urn:lsid:ipni.org:names:103254-2,,
+Fagelia tenuis,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria tenuis,Benth.,urn:lsid:ipni.org:names:103255-2,,
+Fagelia terniflora,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria glauca,Ruiz & Pav.,urn:lsid:ipni.org:names:1027501-2,,
+Fagelia tetragona,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria tetragona,Benth.,urn:lsid:ipni.org:names:103256-2,,
+Fagelia teucrioides,(Griseb.) Rusby,Species,Calceolariaceae,,false,Calceolaria teucrioides,Griseb.,urn:lsid:ipni.org:names:103257-2,,
+Fagelia thyrsiflora,(Graham) Kuntze,Species,Calceolariaceae,,false,Calceolaria thyrsiflora,Graham,urn:lsid:ipni.org:names:103258-2,,
+Fagelia tolimensis,Pennell,Species,Calceolariaceae,,false,Calceolaria perfoliata,L.f.,urn:lsid:ipni.org:names:103259-2,,
+Fagelia tomentosa,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria tomentosa,Ruiz & Pav.,urn:lsid:ipni.org:names:103260-2,,
+Fagelia triandra,(Cav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria triandra,(Cav.) Vahl,urn:lsid:ipni.org:names:103261-2,,
+Fagelia trifida,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria bicolor,Ruiz & Pav.,urn:lsid:ipni.org:names:103262-2,,
+Fagelia trilobata,(Hemsl.) Rusby,Species,Calceolariaceae,,false,Calceolaria trilobata,Hemsl.,urn:lsid:ipni.org:names:103263-2,,
+Fagelia tripartita,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria tripartita,Ruiz & Pav.,urn:lsid:ipni.org:names:103264-2,,
+Fagelia undulata,(Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria undulata,Benth.,urn:lsid:ipni.org:names:103265-2,,
+Fagelia uniflora,(Lam.) Kuntze,Species,Calceolariaceae,,false,Calceolaria uniflora,Lam.,urn:lsid:ipni.org:names:103266-2,,
+Fagelia utriculariodes,(Hook. ex Benth.) Kuntze,Species,Calceolariaceae,,false,Calceolaria utricularioides,Hook. ex Benth.,urn:lsid:ipni.org:names:1100002-2,,
+Fagelia verticillata,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria angustiflora,Ruiz & Pav.,urn:lsid:ipni.org:names:103268-2,,
+Fagelia violacea,(Cav.) Kuntze,Species,Calceolariaceae,,false,Jovellana violacea,(Cav.) G.Don,urn:lsid:ipni.org:names:103269-2,,
+Fagelia virgata,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria virgata,Ruiz & Pav.,urn:lsid:ipni.org:names:103270-2,,
+Fagelia viscosa,(Ruiz & Pav.) Kuntze,Species,Calceolariaceae,,false,Calceolaria viscosa,Ruiz & Pav.,urn:lsid:ipni.org:names:103271-2,,
+Fagelia viscosissima,(Hook.) Kuntze,Species,Calceolariaceae,,false,Calceolaria viscosissima,(Hook.) Lindl.,urn:lsid:ipni.org:names:103272-2,,
+Fagelia volckmannii,(Phil.) Kuntze,Species,Calceolariaceae,,false,Calceolaria volckmannii,Phil.,urn:lsid:ipni.org:names:103273-2,,
+Jovellana,Ruiz & Pav.,Genus,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:37744-1,Chile Central; Chile South; New Zealand North; New Zealand South,CLC; CLS; NZN; NZS
+Jovellana albula,(Colenso) Kraenzl.,Species,Calceolariaceae,,false,Jovellana sinclairii,(Hook.) Kraenzl.,urn:lsid:ipni.org:names:804050-1,,
+Jovellana guentheri,Kraenzl.,Species,Calceolariaceae,,false,Jovellana violacea,(Cav.) G.Don,urn:lsid:ipni.org:names:131700-2,,
+Jovellana petiolaris,Cav.,Species,Calceolariaceae,,false,Calceolaria petioalaris,Cav.,urn:lsid:ipni.org:names:804052-1,,
+Jovellana punctata,Ruiz & Pav.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:804053-1,Chile Central,CLC
+Jovellana punctata var. coerulea,Kraenzl.,Variety,Calceolariaceae,,false,Jovellana punctata,Ruiz & Pav.,urn:lsid:ipni.org:names:131702-2,,
+Jovellana repens,(Hook.f.) Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:804054-1,New Zealand North; New Zealand South,NZN; NZS
+Jovellana scapiflora,Ruiz & Pav.,Species,Calceolariaceae,,false,Calceolaria scapiflora,(Ruiz & Pav.) Benth.,urn:lsid:ipni.org:names:279027-2,,
+Jovellana sinclairii,(Hook.) Kraenzl.,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:804056-1,New Zealand North; New Zealand South,NZN; NZS
+Jovellana sturmii,(Colenso) Kraenzl.,Species,Calceolariaceae,,false,Jovellana sinclairii,(Hook.) Kraenzl.,urn:lsid:ipni.org:names:804057-1,,
+Jovellana triandra,Cav.,Species,Calceolariaceae,,false,Calceolaria triandra,(Cav.) Vahl,urn:lsid:ipni.org:names:279028-2,,
+Jovellana violacea,(Cav.) G.Don,Species,Calceolariaceae,,true,,,urn:lsid:ipni.org:names:804059-1,Chile Central; Chile South,CLC; CLS
+Porodittia,G.Don ex Kraenzl.,Genus,Calceolariaceae,,false,Calceolaria,L.,urn:lsid:ipni.org:names:37938-1,,
+Porodittia triandra,(Cav.) G.Don ex Kraenzl.,Species,Calceolariaceae,,false,Calceolaria triandra,(Cav.) Vahl,urn:lsid:ipni.org:names:77388938-1,,
+Stemotria,Wettst. & Harms,Genus,Calceolariaceae,,false,Calceolaria,L.,urn:lsid:ipni.org:names:38032-1,,
+Stemotria triandra,(Cav.) Govaerts,Species,Calceolariaceae,,false,Calceolaria triandra,(Cav.) Vahl,urn:lsid:ipni.org:names:1010005-1,,
+Trianthera,Wettst.,Genus,Calceolariaceae,,false,Calceolaria,L.,urn:lsid:ipni.org:names:289358-2,,
+Trianthera triandra,(Cav.) Wettst.,Species,Calceolariaceae,,false,Calceolaria triandra,(Cav.) Vahl,urn:lsid:ipni.org:names:810513-1,,

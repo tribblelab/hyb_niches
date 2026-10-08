@@ -1,30 +1,56 @@
 scientificName,genus,specificEpithet,accepted,authority,validName,synonymAuthority
-Calceolaria integrifolia,Calceolaria,integrifolia,true,L.,,
-Calceolaria integrifolia,Calceolaria,integrifolia,false,L.f.,Calceolaria dichotoma subsp. dichotoma,
-Calceolaria glandulosa,Calceolaria,glandulosa,true,Poepp. ex Benth.,,
-Calceolaria glandulosa,Calceolaria,glandulosa,false,Benth.,Calceolaria nitida,Colla
+Calceolaria andicola,Calceolaria,andicola,false,Gillies ex Hook.,Calceolaria biflora,Lam.
+Calceolaria andicola,Calceolaria,andicola,false,Witasek,Calceolaria meyeniana subsp. meyeniana,
 Calceolaria biflora,Calceolaria,biflora,true,Lam.,,
 Calceolaria biflora,Calceolaria,biflora,false,Ruiz & Pav.,Calceolaria dichotoma subsp. dichotoma,
+Calceolaria brachiata,Calceolaria,brachiata,true,Kraenzl.,,
+Calceolaria brachiata,Calceolaria,brachiata,false,Willd. ex Link,Calceolaria flexuosa subsp. flexuosa,
+Calceolaria canescens,Calceolaria,canescens,false,Willd. ex Link,Calceolaria hyssopifolia,Kunth
+Calceolaria canescens,Calceolaria,canescens,false,Willd. ex Schult.,Calceolaria ericoides subsp. ericoides,
+Calceolaria cavanillesii,Calceolaria,cavanillesii,true,Phil.,,
+Calceolaria cavanillesii,Calceolaria,cavanillesii,false,Pers. ex Steud.,Calceolaria fothergillii,Aiton
+Calceolaria cheiranthoides,Calceolaria,cheiranthoides,false,Phil. ex Reiche,Calceolaria dentata subsp. dentata,
+Calceolaria cheiranthoides,Calceolaria,cheiranthoides,false,Reiche ex Witasek,Calceolaria meyeniana subsp. cheiranthoides,(Reiche ex Witasek) C.Ehrh.
 Calceolaria crenata,Calceolaria,crenata,true,Lam.,,
 Calceolaria crenata,Calceolaria,crenata,false,Lindl.,Calceolaria ascendens subsp. ascendens,
-Calceolaria paralia,Calceolaria,paralia,true,Cav.,,
-Calceolaria paralia,Calceolaria,paralia,false,Hook.,Calceolaria corymbosa subsp. corymbosa,
+Calceolaria floribunda,Calceolaria,floribunda,false,Hook.,Calceolaria crenata,Lam.
+Calceolaria floribunda,Calceolaria,floribunda,false,Kunth,Calceolaria crenata,Lam.
+Calceolaria floribunda,Calceolaria,floribunda,false,Lindl.,Calceolaria petioalaris,Cav.
+Calceolaria foliosa,Calceolaria,foliosa,false,Griseb.,Calceolaria plectranthifolia,Walp.
+Calceolaria foliosa,Calceolaria,foliosa,false,Meyen ex Walp. & Schauer,Calceolaria cuneiformis subsp. cuneiformis,
+Calceolaria foliosa,Calceolaria,foliosa,false,Phil.,Calceolaria undulata,Benth.
+Calceolaria glandulosa,Calceolaria,glandulosa,true,Poepp. ex Benth.,,
+Calceolaria glandulosa,Calceolaria,glandulosa,false,Benth.,Calceolaria nitida,Colla
+Calceolaria glutinosa,Calceolaria,glutinosa,false,F.Meigen,Calceolaria glandulosa subsp. glandulosa,
+Calceolaria glutinosa,Calceolaria,glutinosa,false,Heer & Regel,Calceolaria chelidonioides,Kunth
+Calceolaria heterophylla,Calceolaria,heterophylla,true,Ruiz & Pav.,,
+Calceolaria heterophylla,Calceolaria,heterophylla,false,Willd.,Calceolaria tripartita,Ruiz & Pav.
 Calceolaria hypoleuca,Calceolaria,hypoleuca,true,Meyen,,
 Calceolaria hypoleuca,Calceolaria,hypoleuca,false,Benth.,Calceolaria lavandulifolia,Kunth
 Calceolaria hypoleuca,Calceolaria,hypoleuca,false,Kraenzl.,Calceolaria soratensis,Kraenzl.
-Calceolaria nudicaulis,Calceolaria,nudicaulis,true,Benth.,,
-Calceolaria nudicaulis,Calceolaria,nudicaulis,false,Meyen ex Walp. & Schauer,Calceolaria biflora,Lam.
-Calceolaria cavanillesii,Calceolaria,cavanillesii,true,Phil.,,
-Calceolaria cavanillesii,Calceolaria,cavanillesii,false,Pers. ex Steud.,Calceolaria fothergillii,Aiton
+Calceolaria integrifolia,Calceolaria,integrifolia,true,L.,,
+Calceolaria integrifolia,Calceolaria,integrifolia,false,L.f.,Calceolaria dichotoma subsp. dichotoma,
+Calceolaria linifolia,Calceolaria,linifolia,false,Pennell,Calceolaria buchtieniana,Kraenzl.
+Calceolaria linifolia,Calceolaria,linifolia,false,Willd. ex Link,Calceolaria hyssopifolia,Kunth
 Calceolaria nivalis,Calceolaria,nivalis,true,Kunth,,
 Calceolaria nivalis,Calceolaria,nivalis,false,Steud. & Hochst. ex Benth.,Calceolaria ascendens subsp. ascendens,
-Calceolaria brachiata,Calceolaria,brachiata,true,Kraenzl.,,
-Calceolaria brachiata,Calceolaria,brachiata,false,Willd. ex Link,Calceolaria flexuosa subsp. flexuosa,
-Calceolaria angustiflora,Calceolaria,angustiflora,true,Ruiz & Pav.,,
-Calceolaria angustiflora,Calceolaria,angustiflora,false,Hook.,Calceolaria angustiflora,Ruiz & Pav.
+Calceolaria nudicaulis,Calceolaria,nudicaulis,true,Benth.,,
+Calceolaria nudicaulis,Calceolaria,nudicaulis,false,Meyen ex Walp. & Schauer,Calceolaria biflora,Lam.
+Calceolaria obtusifolia,Calceolaria,obtusifolia,false,(Clos) Witasek,Calceolaria valdiviana subsp. valdiviana,
+Calceolaria obtusifolia,Calceolaria,obtusifolia,false,Kunze ex Walp. & Schauer,Calceolaria filicaulis subsp. luxurians,(Witasek) C.Ehrh.
+Calceolaria paniculata,Calceolaria,paniculata,false,G.Don,Calceolaria petioalaris,Cav.
+Calceolaria paniculata,Calceolaria,paniculata,false,Willd. ex Link,Calceolaria crenata,Lam.
+Calceolaria paralia,Calceolaria,paralia,true,Cav.,,
+Calceolaria paralia,Calceolaria,paralia,false,Hook.,Calceolaria corymbosa subsp. corymbosa,
 Calceolaria parvifolia,Calceolaria,parvifolia,true,Wedd.,,
 Calceolaria parvifolia,Calceolaria,parvifolia,false,Phil.,Calceolaria ascendens subsp. glandulifera,(Witasek) C.Ehrh.
-Calceolaria heterophylla,Calceolaria,heterophylla,true,Ruiz & Pav.,,
-Calceolaria heterophylla,Calceolaria,heterophylla,false,Willd.,Calceolaria tripartita,Ruiz & Pav.
+Calceolaria pulchella,Calceolaria,pulchella,false,Phil.,Calceolaria inamoena subsp. inamoena,
+Calceolaria pulchella,Calceolaria,pulchella,false,Salisb.,Calceolaria pinnata subsp. pinnata,
+Calceolaria rugosa,Calceolaria,rugosa,false,Hook.,Calceolaria ascendens subsp. ascendens,
+Calceolaria rugosa,Calceolaria,rugosa,false,Ruiz & Pav.,Calceolaria integrifolia,L.
+Calceolaria salviifolia,Calceolaria,salviifolia,false,Colla,Calceolaria morisii,Walp.
+Calceolaria salviifolia,Calceolaria,salviifolia,false,Pers.,Calceolaria integrifolia,L.
+Calceolaria scabiosifolia,Calceolaria,scabiosifolia,false,Nees ex G.Don,Calceolaria integrifolia,L.
+Calceolaria scabiosifolia,Calceolaria,scabiosifolia,false,Roem. & Schult.,Calceolaria tripartita,Ruiz & Pav.
 Calceolaria uniflora,Calceolaria,uniflora,true,Lam.,,
 Calceolaria uniflora,Calceolaria,uniflora,false,Ruiz & Pav.,Calceolaria virgata,Ruiz & Pav.

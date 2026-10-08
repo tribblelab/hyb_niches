@@ -12,6 +12,7 @@ date: "2026-02-04"
 using CSV, DataFrames
 using JLD2
 using GeoIO, GeoStats
+include("../../niche-modeling-utils/scripts/checklistutils.jl")
 ```
 
 ## load in taxa list df
@@ -50,34 +51,28 @@ insertcols!(taxa_traits, 3, :infraspecificEpithet => infraspecificEpithet)
 
 ## load in powo checklist
 
-I ran a Kew / Plants of the World Online checklist for Calceolaria species at the botanical country level
-on 2026-02-04, using native/introduced taxa.
+build a Kew / Plants of the World Online checklist with `build_checklist` (from `niche-modeling-utils`), including each
+accepted name's native range at the botanical country level.
+we ask for the whole family rather than just *Calceolaria*, so we also get the synonyms that were described in other
+genera (ex. "Fagelia biflora").
+
+this queries POWO, so the names can change between runs: only re-run this chunk when you want to update the checklist.
 
 ```{julia}
-lines = readlines("data/taxonomy_trait_data/powochecklist.txt")
-#pull lines starting from valid species (skipping headers)
-#lauren hard codes this
-subset = lines[9:1110]
-#join back into a single string
-text = join(subset, "\n")
-#split on one or more empty lines
-blocks = split(text, r"\n\s*\n+")
+#| eval: false
+checklist_path = "data/taxonomy_trait_data/powo_checklist.csv"
+build_checklist("Calceolariaceae"; output_file=checklist_path)
+```
+
+```{julia}
+checklist_path = "data/taxonomy_trait_data/powo_checklist.csv"
+checklist = DataFrame(CSV.File(checklist_path))
 ```
 
 ### compare names from anahí with powo valid names
 
 ```{julia}
-#define regex pattern just to pull full name before species authority
-pat = Regex(
-    "^(.+?)\\s+(?=\\(|[A-Z])",
-    "m"
-)
-
-validnames = String[]
-#grab valid names and add to this vector
-for block in blocks
-    push!(validnames, strip(match(pat, block)[1]))
-end
+validnames = checklist.name[checklist.accepted]
 
 discrepancies = String[]
 for name in scientificName
@@ -112,7 +107,7 @@ replace!(taxa_traits.specificEpithet, "petiolaris" => "petioalaris")
 3.  "Calceolaria corymbosa subsp. montana” —> Kew says this is a synonym for "Calceolaria mollissima"
 >> The right species to use here is C. corymbosa montana (mollissima is an old name)
 
-instead of changing the dataframe or dictionary, I'll just add an if statement to the synonym matching with the POWO checklist below.
+instead of changing the dataframe, I'll look this one up under "Calceolaria mollissima" in the POWO checklist (see `powo_names` below).
 
 4.  "Calceolaria crenatifolia”  —> Kew doesn’t have anything for “crenatifolia”, but they do have “crenatiflora” accepted
 >> Another typo. This is C. crenatiflora indeed.
@@ -132,237 +127,59 @@ replace!(taxa_traits.scientificName, "Calceolaria corymbosa subsp. santiagana" =
 replace!(taxa_traits.infraspecificEpithet, "santiagana" => "santiagina")
 ```
 
-let's initialize dictionary of valid names to synonyms for just the taxa we want:
-
-```{julia}
-synonymdict = Dict{String, Vector{Tuple{String, Union{String, Missing}}}}()
-for name in scientificName
-    synonymdict[name] = Tuple{String, Union{String, Missing}}[]
-end
-```
-
 6.  "Calceolaria dentata subsp. cummingiana” —> Kew has one m in “cumingiana” but on the internet I see 2 ms (“cummingiana”) in other sources
 >> This one is C. dentata cummingiana (with two "m"s)
 
+so, two of our names differ from the accepted POWO names: let's keep track of which POWO name to look them up under.
+for cummingiana, let's also manually add our spelling to its synonyms to cover our bases.
+
+the checklist is built from names in Calceolariaceae, so it misses the two synonyms that were described in *Boea*
+(which POWO files under another family): let's add those manually too.
+
 ```{julia}
-#let's manually add "dentata subsp. cumingiana" to synonyms to cover our bases
-push!(synonymdict["Calceolaria dentata subsp. cummingiana"], ("Calceolaria dentata subsp. cumingiana", "(Witasek) C.Ehrh."), ("Calceolaria dentata var. cumingiana", "(Witasek) C.Reiche"), ("Calceolaria dentata subsp. cummingiana", "(Witasek) C.Ehrh."), ("Calceolaria cumingiana", "Witasek"))
+# our name => accepted POWO name
+powo_names = Dict(
+    "Calceolaria dentata subsp. cummingiana" => "Calceolaria dentata subsp. cumingiana",
+    "Calceolaria corymbosa subsp. montana" => "Calceolaria mollissima"
+)
+
+# our name => synonyms to add on top of the POWO ones
+manual_synonyms = Dict(
+    "Calceolaria dentata subsp. cummingiana" => [("Calceolaria dentata subsp. cummingiana", "(Witasek) C.Ehrh.")],
+    "Calceolaria biflora" => [("Boea plantaginea", "(Sm.) Pers.")],
+    "Calceolaria petioalaris" => [("Boea alata", "Pers.")]
+)
 ```
 
 ## gather my valid names vs. synonyms & their authorities
 
 ### get species authorities for valid names
 
-first, get the species authorities for all our valid names (each line in the `blocks` object):
 ```{julia}
-# Create authority dictionary for valid names
-authority_dict = Dict{String, String}()
-
-for block in blocks
-    first_line = split(block, "\n")[1]
-    name_match = match(pat, first_line)
-    
-    if name_match !== nothing
-        name = strip(name_match[1])
-        name_parts = split(name, " ")
-        epithet = length(name_parts) > 2 ? join(name_parts[2:end], " ") : name_parts[2]
-        
-        authority_match = match(Regex("\\b$(epithet)\\s+(.+?),"), first_line)
-        if authority_match !== nothing
-            authority = strip(authority_match[1])
-            authority = replace(authority, r"\s+in\s+.*$" => "")
-            authority_dict[name] = authority
-        end
-    end
-end
+# valid name => authority, for all valid names (including those we don't have sampled)
+authority_dict = Dict(row.name => row.author for row in eachrow(checklist) if row.accepted && !ismissing(row.author))
 
 # Add speciesAuthority column to taxa_traits
 taxa_traits.speciesAuthority = [get(authority_dict, name, missing) for name in taxa_traits.scientificName]
 ```
 
-now we have `authority_dict` that takes all valid names (including those we don't have sampled)
-to their species authority, and we've updated `taxa_traits`.
-
-### parse all synonym names
-
-then, let's evaluate the synonyms section of the POWO checklist.
-we can collect all synonyms and see if there are synonymic epithets
-that also match accepted epithets (`duplicated_taxa`)
-
-```{julia}
-#hard coding 
-powosynonyms = lines[1112:end]
-synonympat = Regex("^(.+?)\\s+(?=\\(|[A-Z])")
-
-synonym_names = Set{String}()
-
-# collect ALL synonym names (even those we haven't sampled) from entire powosynonyms section
-for line in powosynonyms
-    if occursin("===", line)
-        m = match(synonympat, line)
-        if m !== nothing
-            synonym = strip(m[1])
-            push!(synonym_names, synonym)
-        end
-    end
-end
-```
-
-### find epithets that are both accepted & synonyms
-
-```{julia}
-# find duplicated taxa (appear as both valid and synonym)
-valid_set = Set(validnames)
-duplicated_taxa = intersect(valid_set, synonym_names)
-```
-
-duplicated_taxa = Set(["Calceolaria perfoliata", "Calceolaria integrifolia", "Calceolaria glandulosa", "Calceolaria biflora", "Calceolaria crenata", "Calceolaria pinnata", "Calceolaria paralia", "Calceolaria hypoleuca", "Calceolaria nudicaulis", "Calceolaria cavanillesii", "Calceolaria nivalis", "Calceolaria brachiata", "Calceolaria deflexa", "Calceolaria ferruginea", "Calceolaria angustiflora", "Calceolaria parvifolia", "Calceolaria heterophylla", "Calceolaria uniflora"])
-
-Note, some of these names may not be valid names that *we have sampled*, but they may be a synonym to
-one we have sampled (ex. Calceolaria hypoleuca Kraenzl. is a synonym of Calceolaria soratensis Kraenzl.).
-So, let's not filter this list until we map synonyms to their accepted names.
-
-#### make dataframe mapping epithets that are both accepted & synonyms to their authorities
-
-```{julia}
-# Initialize vectors for the homonym dataframe
-scientificName_vec = String[]
-genus_vec = String[]
-specificEpithet_vec = String[]
-accepted_vec = Bool[]
-authority_vec = String[]
-validName_vec = Union{String, Missing}[]
-synonymAuthority_vec = Union{String, Missing}[]
-
-# Process each duplicated taxon at species level only
-for taxon in duplicated_taxa
-    # Only process species-level (2 words)
-    parts = split(taxon, " ")
-    if length(parts) != 2
-        continue
-    end
-    
-    genus = parts[1]
-    epithet = parts[2]
-    
-    # Get valid authority from authority_dict (already computed)
-    valid_authority = get(authority_dict, taxon, missing)
-    
-    # Add the valid entry (accepted = TRUE)
-    push!(scientificName_vec, taxon)
-    push!(genus_vec, genus)
-    push!(specificEpithet_vec, epithet)
-    push!(accepted_vec, true)
-    push!(authority_vec, valid_authority !== missing ? valid_authority : "")
-    push!(validName_vec, missing)
-    push!(synonymAuthority_vec, missing)
-    
-    # Find all synonym entries (but only species-level synonyms)
-    for line in powosynonyms
-        if startswith(line, taxon * " ") && occursin("===", line)
-            parts_line = split(line, "===")
-            synonym_part = strip(parts_line[1])
-            
-            # Make sure the synonym itself is species-level (exactly 2 words before the authority)
-            # Extract just the name part before the authority
-            syn_name_match = match(synonympat, synonym_part)
-            if syn_name_match !== nothing
-                syn_name = strip(syn_name_match[1])
-                syn_name_parts = split(syn_name, " ")
-                
-                # Skip if not exactly 2 words (genus + species)
-                if length(syn_name_parts) != 2
-                    continue
-                end
-            else
-                continue
-            end
-            
-            valid_part = strip(parts_line[2])
-            
-            # Extract synonym authority
-            syn_auth_match = match(Regex("\\b$(epithet)\\s+(.+?),"), synonym_part)
-            syn_authority = ""
-            if syn_auth_match !== nothing
-                syn_authority = strip(syn_auth_match[1])
-                syn_authority = replace(syn_authority, r"\s+in\s+.*$" => "")
-            end
-            
-            # Extract the valid name it points to
-            valid_name_match = match(Regex("^([A-Z][a-z]+\\s+[a-z]+(?:\\s+(?:subsp\\.|var\\.)\\s+[a-z]+)?)"), valid_part)
-            valid_name = valid_name_match !== nothing ? strip(valid_name_match[1]) : ""
-            valid_name_auth = get(authority_dict, valid_name, missing)
-            
-            # Add the synonym entry (accepted = FALSE)
-            push!(scientificName_vec, taxon)
-            push!(genus_vec, genus)
-            push!(specificEpithet_vec, epithet)
-            push!(accepted_vec, false)
-            push!(authority_vec, syn_authority)
-            push!(validName_vec, valid_name)
-            push!(synonymAuthority_vec, valid_name_auth)
-        end
-    end
-end
-
-# Create the homonym dataframe
-homonym_df = DataFrame(
-    scientificName = scientificName_vec,
-    genus = genus_vec,
-    specificEpithet = specificEpithet_vec,
-    accepted = accepted_vec,
-    authority = authority_vec,
-    validName = validName_vec,
-    synonymAuthority = synonymAuthority_vec
-)
-```
-
 ### build our synonym dictionary (mapping valid names to synonyms)
 
-```{julia}
-for name in scientificName
-    valid_auth = get(authority_dict, name, missing)
-    if name == "Calceolaria dentata subsp. cummingiana"; continue; end
-    synonymdict[name] = [(name, valid_auth)]
-end
+`checklist_synonyms` gives us the accepted name + every synonym that points to it, each with its authority.
 
-# Add synonyms to the dictionary for our dataset
-for name in scientificName
-    keyname = name
-    if name == "Calceolaria corymbosa subsp. montana"
-        push!(synonymdict[name], ("Calceolaria mollissima", missing))
-        name = "Calceolaria mollissima"
-    end
-    
-    # Match === followed by the name, then either whitespace or end of string
-    # This works for both "=== Name Author" and "=== Name subsp. infraname"
-    validnamepat = Regex("===\\s+\\Q$name\\E(?:\\s|\$)")
-    potentialmatches = findall(x -> occursin(validnamepat, x), powosynonyms)
-    
-    if !isempty(potentialmatches)
-        for i in potentialmatches
-            line = powosynonyms[i]
-            synonym = strip(match(synonympat, line)[1])
-            syn_parts = split(synonym, " ")
-            syn_epithet = length(syn_parts) > 2 ? join(syn_parts[2:end], " ") : syn_parts[2]
-            
-            # Escape special regex characters in the epithet
-            escaped_epithet = replace(syn_epithet, r"([.*+?^$()[\]{}|\\])" => s"\\\1")
-            
-            auth_match = match(Regex("\\b$(escaped_epithet)\\s+(.+?),"), line)
-            syn_authority = missing
-            if auth_match !== nothing
-                syn_authority = strip(auth_match[1])
-                syn_authority = replace(syn_authority, r"\s+in\s+.*$" => "")
-            end
-            
-            push!(synonymdict[keyname], (synonym, syn_authority))       
-        end
-    end
+```{julia}
+synonymdict = Dict{String, Vector{Tuple{String, Union{String, Missing}}}}()
+
+for name in taxa_traits.scientificName
+    syns = vcat(get(manual_synonyms, name, []), checklist_synonyms(checklist, get(powo_names, name, name)))
+
+    # our name goes first (it's used as the accepted name when cleaning occurrences)
+    ours = filter(syn -> first(syn) == name, syns)
+    synonymdict[name] = unique(vcat(isempty(ours) ? [(name, missing)] : ours, syns))
 end
 
 # preview synonyms
-for k in keys(synonymdict)
+for k in sort(collect(keys(synonymdict)))
     if length(synonymdict[k]) > 1
         @show k synonymdict[k]
     end
@@ -380,8 +197,8 @@ we also want to be able to pull occurrences at the specific level ("Calceolaria 
 - synonyms of the species as a whole & of those unsampled infraspecific taxa.
 
 so, let's build `species_synonymdict`, mapping each species-level name to everything POWO places
-under that species (at any rank), plus anything we manually added to `synonymdict` for our sampled infraspecific taxa
-(ex. "Calceolaria mollissima" for corymbosa, the "cumingiana" spellings for dentata).
+under that species (at any rank), plus what we gathered in `synonymdict` for our sampled infraspecific taxa
+(ex. "Calceolaria mollissima" for corymbosa, the "cummingiana" spelling for dentata).
 
 ```{julia}
 # species-level name => infraspecific taxa we sampled
@@ -395,45 +212,15 @@ end
 species_synonymdict = Dict{String, Vector{Tuple{String, Union{String, Missing}}}}()
 
 for (sp_name, infrataxa) in species_to_infrataxa
-    syns = Tuple{String, Union{String, Missing}}[]
+    # the species itself, all of its accepted infraspecific taxa (sampled or not), & all of their synonyms
+    syns = checklist_synonyms(checklist, sp_name; include_infraspecific=true)
 
-    # 1. accepted names: the species itself + all of its accepted infraspecific taxa (sampled or not)
-    push!(syns, (sp_name, get(authority_dict, sp_name, missing)))
-    for validname in validnames
-        if startswith(validname, sp_name * " ")
-            push!(syns, (validname, get(authority_dict, validname, missing)))
-        end
-    end
-
-    # 2. everything we already gathered (incl. manual additions) for the infraspecific taxa we sampled
+    # everything we already gathered (incl. manual additions) for the infraspecific taxa we sampled
     for infrataxon in infrataxa
-        append!(syns, get(synonymdict, infrataxon, []))
+        append!(syns, synonymdict[infrataxon])
     end
 
-    # 3. synonyms of the species or of any of its infraspecific taxa
-    # (the name after === is followed by whitespace for both "=== Name Author" and "=== Name subsp. infraname")
-    validnamepat = Regex("===\\s+\\Q$sp_name\\E(?:\\s|\$)")
-    for line in powosynonyms
-        occursin(validnamepat, line) || continue
-        synonym = strip(match(synonympat, line)[1])
-        syn_parts = split(synonym, " ")
-        syn_epithet = length(syn_parts) > 2 ? join(syn_parts[2:end], " ") : syn_parts[2]
-
-        # Escape special regex characters in the epithet
-        escaped_epithet = replace(syn_epithet, r"([.*+?^$()[\]{}|\\])" => s"\\\1")
-
-        auth_match = match(Regex("\\b$(escaped_epithet)\\s+(.+?),"), line)
-        syn_authority = missing
-        if auth_match !== nothing
-            syn_authority = strip(auth_match[1])
-            syn_authority = replace(syn_authority, r"\s+in\s+.*$" => "")
-        end
-
-        push!(syns, (synonym, syn_authority))
-    end
-
-    # drop repeated names (keeping the first, so accepted names keep their authority)
-    species_synonymdict[sp_name] = unique(first, syns)
+    species_synonymdict[sp_name] = unique(syns)
 end
 
 # preview species-level synonyms
@@ -443,6 +230,23 @@ for k in sort(collect(keys(species_synonymdict)))
         println("    ", syn_name, "  ", coalesce(syn_auth, ""))
     end
 end
+```
+
+### find homonyms
+
+some names are used for more than one taxon, under different authorities:
+
+- a name can be both accepted & a synonym of something else (ex. "Calceolaria glandulosa Poepp. ex Benth." is accepted,
+  while "Calceolaria glandulosa Benth." is a synonym of "Calceolaria nitida"),
+- a name can be a synonym of two different accepted taxa (ex. "Calceolaria cheiranthoides Reiche ex Witasek" is a synonym of
+  "Calceolaria meyeniana subsp. cheiranthoides", while "Calceolaria cheiranthoides Phil. ex Reiche" is a synonym of
+  "Calceolaria dentata subsp. dentata").
+
+`checklist_homonyms` finds all of these. Note, some of these names may not be valid names that *we have sampled*, but they
+may be a synonym to one we have sampled (ex. Calceolaria hypoleuca Kraenzl. is a synonym of Calceolaria soratensis Kraenzl.).
+
+```{julia}
+homonym_df = checklist_homonyms(checklist)
 ```
 
 ### filter homonym_df to only include species of interest
@@ -472,49 +276,45 @@ end
 ## gather native ranges from checklist 
 
 ```{julia}
-# Get the set of taxa in our dataset
-dataset_taxa = Set(taxa_traits.scientificName)
-
-# Dictionary to store taxon -> country codes
-country_dict = Dict{String, Vector{String}}()
-
-# Pattern to extract taxon name
-pat = Regex("^(.+?)\\s+(?=\\(|[A-Z])", "m")
-
-# Pattern to extract 3-letter uppercase country codes
-country_pat = r"\b([A-Z]{3})\b"
-
-for block in blocks
-    # Extract the taxon name
-    name_match = match(pat, block)
-    taxon_name = strip(name_match[1])
-
-    # Only process if in our dataset
-    # deal with taxa where we're using a different name compared to the valid POWO names
-    if taxon_name == "Calceolaria dentata subsp. cumingiana"
-        taxon_name = "Calceolaria dentata subsp. cummingiana"
-    elseif taxon_name == "Calceolaria mollissima"
-        taxon_name = "Calceolaria corymbosa subsp. montana"
-    elseif !(taxon_name in dataset_taxa)
-        continue
-    end
-    
-    # Find all 3-letter uppercase codes
-    country_codes = String[]
-    for m in eachmatch(country_pat, block)
-        code = m[1]
-        push!(country_codes, code)
-    end
-        
-    country_dict[taxon_name] = country_codes
-end
+# taxon -> botanical country codes
+# (looking up the taxa where we're using a different name under their valid POWO name)
+country_dict = Dict(
+    name => checklist_native_range(checklist, get(powo_names, name, name))
+    for name in taxa_traits.scientificName
+)
 
 # Add to taxa_traits dataframe
-taxa_traits.botanicalCountries = [get(country_dict, name, String[]) for name in taxa_traits.scientificName]
+taxa_traits.botanicalCountries = [country_dict[name] for name in taxa_traits.scientificName]
 ```
 
-write out clean version of `taxa_traits`, my homonym df, my synonym dict, my species-level synonym dict:
+### gather native ranges for the species-level taxa
+
+for the taxa we sampled at the infraspecific level, we also pull occurrences at the specific level (see `species_synonymdict`),
+so let's get the native range of the species as a whole: the species itself + all of its accepted infraspecific taxa (sampled or not).
+
 ```{julia}
+species_country_dict = Dict{String, Vector{String}}()
+
+for (sp_name, infrataxa) in species_to_infrataxa
+    country_codes = checklist_native_range(checklist, sp_name; include_infraspecific=true)
+
+    # also cover the taxa where we're using a different name compared to the valid POWO names
+    for infrataxon in infrataxa
+        append!(country_codes, country_dict[infrataxon])
+    end
+
+    species_country_dict[sp_name] = sort(unique(country_codes))
+end
+
+species_ranges = DataFrame(scientificName = sort(collect(keys(species_country_dict))))
+species_ranges.specificEpithet = [split(name, " ")[2] for name in species_ranges.scientificName]
+species_ranges.botanicalCountries = [species_country_dict[name] for name in species_ranges.scientificName]
+species_ranges
+```
+
+write out clean version of `taxa_traits`, my homonym df, my synonym dict, my species-level synonym dict & native ranges:
+```{julia}
+CSV.write("data/taxonomy_trait_data/species_level_ranges.csv", species_ranges)
 save("data/taxonomy_trait_data/synonymdict.jld2", synonymdict)
 save("data/taxonomy_trait_data/species_synonymdict.jld2", species_synonymdict)
 CSV.write("data/taxonomy_trait_data/homonyms.csv", homonym_df)
