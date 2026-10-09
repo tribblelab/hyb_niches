@@ -216,10 +216,37 @@ CSV.write("data/occurrence_data/summarytables_plots/ranked_togeoref.csv", enough
 ## prepare geolocate formatted files
 
 ```{julia}
+#| eval: false
 prepare_geolocate_files(
     "data/occurrence_data/pt_occs_to_georeference",
     "data/occurrence_data/pt_occs_to_georeference_geolocate_format"
 )
+```
+
+## oct 2026- merge already geolocated lines into the species-level geolocate files
+
+the species-level pulls include records that were already georeferenced (or looked at & marked `VIABLE` = FALSE) for
+their infraspecific taxa. this copies those rows' coordinates, notes & `VIABLE` into the species-level geolocate files
+(matching on `ID`), so only the rows with an empty `VIABLE` still need to be looked at.
+
+```{julia}
+geolocate_dir = "data/occurrence_data/pt_occs_to_georeference_geolocate_format"
+georef_dir = "data/occurrence_data/pt_occs_georeferenced"
+
+for species in sort(collect(keys(species_synonymdict)))
+    stem = replace(species, " " => "_")
+    geolocate_path = latest_no_coords_file(stem, geolocate_dir)
+    isempty(geolocate_path) && continue
+
+    # georeferenced files of this species' infraspecific taxa
+    infra_files = filter(f -> startswith(taxon_stem(f), stem * "_"), readdir(georef_dir))
+    isempty(infra_files) && continue
+    georef_df = vcat([read_georef_file(joinpath(georef_dir, f)) for f in infra_files]...; cols=:union)
+
+    filled, n_filled = carry_over_georef(read_occs(geolocate_path), georef_df)
+    CSV.write(geolocate_path, filled)
+    println("$species: $n_filled of $(nrow(filled)) rows already looked at ($(count(isequal("TRUE"), filled.VIABLE)) viable), from $(length(infra_files)) file(s)")
+end
 ```
 
 ## visualize occurrences before & after filtering
@@ -230,7 +257,6 @@ plot_all_occurrence_maps(
     raw_dir="data/occurrence_data/pt_occs_raw",
     clean_dir="data/occurrence_data/pt_occs_clean",
     georef_dir="data/occurrence_data/pt_occs_georeferenced",
-    filtered_dir="data/occurrence_data/pt_occs_filtered",
     shapefile_path="data/occurrence_data/supp_data/bot_country_shapefiles/level3.shp",
     pdf_file="data/occurrence_data/summarytables_plots/occurrence_maps_before_after-2026_10_07.pdf",
     species_ranges_path="data/taxonomy_trait_data/species_level_ranges.csv",
