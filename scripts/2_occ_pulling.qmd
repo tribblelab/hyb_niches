@@ -83,12 +83,9 @@ if (any(!github_loaded)) {
 
 ### load packages - julia
 ```{julia}
-include("helper_fxns.jl")
-include("../../niche-modeling-utils/scripts/fileutils.jl")
-include("../../niche-modeling-utils/scripts/occpulling.jl")
-include("../../niche-modeling-utils/scripts/datacleaning.jl")
-include("../../niche-modeling-utils/scripts/plottingutils.jl")
+using CSV, DataFrames
 using JLD2
+using PlantOccurrences
 ```
 
 ## load in data

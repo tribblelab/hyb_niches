@@ -1,5 +1,6 @@
 using CSV, DataFrames
 using RCall
+using PlantOccurrences
 
 R"""
 library(gatoRs)
@@ -15,8 +16,8 @@ library(dplyr) #needs to be loaded in last, so it defaults to correct `filter` f
 # ─────────────────────────────────────────────────────────────────────────────
 # Calceolaria-specific helpers
 #
-# the general functions (file lookup, pulling, cleaning, plotting) live in
-# niche-modeling-utils/scripts — include those alongside this file.
+# the general functions (file lookup, pulling, cleaning, plotting) come from
+# the PlantOccurrences package.
 # ─────────────────────────────────────────────────────────────────────────────
 
 # List of safe taxa based on user request

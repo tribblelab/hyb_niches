@@ -11,8 +11,7 @@ date: "2026-02-04"
 ```{julia}
 using CSV, DataFrames
 using JLD2
-using GeoIO, GeoStats
-include("../../niche-modeling-utils/scripts/checklistutils.jl")
+using PlantOccurrences
 ```
 
 ## load in taxa list df
@@ -51,7 +50,7 @@ insertcols!(taxa_traits, 3, :infraspecificEpithet => infraspecificEpithet)
 
 ## load in powo checklist
 
-build a Kew / Plants of the World Online checklist with `build_checklist` (from `niche-modeling-utils`), including each
+build a Kew / Plants of the World Online checklist with `build_checklist` (from `PlantOccurrences`), including each
 accepted name's native range at the botanical country level.
 we ask for the whole family rather than just *Calceolaria*, so we also get the synonyms that were described in other
 genera (ex. "Fagelia biflora").

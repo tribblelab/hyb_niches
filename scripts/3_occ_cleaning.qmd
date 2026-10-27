@@ -21,10 +21,8 @@ saved, with the reason, in `removed_points-<date>.csv`.
 ## load packages
 
 ```{julia}
+using PlantOccurrences
 include("helper_fxns.jl")
-include("../../niche-modeling-utils/scripts/fileutils.jl")
-include("../../niche-modeling-utils/scripts/datacleaning.jl")
-include("../../niche-modeling-utils/scripts/plottingutils.jl")
 ```
 
 ## paths
@@ -152,15 +150,15 @@ geo_filters = [
     (taxon="Calceolaria flexuosa subsp. chrysocalyx", lat_max=-8, note="Amazonas Peru point - annotated by Molau as \"chrysocalyx Edwin\", but monograph uses spec # for luteocalyx"),
     (taxon="Calceolaria germainii", lon_max=-68, note="remove outlier point. no digitization for the herbarium sheet, nor any good Argentinian range definition."),
     (taxon="Calceolaria parvifolia subsp. parvifolia", lat_max=-14, note="out of range"),
+    (taxon="Calceolaria ascendens subsp. glandulifera", lon_max=-69.5, note="IDed by Anahí as out of range"),
+    (taxon="Calceolaria glandulosa subsp. glandulosa", lon_max=-70, note="IDed by Anahí as out of range"),
+    (taxon="Calceolaria corymbosa subsp. montana", lon_max=-70, note="IDed by Anahí as out of range"),
+    (taxon="Calceolaria corymbosa subsp. corymbosa", lon_min=-73.5, note="IDed by Anahí as out of range")
 ]
 ```
 
 looked at, but nothing filtered (yet):
-
-- ascendens subsp. glandulifera
 - ascendens subsp. ascendens
-- corymbosa subsp. corymbosa
-- corymbosa subsp. montana
 - biflora
 - chrysophaera - two points in Bolivia, which doesn't agree with Molau. but those two were det. by Puppo, who I trust.
 
