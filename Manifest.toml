@@ -682,7 +682,7 @@ weakdeps = ["REPL"]
 
 [[deps.PlantOccurrences]]
 deps = ["CSV", "DataFrames", "Dates", "HTTP", "JSON3", "NetworkOptions", "RCall"]
-git-tree-sha1 = "70bd19320fdd0839c1c7d21de337e781cd099c8d"
+path = "/Users/laurenfrankel/Desktop/PlantOccurrences.jl"
 uuid = "41e93952-0be5-45ed-9935-83314b503f47"
 version = "0.1.0"
 

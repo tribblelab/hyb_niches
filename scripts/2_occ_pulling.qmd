@@ -230,6 +230,13 @@ their infraspecific taxa. this copies those rows' coordinates, notes & `VIABLE` 
 geolocate_dir = "data/occurrence_data/pt_occs_to_georeference_geolocate_format"
 georef_dir = "data/occurrence_data/pt_occs_georeferenced"
 
+# the georeferenced files have the IDs of the earlier pulls they were made from; some records have been
+# re-pulled under a new ID since, so match those back up through occurrenceID (see remap_georef_ids)
+old_pull_dirs = ["data/occurrence_data/older versions/february 2026",
+                 "data/occurrence_data/older versions/april 2026/pt_occs_raw"]
+old_occs = unique(vcat([select(read_occs(path), :ID, :occurrenceID)
+                        for dir in old_pull_dirs for path in readdir(dir, join=true) if endswith(path, ".csv")]...))
+
 for species in sort(collect(keys(species_synonymdict)))
     stem = replace(species, " " => "_")
     geolocate_path = latest_no_coords_file(stem, geolocate_dir)
@@ -239,6 +246,8 @@ for species in sort(collect(keys(species_synonymdict)))
     infra_files = filter(f -> startswith(taxon_stem(f), stem * "_"), readdir(georef_dir))
     isempty(infra_files) && continue
     georef_df = vcat([read_georef_file(joinpath(georef_dir, f)) for f in infra_files]...; cols=:union)
+    no_coords_df = read_occs(latest_no_coords_file(stem, "data/occurrence_data/pt_occs_to_georeference"))
+    georef_df, _ = remap_georef_ids(georef_df, no_coords_df, old_occs)
 
     filled, n_filled = carry_over_georef(read_occs(geolocate_path), georef_df)
     CSV.write(geolocate_path, filled)

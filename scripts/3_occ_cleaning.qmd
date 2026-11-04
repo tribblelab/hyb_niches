@@ -37,17 +37,44 @@ final_dir     = joinpath(occ_dir, "pt_occs_final")
 summary_dir   = joinpath(occ_dir, "summarytables_plots")
 safe_ids_json = joinpath(occ_dir, "supp_data", "calceolaria_ids.json")
 traits_path   = "data/taxonomy_trait_data/traits_species_cleaned-2026_02_25.csv"
+# earlier raw pulls the georeferencing was done from
+old_pull_dirs = [joinpath(occ_dir, "older versions", "february 2026"),
+                 joinpath(occ_dir, "older versions", "april 2026", "pt_occs_raw")]
 
 # tag for this run's summary tables & plots
 run_date = "2026_10_07"
+```
+
+## IDs of the earlier pulls
+
+some records have been re-pulled under a different `ID` since they were georeferenced (ex. `remove_duplicates` now
+keeps the iDigBio copy of a specimen, with a UUID, instead of the GBIF copy). the georeferenced files still have the
+old IDs, so `remap_georef_ids` matches them back up through `occurrenceID`, using the pulls they were made from.
+
+```{julia}
+old_occs = unique(vcat([select(read_occs(path), :ID, :occurrenceID)
+                        for dir in old_pull_dirs for path in readdir(dir, join=true) if endswith(path, ".csv")]...))
+println("$(nrow(old_occs)) records in the earlier pulls")
 ```
 
 ## what gets filtered out
 
 ### wrong taxa
 
-`scientificName` values that got lumped in with a taxon but belong to a different one.
-(to find these, see "check taxonomy" below)
+fixit: make a function to automate this
+
+taxa with 2+ unique `scientificName` values left in their final points (potentially wrong taxa getting lumped in there).
+anything that doesn't belong goes in `name_filters`.
+
+```{julia}
+for (stem, path) in taxon_files(final_dir)
+    unique_names = unique(skipmissing(read_occs(path).scientificName))
+    if length(unique_names) >= 2
+        println("\n$stem:")
+        foreach(name -> println("  $name"), sort(unique_names))
+    end
+end
+```
 
 ```{julia}
 name_filters = [
@@ -61,7 +88,8 @@ name_filters = [
         "Calceolaria crenata × Calceolaria Ferruginea",
         "Calceolaria nivalis subsp. nivalis",
         "Calceolaria nivalis subsp. lanatifolia Puppo",
-        "Calceolaria nivalis subsp. cerasifolia (Benth.) Molau"],
+        "Calceolaria nivalis subsp. cerasifolia (Benth.) Molau",
+        "Calceolaria nivalis Kunth subsp. Cerasifolia (Benth.) Molau"],
     "Calceolaria ascendens subsp. glandulifera" => [
         "Calceolaria tripartita",
         "Calceolaria parvifolia subsp. guentheri (Kraenzl.) Molau",
@@ -102,8 +130,6 @@ to try out bounds before adding a row here: `preview_coords("Calceolaria nitida"
 
 ```{julia}
 geo_filters = [
-    # this manuscript defines / carves out several species from integrifolia s.l.,
-    # defining integrifolia s.s. might be a problem if all these occurrences haven't been annotated / revisited post 2005.
     (taxon="Calceolaria integrifolia", countries=["Peru"], note="Peru can definitely be removed"),
     (taxon="Calceolaria polifolia", lat_min=-35, note="remove two -35 points"),
     (taxon="Calceolaria nitida", lat_max=-31, lat_min=-34.5, note="can remove points -31 and above and -35 and below"),
@@ -116,9 +142,9 @@ geo_filters = [
     (taxon="Calceolaria crenatiflora", lat_max=-15, note="remove point above -15"),
     (taxon="Calceolaria filicaulis subsp. filicaulis", lat_min=-46, lat_max=-32, note="remove points below -46 and above -32"),
     (taxon="Calceolaria filicaulis subsp. luxurians", lat_max=-30, note="remove points above -30"),
-    (taxon="Calceolaria uniflora", lat_max=-45, note="remove points above -45"),
+    (taxon="Calceolaria uniflora", lat_max=-45, lon_max=-65, note="remove points above -45, point on the Falklands"),
     (taxon="Calceolaria rupestris", lat_max=-10, note="-9 point out of range as described by Molau (not in Junin, Huancavelica, or Ayacucho)"),
-    (taxon="Calceolaria undulata", lat_min=-39, note="remove one -39 point"),
+    (taxon="Calceolaria undulata", lat_min=-37.5, note="remove two southern points"),
     (taxon="Calceolaria tenella", lat_max=-36, note="remove point above -36"),
     (taxon="Calceolaria picta", lat_min=-32, note="any point below -32 does not fit into range"),
     (taxon="Calceolaria flavovirens", lat_max=-29, note="remove -29 point"),
@@ -153,14 +179,22 @@ geo_filters = [
     (taxon="Calceolaria ascendens subsp. glandulifera", lon_max=-69.5, note="IDed by Anahí as out of range"),
     (taxon="Calceolaria glandulosa subsp. glandulosa", lon_max=-70, note="IDed by Anahí as out of range"),
     (taxon="Calceolaria corymbosa subsp. montana", lon_max=-70, note="IDed by Anahí as out of range"),
-    (taxon="Calceolaria corymbosa subsp. corymbosa", lon_min=-73.5, note="IDed by Anahí as out of range")
-]
+    (taxon="Calceolaria corymbosa subsp. corymbosa", lon_min=-73.5, note="IDed by Anahí as out of range"),
+    (taxon="Calceolaria ascendens", countries=["Peru"], note="only found in Chile"),
+    (taxon="Calceolaria collina subsp. subincisa", lat_min=-33, note="remove point below -33"),
+    (taxon="Calceolaria linearis", countries=["Ecuador"], note="only found in Peru"),
+    (taxon="Calceolaria corymbosa", lat_max=-25, note="removing outlier point in Peru outside of range"),
+    (taxon="Calceolaria valdiviana", lat_max=-36, note="removing outlier points outside of range"),
+    (taxon="Calceolaria inamoena", lat_max=-14, note="removing outlier point"),
+    (taxon="Calceolaria dentata", lon_max=-68, note="removing outlier points"),
+    (taxon="Calceolaria collina", lat_min=-34, note="removing outlier point out of range"),
+    (taxon="Calceolaria glandulosa", lat_min=-34.5, lat_max=-29, note="remove outlier points"),
+    (taxon="Calceolaria biflora", lat_max=-28, note="remove northern outlier point")]
 ```
 
 looked at, but nothing filtered (yet):
-- ascendens subsp. ascendens
-- biflora
 - chrysophaera - two points in Bolivia, which doesn't agree with Molau. but those two were det. by Puppo, who I trust.
+- corymbosa subsp. corymbosa - two points pretty far south (beyond Ehrhart description), but both det'ed by Cocucci/Sersic
 
 ## build the final points
 
@@ -180,7 +214,10 @@ function build_final_occs(stem::String, clean_path::String)
     georef_df = load_georef_df(stem, georef_dir)
     no_coords_path = latest_no_coords_file(stem, no_coords_dir)
     if !isnothing(georef_df) && !isempty(no_coords_path)
-        df = merge_georef(df, read_occs(no_coords_path), georef_df)
+        no_coords_df = read_occs(no_coords_path)
+        georef_df, n_remapped = remap_georef_ids(georef_df, no_coords_df, old_occs)
+        n_remapped > 0 && println("  $stem: $n_remapped georeferenced point(s) matched to a new ID")
+        df = merge_georef(df, no_coords_df, georef_df)
     end
     n_georef = nrow(df) - n_clean
 
@@ -258,23 +295,6 @@ low_n_taxa = filter(:final_points => <(15), summary_df)
 ```{julia}
 # how many points were removed for each reason?
 combine(groupby(removed_df, :removed_reason), nrow => :n)
-```
-
-## check taxonomy
-
-fixit: make a better function to automate this
-
-taxa with 2+ unique `scientificName` values left in their final points (potentially wrong taxa getting lumped in there).
-anything that doesn't belong goes in `name_filters` above.
-
-```{julia}
-for (stem, path) in taxon_files(final_dir)
-    unique_names = unique(skipmissing(read_occs(path).scientificName))
-    if length(unique_names) >= 2
-        println("\n$stem:")
-        foreach(name -> println("  $name"), sort(unique_names))
-    end
-end
 ```
 
 ## visualize
